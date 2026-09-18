@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="application-name" content="Clubewins 11.2">
+<meta name="theme-color" content="#7928ca"><title>Clubewins 11.2 💜</title>
+<style>
+:root{--bg:#100d19;--panel:#1c1728;--panel2:#292139;--text:#f7f3ff;--muted:#b9afca;--border:#403451;--purple:#7928ca;--pink:#ff4fa3;--red:#ff5964}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px system-ui;line-height:1.5}body.light{--bg:#f5f1fb;--panel:#fff;--panel2:#eee7f8;--text:#241a32;--muted:#6c607b;--border:#ddd1eb}button,input,select,textarea{font:inherit}button{cursor:pointer}.top{position:sticky;top:0;background:var(--panel);padding:12px 16px;display:flex;gap:12px;align-items:center;border-bottom:1px solid var(--border);z-index:3}.brand{font-weight:900;font-size:1.25rem}.brand b{color:var(--pink)}.wrap{max-width:1100px;margin:auto;padding:18px;display:grid;grid-template-columns:190px 1fr;gap:18px}.side{display:grid;gap:7px;align-content:start;position:sticky;top:75px;height:max-content}.nav,.btn{padding:10px 13px;border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--text)}.nav{text-align:left}.nav.active{background:var(--purple);color:white}.btn.primary{background:var(--purple);color:white;border:0;font-weight:700}.btn.danger{background:var(--red);color:white;border:0}.page{display:none}.page.active{display:block}.hero{padding:25px;border-radius:22px;background:linear-gradient(130deg,#4b1a79,#8525bc,#d13d9b);margin-bottom:16px}.hero h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.1;margin:10px 0}.hero p{color:#f5e9ff}.stats,.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.cols{grid-template-columns:repeat(2,minmax(0,1fr))}.stat,.card,.item{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:13px}.stat strong{display:block;font-size:1.4rem}.muted{color:var(--muted)}.field{display:grid;gap:5px;margin:11px 0}.field input,.field textarea,.field select,input[type=search]{width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text)}textarea{min-height:90px;resize:vertical}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}.item h3{margin:5px 0}.item p{white-space:pre-wrap;overflow-wrap:anywhere}.pill{font-size:.83rem;background:var(--panel2);padding:4px 9px;border-radius:99px}.avatar{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--purple);font-size:1.5rem}.notice{background:var(--panel2);padding:12px;border-left:4px solid #ffd166;border-radius:8px;color:var(--muted)}.map{width:100%;height:320px;border:0;border-radius:12px}.empty{padding:20px;text-align:center;color:var(--muted)}.mobile{display:none}.modal{position:fixed;inset:0;background:#000c;z-index:10;display:grid;place-items:center;padding:18px}.modalbox{max-width:450px;background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px}.hidden{display:none!important}a{color:#54d9e8}
+@media(max-width:720px){.wrap{display:block;padding:12px 12px 80px}.side{display:none}.mobile{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:4;background:var(--panel);border-top:1px solid var(--border);justify-content:space-around;padding:7px 3px calc(7px + env(safe-area-inset-bottom))}.mobile button{background:transparent;color:var(--muted);border:0;font-size:.75rem}.mobile button.active{color:var(--pink)}.cols{grid-template-columns:1fr}.stats{gap:6px}.hero{padding:20px}.top{padding:10px}}
+
+/* Clubewins 11.2 enhancements */
+.v11-panel{background:var(--card,rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:16px;margin:14px 0}
+.v11-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.v11-chip{display:inline-flex;padding:6px 10px;border-radius:999px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.35);font-size:.82rem}
+.v11-btn{border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;background:#8b5cf6;color:white}
+.v11-btn.secondary{background:rgba(255,255,255,.1);color:inherit;border:1px solid rgba(255,255,255,.15)}
+.v11-field{width:100%;padding:11px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(127,127,127,.08);color:inherit;margin:6px 0}
+
+</style></head><body>
+<header class="top"><button class="btn" id="menu">☰</button><div class="brand">Clube<b>wins</b> 💜</div><span style="flex:1"></span><button class="btn danger" id="panic">⚠ Sair</button></header>
+<div class="wrap"><aside class="side" id="side">
+<button class="nav active" data-page="inicio">🏠 Início</button><button class="nav" data-page="eventos">📅 Eventos</button><button class="nav" data-page="perfil">👤 Perfil</button><button class="nav" data-page="mural">💬 Mural</button><button class="nav" data-page="mapa">📍 Mapa</button><button class="nav" data-page="config">⚙ Configurações</button><button class="nav" data-page="sobre">ℹ Sobre</button>
+</aside><main>
+<section class="page active" id="inicio"><div class="hero"><span class="pill">Comunidade • Brasília</span><h1>Conheça, participe<br>e pertença.</h1><p>Descubra eventos e compartilhe ideias com respeito e segurança.</p><div class="row"><button class="btn" data-go="eventos">Explorar eventos</button><button class="btn" data-go="perfil">Editar perfil</button></div><div class="stats"><div class="stat"><strong id="se">0</strong>eventos futuros</div><div class="stat"><strong id="sp">0</strong>publicações</div><div class="stat"><strong id="pts">0</strong>pontos locais</div></div></div><div class="cols"><div class="card"><h2>📅 Próximos eventos</h2><div id="homeEvents"></div><button class="btn" data-go="eventos">Ver eventos</button></div><div class="card"><h2>💬 Mural</h2><div id="homePosts"></div><button class="btn" data-go="mural">Abrir mural</button></div></div></section>
+<section class="page" id="eventos"><h1>Eventos</h1><div class="card"><h2>➕ Criar evento</h2><form id="ef"><div class="field"><label>Nome *</label><input id="et" maxlength="90" required></div><div class="cols"><div class="field"><label>Data *</label><input id="ed" type="date" required></div><div class="field"><label>Horário</label><input id="eh" maxlength="20" placeholder="15h"></div></div><div class="field"><label>Local *</label><input id="el" maxlength="120" required></div><div class="field"><label>Categoria</label><select id="ec"><option>Convivência</option><option>Cultura</option><option>Esporte</option><option>Estudo</option><option>Voluntariado</option><option>Outro</option></select></div><div class="field"><label>Descrição</label><textarea id="edesc" maxlength="700"></textarea></div><button class="btn primary">Publicar evento</button></form></div><div class="card"><div class="row between"><h2>Encontrar eventos</h2><select id="filter"><option value="all">Todos</option><option value="future">Próximos</option><option value="mine">Criados por mim</option><option value="joined">Minha agenda</option><option value="saved">Favoritos</option></select></div><input id="search" type="search" placeholder="Buscar nome, local ou categoria"><div id="events"></div></div></section>
+<section class="page" id="perfil"><h1>Meu perfil</h1><div class="card"><div class="row"><div class="avatar" id="av">💜</div><div><h2 id="pn">Pessoa da comunidade</h2><span class="muted" id="pbview"></span></div></div><form id="pf"><div class="field"><label>Nome/apelido</label><input id="pname" maxlength="50"></div><div class="field"><label>Sobre mim</label><textarea id="pbio" maxlength="300"></textarea></div><div class="cols"><div class="field"><label>Emoji/avatar</label><input id="pemoji" maxlength="8"></div><div class="field"><label>Cor</label><input id="pcolor" type="color" value="#7928ca"></div></div><button class="btn primary">Salvar perfil</button></form><hr><b id="level">Nível 1</b> <span class="pill" id="levelpts">0 pontos</span><p class="muted">Pontos demonstrativos, armazenados apenas neste navegador.</p></div></section>
+<section class="page" id="mural"><h1>Mural da comunidade</h1><div class="card"><h2>Compartilhar</h2><form id="postf"><div class="field"><label>Mensagem *</label><textarea id="posttext" maxlength="1000" required></textarea></div><button class="btn primary">Publicar</button></form></div><div class="card"><h2>Publicações</h2><div id="posts"></div></div></section>
+<section class="page" id="mapa"><h1>Mapa</h1><div class="card"><h2>📍 Explorar Brasília</h2><div class="field"><label>Buscar lugar</label><input id="mq" value="Brasília, Distrito Federal, Brasil"></div><button class="btn primary" id="mb">Buscar</button><iframe class="map" id="mf" title="Mapa" loading="lazy" src="https://www.google.com/maps?q=Brasilia&output=embed"></iframe><p><a id="ml" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&query=Brasilia">Abrir no Google Maps ↗</a></p></div></section>
+<section class="page" id="config"><h1>Configurações</h1><div class="card"><h2>🎨 Aparência</h2><div class="field"><label>Tema</label><select id="theme"><option value="dark">Escuro</option><option value="light">Claro</option></select></div><label><input type="checkbox" id="discreet"> Modo discreto</label><br><label><input type="checkbox" id="large"> Texto maior</label></div><div class="card"><h2>💾 Backup e dados</h2><p class="muted">Exporte ou importe um arquivo JSON.</p><div class="row"><button class="btn" id="export">Exportar backup</button><label class="btn" for="import">Importar backup</label><input class="hidden" id="import" type="file" accept=".json,application/json"></div><hr><button class="btn danger" id="clear">Apagar dados locais</button><p class="notice">Apaga apenas dados deste navegador. Não apaga histórico do navegador nem cópias exportadas.</p></div><div class="card"><h2>🔔 Notificações</h2><button class="btn" id="notify">Solicitar permissão</button> <span id="ns" class="muted"></span><p class="muted">Este protótipo não envia notificações em segundo plano.</p></div></section>
+<section class="page" id="sobre"><h1>Sobre</h1><div class="card"><h2>Protótipo local Clubewins</h2><p>Perfil, eventos, favoritos, participações, mural, mapa, temas e backup funcionam neste navegador.</p><ul><li>Não há contas reais, servidor, sincronização ou moderação remota.</li><li>Confirmação de idade não é verificação oficial.</li><li>Não publique conteúdo ilegal ou dados pessoais sensíveis.</li><li>Encontros devem ser combinados em locais públicos.</li></ul></div></section><p class="muted" style="text-align:center">Clubewins 💜 • Protótipo local para testes</p>
+</main></div><nav class="mobile" id="mob"><button data-page="inicio">🏠<br>Início</button><button data-page="eventos">📅<br>Eventos</button><button data-page="mural">💬<br>Mural</button><button data-page="perfil">👤<br>Perfil</button><button data-page="config">⚙<br>Ajustes</button></nav>
+<div class="modal hidden" id="age"><div class="modalbox"><h2>Antes de continuar</h2><p>Este protótipo é destinado a maiores de 18 anos. Esta declaração não verifica sua idade.</p><label><input type="checkbox" id="agecheck"> Confirmo que tenho 18 anos ou mais.</label><p class="notice">Se você tem menos de 18 anos, não continue.</p><button class="btn primary" id="accept" disabled>Continuar</button></div></div>
+<script>
+(()=>{'use strict';
+const KEY='clubewins_local_v2',AGE='clubewins_age_ack_v1',$=id=>document.getElementById(id),uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8),today=()=>new Date().toISOString().slice(0,10),txt=(v,n=1000)=>String(v??'').trim().slice(0,n),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fresh=()=>({profile:{name:'Pessoa da comunidade',bio:'',emoji:'💜',color:'#7928ca'},theme:'dark',discreet:false,large:false,points:0,events:[],favorites:[],joined:[],posts:[]});
+function normalize(x){let d=fresh(),p=x&&x.profile||{};return{profile:{name:txt(p.name,50)||d.profile.name,bio:txt(p.bio,300),emoji:txt(p.emoji,8)||'💜',color:/^#[0-9a-f]{6}$/i.test(p.color||'')?p.color:'#7928ca'},theme:x&&x.theme==='light'?'light':'dark',discreet:!!(x&&x.discreet),large:!!(x&&x.large),points:Math.max(0,Math.min(1e6,Number(x&&x.points)||0)),events:Array.isArray(x&&x.events)?x.events.filter(e=>e&&e.title&&e.place).slice(0,500).map(e=>({id:txt(e.id,80)||uid(),title:txt(e.title,90),date:/^\\d{4}-\\d{2}-\\d{2}$/.test(e.date||'')?e.date:'',time:txt(e.time,20),place:txt(e.place,120),category:txt(e.category,40),desc:txt(e.desc,700),createdBy:txt(e.createdBy,50)||d.profile.name})):[],favorites:Array.isArray(x&&x.favorites)?x.favorites.filter(v=>typeof v==='string'):[],joined:Array.isArray(x&&x.joined)?x.joined.filter(v=>typeof v==='string'):[],posts:Array.isArray(x&&x.posts)?x.posts.filter(p=>p&&p.text).slice(0,1000).map(p=>({id:txt(p.id,80)||uid(),text:txt(p.text,1000),author:txt(p.author,50),date:txt(p.date,50),likes:Array.isArray(p.likes)?p.likes.filter(v=>typeof v==='string'):[]})):[]}}
+let state;try{state=normalize(JSON.parse(localStorage.getItem(KEY)||'null')||fresh())}catch(e){state=fresh()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){alert('Falha ao salvar: armazenamento indisponível ou cheio.')}}
+function go(id){if(!$ (id))return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>go(b.dataset.page));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+$('menu').onclick=()=>{if(matchMedia('(max-width:720px)').matches)go('eventos');else $('side').style.display=$('side').style.display==='none'?'grid':''};
+$('panic').onclick=()=>location.replace('https://www.google.com/');
+function settings(){document.body.classList.toggle('light',state.theme==='light');document.body.classList.toggle('large',state.large);$('theme').value=state.theme;$('discreet').checked=state.discreet;$('large').checked=state.large;document.title=state.discreet?'Início':'Clubewins 💜'}
+function renderProfile(){$('pn').textContent=state.profile.name;$('pbview').textContent=state.profile.bio||'Perfil salvo neste dispositivo';$('av').textContent=state.profile.emoji;$('av').style.background=state.profile.color;$('pname').value=state.profile.name;$('pbio').value=state.profile.bio;$('pemoji').value=state.profile.emoji;$('pcolor').value=state.profile.color;$('level').textContent='Nível '+(Math.floor(state.points/100)+1);$('levelpts').textContent=state.points+' pontos'}
+function renderEvents(){let q=$('search').value.toLowerCase(),f=$('filter').value,es=state.events.filter(e=>[e.title,e.place,e.category,e.desc].join(' ').toLowerCase().includes(q)&& (f==='all'||f==='future'&&e.date>=today()||f==='mine'&&e.createdBy===state.profile.name||f==='joined'&&state.joined.includes(e.id)||f==='saved'&&state.favorites.includes(e.id))).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));$('events').innerHTML=es.length?es.map(e=>`<article class="item"><div class="row between"><span class="pill">${esc(e.category)}</span><span class="muted">${esc(e.date)} ${esc(e.time)}</span></div><h3>${esc(e.title)}</h3><p class="muted">📍 ${esc(e.place)}</p>${e.desc?`<p>${esc(e.desc)}</p>`:''}<p class="muted">Criado por ${esc(e.createdBy)}</p><div class="row"><button class="btn" data-act="join" data-id="${esc(e.id)}">${state.joined.includes(e.id)?'✓ Participando':'＋ Participar'}</button><button class="btn" data-act="fav" data-id="${esc(e.id)}">${state.favorites.includes(e.id)?'★ Favorito':'☆ Favoritar'}</button>${e.createdBy===state.profile.name?`<button class="btn danger" data-act="de" data-id="${esc(e.id)}">Excluir</button>`:''}</div></article>`).join(''):'<div class="empty">Nenhum evento encontrado.</div>';$('homeEvents').innerHTML=state.events.filter(e=>e.date>=today()).slice(0,3).map(e=>`<p><b>${esc(e.title)}</b><br><span class="muted">${esc(e.date)} • ${esc(e.place)}</span></p>`).join('')||'<p class="muted">Sem eventos próximos.</p>'}
+function renderPosts(){let ps=[...state.posts].reverse();$('posts').innerHTML=ps.length?ps.map(p=>`<article class="item"><div class="row between"><b>${esc(p.author)}</b><span class="muted">${esc(p.date)}</span></div><p>${esc(p.text)}</p><div class="row"><button class="btn" data-act="like" data-id="${esc(p.id)}">${p.likes.includes('local-user')?'♥':'♡'} ${p.likes.length}</button><button class="btn" data-act="report" data-id="${esc(p.id)}">⚑ Marcar</button>${p.author===state.profile.name?`<button class="btn danger" data-act="dp" data-id="${esc(p.id)}">Excluir</button>`:''}</div></article>`).join(''):'<div class="empty">Mural vazio.</div>';$('homePosts').innerHTML=ps.slice(0,2).map(p=>`<p><b>${esc(p.author)}</b><br>${esc(p.text.slice(0,100))}</p>`).join('')||'<p class="muted">Sem publicações.</p>'}
+function render(){renderProfile();renderEvents();renderPosts();$('se').textContent=state.events.filter(e=>e.date>=today()).length;$('sp').textContent=state.posts.length;$('pts').textContent=state.points;settings()}
+$('ef').onsubmit=e=>{e.preventDefault();let title=txt($('et').value,90),date=$('ed').value,place=txt($('el').value,120);if(!title||!date||!place)return alert('Preencha nome, data e local.');if(date<today()&&!confirm('A data já passou. Publicar mesmo assim?'))return;state.events.push({id:uid(),title,date,time:txt($('eh').value,20),place,category:$('ec').value,desc:txt($('edesc').value,700),createdBy:state.profile.name});state.points+=10;save();e.target.reset();render();alert('Evento salvo neste dispositivo.')};
+$('pf').onsubmit=e=>{e.preventDefault();state.profile={name:txt($('pname').value,50)||'Pessoa da comunidade',bio:txt($('pbio').value,300),emoji:txt($('pemoji').value,8)||'💜',color:$('pcolor').value};save();render();alert('Perfil salvo.')};
+$('postf').onsubmit=e=>{e.preventDefault();let text=txt($('posttext').value,1000);if(!text)return;state.posts.push({id:uid(),text,author:state.profile.name,date:new Date().toLocaleString('pt-BR'),likes:[]});state.points+=2;save();$('posttext').value='';render()};
+$('search').oninput=renderEvents;$('filter').onchange=renderEvents;
+document.onclick=e=>{let b=e.target.closest('[data-act]');if(!b)return;let id=b.dataset.id,a=b.dataset.act;if(a==='join'){state.joined=state.joined.includes(id)?state.joined.filter(x=>x!==id):[...state.joined,id];if(state.joined.includes(id))state.points++}if(a==='fav')state.favorites=state.favorites.includes(id)?state.favorites.filter(x=>x!==id):[...state.favorites,id];if(a==='de'){if(!confirm('Excluir evento?'))return;state.events=state.events.filter(x=>x.id!==id);state.joined=state.joined.filter(x=>x!==id);state.favorites=state.favorites.filter(x=>x!==id)}if(a==='like'){let p=state.posts.find(x=>x.id===id);p.likes=p.likes.includes('local-user')?p.likes.filter(x=>x!=='local-user'):[...p.likes,'local-user']}if(a==='dp'){if(!confirm('Excluir publicação?'))return;state.posts=state.posts.filter(x=>x.id!==id)}if(a==='report'){alert('Marcado apenas localmente. Nenhuma denúncia foi enviada.');return}save();render()};
+$('theme').onchange=()=>{state.theme=$('theme').value;save();settings()};$('discreet').onchange=()=>{state.discreet=$('discreet').checked;save();settings()};$('large').onchange=()=>{state.large=$('large').checked;save();settings()};
+$('mb').onclick=()=>{let q=$('mq').value.trim();if(!q)return alert('Digite um local.');let u=encodeURIComponent(q);$('mf').src='https://www.google.com/maps?q='+u+'&output=embed';$('ml').href='https://www.google.com/maps/search/?api=1&query='+u};
+$('export').onclick=()=>{let blob=new Blob([JSON.stringify({app:'Clubewins',version:2,data:state},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='clubewins-backup.json';a.click();URL.revokeObjectURL(url)};
+$('import').onchange=async e=>{let file=e.target.files[0];if(!file)return;try{if(file.size>2e6)throw Error('Arquivo maior que 2 MB.');let obj=JSON.parse(await file.text());if(!obj||typeof obj!=='object')throw Error('Formato inválido.');if(!confirm('Substituir os dados atuais pelo backup?'))return;state=normalize(obj.data||obj);save();render();alert('Backup importado.')}catch(err){alert('Falha na importação: '+err.message)}finally{e.target.value=''}};
+$('clear').onclick=()=>{if(!confirm('Apagar todos os dados locais?'))return;if(!confirm('Confirma? Esta ação não pode ser desfeita.'))return;localStorage.removeItem(KEY);state=fresh();save();render();alert('Dados locais apagados.')};
+$('notify').onclick=async()=>{if(!('Notification'in window))return $('ns').textContent='Não suportado neste navegador.';try{$('ns').textContent='Permissão: '+await Notification.requestPermission()}catch(e){$('ns').textContent='Não foi possível solicitar permissão.'}};
+$('agecheck').onchange=()=>$('accept').disabled=!$('agecheck').checked;$('accept').onclick=()=>{if(!$('agecheck').checked)return;sessionStorage.setItem(AGE,'1');$('age').classList.add('hidden')};if(sessionStorage.getItem(AGE)!=='1')$('age').classList.remove('hidden');$('ed').min=today();render();
+})();
+</script>
+<script>
+/* Clubewins 11.2: local-only safety and event tools */
+(() => {
+  const KEY = 'clubewins_v11_safety';
+  const read = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {blocked:[], reports:[], attendance:{}}; } catch { return {blocked:[], reports:[], attendance:{}}; } };
+  const save = data => localStorage.setItem(KEY, JSON.stringify(data));
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function mountSafety() {
+    if (document.getElementById('v11-safety')) return;
+    const host = document.createElement('section');
+    host.id='v11-safety'; host.className='v11-panel';
+    host.innerHTML = `<h2>🛡️ Central de segurança <span class="v11-chip">v11.0</span></h2>
+      <p>Ferramentas locais para organizar bloqueios e denúncias de teste. Elas ficam neste aparelho e não chegam a uma equipe de moderação.</p>
+      <div class="v11-row"><input id="v11-user" class="v11-field" style="flex:1;min-width:180px" placeholder="Nome/identificador do perfil"><button class="v11-btn" id="v11-block">Bloquear</button><button class="v11-btn secondary" id="v11-report">Registrar denúncia de teste</button></div>
+      <div id="v11-status" aria-live="polite"></div><div id="v11-blocked"></div>`;
+    const target = document.querySelector('main') || document.body;
+    target.appendChild(host);
+    const render = () => {
+      const d=read();
+      document.getElementById('v11-blocked').innerHTML = `<h3>Perfis bloqueados</h3>${d.blocked.length ? d.blocked.map((u,i)=>`<div class="v11-row"><span>${esc(u)}</span><button class="v11-btn secondary" data-unblock="${i}">Desbloquear</button></div>`).join('') : '<p>Nenhum perfil bloqueado neste protótipo.</p>'}<p>Denúncias de teste registradas: <b>${d.reports.length}</b></p>`;
+      host.querySelectorAll('[data-unblock]').forEach(b=>b.onclick=()=>{const x=read();x.blocked.splice(+b.dataset.unblock,1);save(x);render();});
+    };
+    document.getElementById('v11-block').onclick=()=>{const input=document.getElementById('v11-user'),v=input.value.trim();if(!v)return;const d=read();if(!d.blocked.includes(v))d.blocked.push(v);save(d);input.value='';document.getElementById('v11-status').textContent='Perfil adicionado à lista local de bloqueio.';render();};
+    document.getElementById('v11-report').onclick=()=>{const v=document.getElementById('v11-user').value.trim();if(!v)return;const d=read();d.reports.push({target:v,createdAt:new Date().toISOString()});save(d);document.getElementById('v11-status').textContent='Denúncia de teste salva apenas neste aparelho. Não foi enviada.';render();};
+    render();
+  }
+  function enhanceEvents() {
+    document.querySelectorAll('button').forEach(btn=>{
+      const t=(btn.textContent||'').trim().toLowerCase();
+      if(!/(participar|confirmar presença)/.test(t)||btn.dataset.v11bound)return;
+      btn.dataset.v11bound='1';
+      btn.addEventListener('click',()=>{
+        const card=btn.closest('article,.card,.event-card,[class*="event"]');
+        const label=(card?.innerText||'Evento').split('\n').map(x=>x.trim()).filter(Boolean)[0]||'Evento';
+        const d=read(); d.attendance[label]=d.attendance[label]==='confirmado'?'lista de interesse':'confirmado';save(d);
+      });
+    });
+  }
+  function addAboutNote(){
+    const note=document.createElement('p');
+    note.className='v11-chip';
+    note.textContent='v11.0: bloqueios/denúncias e confirmações são locais; não substituem moderação, autenticação ou backend.';
+    const footer=document.querySelector('footer');
+    if(footer&&!footer.querySelector('.v11-chip'))footer.appendChild(note);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{mountSafety();enhanceEvents();addAboutNote();});
+  else {mountSafety();enhanceEvents();addAboutNote();}
+})();
+</script>
+
+
+<style>
+/* v11.1 polish */
+:root{scroll-behavior:smooth}
+button,input,textarea,select{font:inherit}
+button{transition:transform .15s ease,filter .15s ease}
+button:active{transform:scale(.98)}
+:focus-visible{outline:3px solid #c084fc;outline-offset:3px}
+.v111-tools{margin:16px 0;padding:16px;border:1px solid #a78bfa55;border-radius:18px;background:linear-gradient(135deg,#8b5cf61a,#ec48991a)}
+.v111-tools h2{margin-top:0}
+.v111-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.v111-box{padding:12px;border-radius:13px;background:#80808012;border:1px solid #8883}
+.v111-muted{opacity:.75;font-size:.9rem}
+.v111-count{font-variant-numeric:tabular-nums;font-weight:700}
+.v111-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:99999;max-width:calc(100vw - 32px);padding:12px 16px;border-radius:14px;background:#201334;color:white;box-shadow:0 8px 30px #0004}
+@media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
+<script>
+(()=>{'use strict';
+const K='clubewins_v111_preferences';
+const safeRead=()=>{try{return JSON.parse(localStorage.getItem(K))||{favorites:[],drafts:[],hidden:[]}}catch{return{favorites:[],drafts:[],hidden:[]}}};
+const safeSave=x=>{try{localStorage.setItem(K,JSON.stringify(x));return true}catch{return false}};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(msg){let n=document.querySelector('.v111-toast');if(!n){n=document.createElement('div');n.className='v111-toast';n.setAttribute('role','status');document.body.appendChild(n)}n.textContent=msg;clearTimeout(n._t);n._t=setTimeout(()=>n.remove(),2600)}
+function install(){
+ if(document.getElementById('v111-tools'))return;
+ const section=document.createElement('section');section.id='v111-tools';section.className='v111-tools';
+ section.innerHTML=`<h2>✨ Ferramentas da comunidade <small>11.1</small></h2>
+ <p class="v111-muted">Preferências e rascunhos são salvos somente neste navegador. Limpar os dados do navegador pode apagá-los.</p>
+ <div class="v111-grid">
+  <div class="v111-box"><h3>📝 Rascunho rápido</h3><textarea id="v111-draft" class="v11-field" rows="3" maxlength="1200" placeholder="Escreva algo para guardar..."></textarea><div class="v111-row"><span id="v111-count" class="v111-muted v111-count">0/1200</span><button class="v111-btn" id="v111-save">Salvar rascunho</button></div><div id="v111-drafts"></div></div>
+  <div class="v111-box"><h3>🔖 Favoritos locais</h3><input id="v111-fav" class="v11-field" maxlength="120" placeholder="Nome de evento ou perfil"><button class="v11-btn" id="v111-addfav">Adicionar favorito</button><div id="v111-favs"></div></div>
+  <div class="v111-box"><h3>🧹 Privacidade neste aparelho</h3><p class="v111-muted">Apaga somente os dados extras criados pela versão 11.1, não os dados do site inteiro.</p><button class="v11-btn secondary" id="v111-clear">Apagar dados extras</button><p class="v111-muted">Isso não apaga histórico do navegador, registros do servidor ou capturas de tela.</p></div>
+ </div>`;
+ (document.querySelector('main')||document.body).appendChild(section);
+ const draft=document.getElementById('v111-draft');
+ const render=()=>{let d=safeRead();document.getElementById('v111-count').textContent=draft.value.length+'/1200';document.getElementById('v111-drafts').innerHTML=d.drafts.length?d.drafts.map((v,i)=>`<div class="v111-row"><span>${esc(v.slice(0,95))}${v.length>95?'…':''}</span><button class="v11-btn secondary" data-draft="${i}">Excluir</button></div>`).join(''):'<p class="v111-muted">Nenhum rascunho salvo.</p>';document.getElementById('v111-favs').innerHTML=d.favorites.length?d.favorites.map((v,i)=>`<div class="v111-row"><span>${esc(v)}</span><button class="v11-btn secondary" data-fav="${i}">Remover</button></div>`).join(''):'<p class="v111-muted">Nenhum favorito salvo.</p>';section.querySelectorAll('[data-draft]').forEach(b=>b.onclick=()=>{let x=safeRead();x.drafts.splice(+b.dataset.draft,1);safeSave(x);render();toast('Rascunho removido')});section.querySelectorAll('[data-fav]').forEach(b=>b.onclick=()=>{let x=safeRead();x.favorites.splice(+b.dataset.fav,1);safeSave(x);render();toast('Favorito removido')})};
+ draft.addEventListener('input',()=>document.getElementById('v111-count').textContent=draft.value.length+'/1200');
+ document.getElementById('v111-save').onclick=()=>{const v=draft.value.trim();if(!v)return toast('Escreva algo antes de salvar');let d=safeRead();d.drafts.unshift(v);d.drafts=d.drafts.slice(0,30);if(safeSave(d)){draft.value='';render();toast('Rascunho salvo neste aparelho')}else toast('Não foi possível salvar')};
+ document.getElementById('v111-addfav').onclick=()=>{const input=document.getElementById('v111-fav'),v=input.value.trim();if(!v)return toast('Digite um nome primeiro');let d=safeRead();if(!d.favorites.includes(v))d.favorites.unshift(v);d.favorites=d.favorites.slice(0,100);if(safeSave(d)){input.value='';render();toast('Favorito salvo')}};
+ document.getElementById('v111-clear').onclick=()=>{if(confirm('Apagar rascunhos e favoritos extras salvos pela versão 11.1 neste navegador?')){localStorage.removeItem(K);render();toast('Dados extras apagados')}};
+ render();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
+})();
+</script>
+
+
+<style>
+/* 11.2 usability and resilience */
+:focus-visible{outline:3px solid #c084fc!important;outline-offset:3px}
+button:disabled{opacity:.55;cursor:not-allowed}
+img{max-width:100%;height:auto}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+.v112-notice{margin:12px 0;padding:12px 14px;border:1px solid #a78bfa66;border-radius:12px;background:#8b5cf61a}
+</style>
+<script>
+(()=>{'use strict';
+function init112(){
+ if(document.getElementById('cw112-notice'))return;
+ const n=document.createElement('aside');n.id='cw112-notice';n.className='v112-notice';
+ n.setAttribute('role','note');
+ n.innerHTML='<strong>Clubewins 11.2 · modo de teste</strong><p>Dados locais podem ser apagados pelo navegador. Bloqueios e denúncias demonstrativas não são enviados a uma equipe. Evite inserir informações pessoais reais.</p>';
+ const main=document.querySelector('main');
+ if(main)main.prepend(n);else document.body.prepend(n);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init112,{once:true});else init112();
+})();
+</script>
+
+
+<style id="clubewins-12-enhancements">
+:root{scroll-behavior:smooth}html{scroll-padding-top:90px}body{overflow-wrap:anywhere}
+button,a,input,select,textarea{touch-action:manipulation}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #22d3ee;outline-offset:3px}
+@media(max-width:600px){button,.btn{min-height:42px}input,select,textarea{font-size:16px!important}}
+#cw12-top{position:fixed;right:16px;bottom:18px;z-index:9998;border:0;border-radius:999px;padding:12px 15px;background:#7928ca;color:white;font-weight:700;box-shadow:0 5px 18px #0003;display:none}
+#cw12-top.show{display:block}#cw12-toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:10000;background:#171329;color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 8px 28px #0004;max-width:90vw;text-align:center}
+</style>
+<button id="cw12-top" type="button" aria-label="Voltar ao início">↑ Início</button>
+<script id="clubewins-12-enhancements-js">
+(()=>{'use strict';const b=document.getElementById('cw12-top');
+if(b){const u=()=>b.classList.toggle('show',window.scrollY>420);window.addEventListener('scroll',u,{passive:true});u();b.addEventListener('click',()=>window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));}
+const toast=m=>{let n=document.getElementById('cw12-toast');if(!n){n=document.createElement('div');n.id='cw12-toast';n.setAttribute('role','status');n.setAttribute('aria-live','polite');document.body.appendChild(n);}n.textContent=m;clearTimeout(n._hide);n._hide=setTimeout(()=>n.remove(),2800);};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const d=document.querySelector('.modal.show,.modal.active,[role="dialog"][aria-hidden="false"]');if(d){const c=d.querySelector('[data-dismiss],.close,.modal-close,button[aria-label*="Fechar"]');if(c)c.click();}}});
+window.addEventListener('offline',()=>toast('Sem conexão. Recursos locais continuam disponíveis; nada foi enviado.'));
+window.addEventListener('online',()=>toast('Conexão restaurada.'));
+})();
+</script>
+
+
+<style id="cw13-polish">
+#cw13-skip{position:fixed;top:8px;left:8px;z-index:10001;padding:10px 14px;background:#fff;color:#24103e;border:2px solid #7928ca;border-radius:9px;transform:translateY(-160%)}
+#cw13-skip:focus{transform:translateY(0)}
+:where(button,a,input,select,textarea){-webkit-tap-highlight-color:transparent}
+img{max-width:100%;height:auto}
+@media(prefers-contrast:more){button,a{ text-decoration-thickness:2px} :focus-visible{outline:3px solid currentColor!important;outline-offset:3px!important}}
+@media print{#cw12-top,#cw13-skip,#cw12-toast{display:none!important}body{background:#fff!important;color:#000!important}*{box-shadow:none!important}}
+</style>
+<a id="cw13-skip" href="#main">Pular para o conteúdo</a>
+<script id="cw13-polish-js">
+(()=>{'use strict';
+const skip=document.getElementById('cw13-skip');
+const main=document.querySelector('main,[role="main"],#main');
+if(skip&&main){if(!main.id)main.id='cw13-main';skip.href='#'+main.id;if(!main.hasAttribute('tabindex'))main.setAttribute('tabindex','-1');}
+document.querySelectorAll('a[target="_blank"]').forEach(a=>{const rel=(a.getAttribute('rel')||'').split(/\s+/).filter(Boolean);if(!rel.includes('noopener'))rel.push('noopener');a.setAttribute('rel',rel.join(' '));});
+document.querySelectorAll('img').forEach((img,i)=>{if(i>1&&!img.hasAttribute('loading'))img.loading='lazy';if(!img.hasAttribute('decoding'))img.decoding='async';});
+})();
+</script>
+
+</body></html>
