@@ -1,96 +1,98 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#7928ca">
-<meta name="description" content="Clubewins 💜 — conheça, participe e pertença. Eventos, mural, perfil e comunidade.">
-<meta name="robots" content="index,follow">
-<title>Clubewins 💜</title>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8005983262078707" crossorigin="anonymous"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-<style>
-:root{--bg:#100d19;--panel:#1c1728;--panel2:#292139;--text:#f8f7fb;--muted:#b9b1c8;--primary:#7928ca;--accent:#ff4fa3;--danger:#ff5964;--border:rgba(255,255,255,.09);--shadow:0 18px 50px #0005;--radius:22px}
-:root.light{--bg:#f6f3fa;--panel:#fff;--panel2:#f0eaf7;--text:#211a2b;--muted:#6f6479;--border:rgba(31,22,45,.11);--shadow:0 15px 40px #3a1f531f}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% -10%,#7928ca44,transparent 35%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;min-height:100vh}
-button,input,textarea,select{font:inherit}button{cursor:pointer}.sidebar{position:fixed;left:0;top:0;bottom:0;width:245px;padding:22px 16px;background:#100d19e8;backdrop-filter:blur(18px);border-right:1px solid var(--border);z-index:20}.light .sidebar{background:#ffffffe8}
-.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;padding:4px 8px 24px}.brand-badge,.avatar,.big-avatar{background:linear-gradient(135deg,var(--primary),var(--accent))}
-.brand-badge{width:40px;height:40px;display:grid;place-items:center;border-radius:13px}.nav{display:grid;gap:6px}.nav button{display:flex;align-items:center;gap:12px;padding:13px 14px;border:0;border-radius:14px;background:transparent;color:var(--muted);text-align:left}.nav button:hover,.nav button.active{background:var(--panel2);color:var(--text)}
-.main{margin-left:245px;min-height:100vh;padding:18px 24px 100px;max-width:1500px}.topbar{height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:15;background:linear-gradient(var(--bg) 70%,transparent);backdrop-filter:blur(6px)}
-.top-actions{display:flex;gap:8px}.icon-btn,.secondary{background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:13px;padding:10px 13px}.primary{background:linear-gradient(135deg,var(--primary),#9b43ec);color:#fff;border:0;border-radius:13px;padding:11px 16px;font-weight:700}.danger{background:#ff59641f;color:#ff9aa1;border:1px solid #ff596440;border-radius:13px;padding:10px 13px;font-weight:700}
-.page{display:none;animation:fade .2s ease}.page.active{display:block}@keyframes fade{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}
-.hero{padding:34px 0 22px;display:grid;grid-template-columns:1.3fr .7fr;gap:18px}.hero-card{position:relative;overflow:hidden;padding:34px;border-radius:30px;background:linear-gradient(135deg,#2a1644,#6d219d 55%,#ff4fa3);box-shadow:var(--shadow)}.hero-card:after{content:'💜';position:absolute;right:-15px;bottom:-35px;font-size:180px;opacity:.13}.hero h1{font-size:clamp(34px,5vw,64px);line-height:.98;margin:12px 0 16px;max-width:720px;letter-spacing:-2px}.hero p{color:#f0e8f7;max-width:650px;line-height:1.6}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.hero-side{display:grid;gap:12px}.stat{background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:22px}.stat strong{display:block;font-size:28px}.stat span{color:var(--muted);font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:0 10px 35px #00000014}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:30px 0 14px}.section-head h2{margin:0;font-size:20px}.muted{color:var(--muted)}.tag{display:inline-flex;width:max-content;padding:6px 9px;border-radius:999px;background:#7928ca2b;color:#d5b6f7;font-size:12px;font-weight:700}
-.event{display:flex;flex-direction:column;gap:10px}.event h3{margin:2px 0;font-size:18px}.event-meta{color:var(--muted);font-size:13px;line-height:1.5}.event-actions{display:flex;gap:8px;margin-top:auto}.feed{display:grid;gap:14px}.post-head{display:flex;align-items:center;gap:10px}.avatar{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-weight:800}.post-body{line-height:1.65;margin:8px 0}.post-actions button{background:var(--panel2);color:var(--muted);border:0;border-radius:11px;padding:8px 10px}
-.form{display:grid;gap:12px}.field{display:grid;gap:6px}.field label{font-size:13px;color:var(--muted);font-weight:600}.field input,.field textarea,.field select{width:100%;padding:12px 13px;border-radius:13px;border:1px solid var(--border);background:var(--bg);color:var(--text);outline:none}.field textarea{min-height:110px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.profile{display:grid;grid-template-columns:220px 1fr;gap:20px}.profile-side{text-align:center}.big-avatar{width:120px;height:120px;border-radius:35px;margin:0 auto 12px;display:grid;place-items:center;font-size:55px}.points{font-size:35px;font-weight:800}
-.mission{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;background:var(--panel2);border-radius:15px}.mission+.mission{margin-top:9px}.switch{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)}
-.map{height:430px;border-radius:20px;overflow:hidden;border:1px solid var(--border)}#map{height:100%}.empty{padding:35px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:18px}.ad-slot{min-height:90px;border:1px dashed var(--border);border-radius:16px;display:grid;place-items:center;color:var(--muted);margin:20px 0;font-size:12px}.cookie{position:fixed;left:20px;right:20px;bottom:20px;z-index:50;background:var(--panel);border:1px solid var(--border);box-shadow:var(--shadow);border-radius:20px;padding:17px;display:flex;align-items:center;justify-content:space-between;gap:15px}.cookie p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}.modal{position:fixed;inset:0;background:#000b;z-index:60;display:none;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-box{width:min(520px,100%);background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:24px;box-shadow:var(--shadow)}.toast{position:fixed;right:20px;bottom:20px;z-index:80;background:#221b2e;color:#fff;border:1px solid var(--border);padding:12px 15px;border-radius:13px;opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:none}.bottom-nav{display:none}.ghost .sensitive{filter:blur(7px)}.footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
-@media(max-width:900px){.sidebar{display:none}.main{margin:0;padding:12px 14px 90px}.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.profile{grid-template-columns:1fr}.bottom-nav{position:fixed;display:grid;grid-template-columns:repeat(5,1fr);left:10px;right:10px;bottom:10px;z-index:40;background:#1c1728f5;backdrop-filter:blur(18px);border:1px solid var(--border);border-radius:18px;padding:7px}.light .bottom-nav{background:#fffffff5}.bottom-nav button{background:transparent;color:var(--muted);border:0;font-size:11px;padding:7px 3px}.bottom-nav button.active{color:var(--text)}.bottom-nav span{display:block;font-size:19px;margin-bottom:2px}.cookie{left:10px;right:10px;bottom:78px;flex-direction:column;align-items:stretch}}
-@media(max-width:600px){.grid{grid-template-columns:1fr}.hero-card{padding:26px 22px}.hero h1{font-size:42px}.row{grid-template-columns:1fr}.card{padding:17px}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clube Wins - Análises, Vídeos e Estratégias Exclusivas</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<aside class="sidebar">
-  <div class="brand"><div class="brand-badge">💜</div> Clubewins</div>
-  <nav class="nav">
-    <button data-page="home" class="active">🏠 <span>Início</span></button>
-    <button data-page="events">📅 <span>Eventos</span></button>
-    <button data-page="profile">👤 <span>Perfil</span></button>
-    <button data-page="wall">💬 <span>Mural</span></button>
-    <button data-page="map">🗺️ <span>Mapa</span></button>
-    <button data-page="settings">⚙️ <span>Configurações</span></button>
-    <button data-page="about">ℹ️ <span>Sobre</span></button>
-  </nav>
-</aside>
-<main class="main">
-<header class="topbar"><div><strong id="pageTitle">Início</strong><div class="muted" style="font-size:12px">Conheça, participe e pertença.</div></div><div class="top-actions"><button class="secondary" id="themeBtn">☀️ Tema</button><button class="danger" id="panicBtn">⚠ Sair</button></div></header>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container">
+            <h1 class="logo">Clube <span>Wins</span></h1>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#estrategia">Gerador</a></li>
+                    <li><a href="#monetizacao">Vídeos & VIP</a></li>
+                    <li><a href="#recursos">Recursos</a></li>
+                    <li><a href="#contato" class="btn-cta">Área VIP</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<section class="page active" id="page-home">
-<div class="hero">
-<div class="hero-card"><div class="tag" style="background:#ffffff2b;color:#fff">COMUNIDADE CLUBEWINS</div><h1>Conheça, participe e pertença.</h1><p>Um espaço para descobrir eventos, conversar, criar encontros e encontrar novas conexões.</p><div class="hero-actions"><button class="primary" data-go="events">📅 Ver eventos</button><button class="secondary" data-go="wall">💬 Ir para o mural</button></div></div>
-<div class="hero-side"><div class="stat"><span>SEU NÍVEL</span><strong id="levelText">Bronze</strong><span id="pointsText">450 pontos</span></div><div class="stat"><span>CONVITE</span><strong style="font-size:20px">CLUB-28XZ</strong><span>Compartilhe com quem você confia.</span></div><div class="stat"><span>MISSÃO DO DIA</span><strong style="font-size:19px">Complete seu perfil</strong><button class="primary" style="margin-top:10px" id="dailyBtn">+10 pontos</button></div></div>
-</div>
-<div class="ad-slot">Espaço publicitário</div>
-<div class="section-head"><h2>Próximos eventos</h2><button class="secondary" data-go="events">Ver todos</button></div><div class="grid" id="homeEvents"></div>
-<div class="section-head"><h2>Últimas conversas</h2><button class="secondary" data-go="wall">Abrir mural</button></div><div class="feed" id="homePosts"></div>
-</section>
+    <!-- Seção Hero -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <h2>Sua Plataforma Definitiva de Vitória</h2>
+            <p>Estatísticas avançadas, análises em vídeo exclusivas e a comunidade que mais cresce.</p>
+            <a href="#monetizacao" class="btn-main">Explorar Conteúdo VIP</a>
+        </div>
+    </section>
 
-<section class="page" id="page-events">
-<div class="section-head"><div><h2>Eventos</h2><div class="muted">Encontre algo para fazer e gente para conhecer.</div></div><button class="primary" id="newEventBtn">＋ Criar evento</button></div>
-<div class="card" id="eventFormCard" style="display:none;margin-bottom:16px"><form class="form" id="eventForm"><div class="row"><div class="field"><label>Nome do evento</label><input id="et" required maxlength="80"></div><div class="field"><label>Categoria</label><select id="ec"><option>Social</option><option>Amizade</option><option>Cultura</option><option>Esporte</option><option>Outros</option></select></div></div><div class="row"><div class="field"><label>Data</label><input id="ed" type="date" required></div><div class="field"><label>Horário</label><input id="eh" type="time" required></div></div><div class="field"><label>Local</label><input id="el" required maxlength="100"></div><div class="field"><label>Descrição</label><textarea id="edesc" maxlength="500"></textarea></div><div><button class="primary" type="submit">Publicar evento</button> <button class="secondary" type="button" id="cancelEvent">Cancelar</button></div></form></div>
-<div class="grid" id="eventsList"></div>
-</section>
+    <!-- Ferramenta Interativa: Gerador de Estratégia -->
+    <section id="estrategia" class="interactive-section">
+        <div class="container">
+            <h3>⚡ Insights & Dica do Dia</h3>
+            <p>Clique no botão abaixo para gerar uma estratégia rápida analisada pela nossa comunidade:</p>
+            <div class="card-generator">
+                <p id="tip-display">"Clique no botão para carregar a estratégia de hoje..."</p>
+                <button onclick="gerarDica()" class="btn-secondary">Gerar Nova Dica</button>
+            </div>
+        </div>
+    </section>
 
-<section class="page" id="page-profile">
-<div class="section-head"><div><h2>Seu perfil</h2><div class="muted">Personalize o que a comunidade vê.</div></div><button class="primary" id="saveProfile">Salvar</button></div>
-<div class="profile"><div class="card profile-side"><div class="big-avatar" id="bigAvatar">💜</div><strong id="profilePreview">Pessoa da comunidade</strong><div class="muted" id="profileLevel">Nível Bronze</div><div class="points" id="profilePoints">450</div><div class="muted">pontos</div></div><div class="card"><form class="form"><div class="field"><label>Nome exibido</label><input id="profileName" maxlength="40"></div><div class="field"><label>Avatar</label><select id="profileAvatar"><option>💜</option><option>😊</option><option>🌈</option><option>⭐</option><option>🌻</option><option>🦋</option></select></div><div class="field"><label>Sobre você</label><textarea id="profileBio" maxlength="240"></textarea></div></form></div></div>
-<div class="section-head"><h2>Missões diárias</h2></div><div class="card"><div class="mission"><span>Complete seu perfil</span><strong>+10</strong></div><div class="mission"><span>Publique uma mensagem</span><strong>+20</strong></div><div class="mission"><span>Crie um evento</span><strong>+50</strong></div></div>
-</section>
+    <!-- Seção de Vídeos & Monetização -->
+    <section id="monetizacao" class="monetization">
+        <div class="container">
+            <h3>🎥 Vídeos Exclusivos & Monetização</h3>
+            <div class="grid">
+                <div class="card vip-card">
+                    <span class="badge">Área de Membros</span>
+                    <h4>Assinatura Clubewins VIP</h4>
+                    <p>Tenha acesso liberado a aulas avançadas, transmissões de análises ao vivo e grupo fechado de palpites.</p>
+                    <a href="#" class="btn-main">Assinar por R$ 29,90/mês</a>
+                </div>
+                <div class="card">
+                    <span class="badge secondary-badge">Conteúdo Fechado</span>
+                    <h4>Módulo de Vídeos Práticos</h4>
+                    <p>Aprenda a ler gráficos de desempenho, calcular probabilidades reais e gerenciar sua banca com inteligência.</p>
+                    <a href="#" class="btn-link">Assistir Abertura</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section class="page" id="page-wall"><div class="section-head"><div><h2>Mural</h2><div class="muted">Compartilhe ideias, convites e bons momentos.</div></div></div><div class="card" style="margin-bottom:16px"><form class="form" id="postForm"><div class="field"><label>Nova publicação</label><textarea id="postText" required maxlength="500"></textarea></div><button class="primary">Publicar no mural</button></form></div><div class="feed" id="postsList"></div></section>
+    <!-- Seção de Recursos Principais -->
+    <section id="recursos" class="features">
+        <div class="container">
+            <h3>O que o Clube Oferece</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>📊 Análises de Dados</h4>
+                    <p>Estatísticas detalhadas e cruzamento de informações para decisões precisas.</p>
+                </div>
+                <div class="card">
+                    <h4>🔥 Feed Wins do Dia</h4>
+                    <p>Resultados atualizados em tempo real e compartilhamento de experiências entre membros.</p>
+                </div>
+                <div class="card">
+                    <h4>⭐ Suporte Direto</h4>
+                    <p>Tire dúvidas e interaja com especialistas focados em otimizar seus resultados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section class="page" id="page-map"><div class="section-head"><div><h2>Mapa</h2><div class="muted">Explore Brasília.</div></div></div><div class="card"><div id="map" class="map"></div><p class="muted" style="font-size:12px">Evite publicar sua localização residencial ou rotinas pessoais.</p></div></section>
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Clube Wins. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 
-<section class="page" id="page-settings"><div class="section-head"><div><h2>Configurações</h2><div class="muted">Controle a experiência neste dispositivo.</div></div></div><div class="card">
-<div class="switch"><span>Modo discreto</span><input type="checkbox" id="discreet"></div><div class="switch"><span>Texto maior</span><input type="checkbox" id="largeText"></div><div class="switch"><span>Modo Fantasma Total</span><input type="checkbox" id="ghostMode"></div>
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px"><button class="secondary" id="exportData">⬇ Exportar backup</button><button class="secondary" id="importData">⬆ Importar backup</button><button class="danger" id="clearData">Apagar dados locais</button></div><input type="file" id="importFile" accept="application/json" hidden></div>
-<div class="card" style="margin-top:16px"><strong>Saída rápida</strong><p class="muted">Leva para uma tela neutra nesta aba.</p><button class="danger" id="panicBtn2">⚠ Sair agora</button></div></section>
-
-<section class="page" id="page-about"><div class="section-head"><div><h2>Sobre o Clubewins</h2><div class="muted">Uma comunidade em construção.</div></div></div><div class="card"><h3>Clubewins 💜</h3><p class="muted" style="line-height:1.7">Um espaço para eventos, amizades e participação comunitária.</p><h3>Segurança</h3><p class="muted" style="line-height:1.7">Não compartilhe senhas, documentos ou endereço residencial. Prefira locais públicos para encontros.</p><h3>Privacidade</h3><p class="muted" style="line-height:1.7">Esta versão salva os dados localmente no navegador. Contas reais, sincronização e moderação de servidor precisam ser configuradas separadamente.</p></div></section>
-<footer class="footer">Clubewins 💜 · <span id="year"></span></footer>
-</main>
-<nav class="bottom-nav"><button data-page="home" class="active"><span>🏠</span>Início</button><button data-page="events"><span>📅</span>Eventos</button><button data-page="profile"><span>👤</span>Perfil</button><button data-page="wall"><span>💬</span>Mural</button><button data-page="settings"><span>⚙️</span>Config.</button></nav>
-
-<div class="cookie" id="cookie"><p>O site usa armazenamento local para preferências e dados criados neste dispositivo.</p><button class="primary" id="acceptCookie">Continuar</button></div>
-<div class="modal show" id="ageModal"><div class="modal-box"><div class="tag">18+</div><h2>Antes de entrar</h2><p class="muted" style="line-height:1.6">Esta versão é destinada a maiores de 18 anos. Esta confirmação é apenas uma declaração, não uma verificação oficial de idade.</p><button class="primary" id="ageYes" style="width:100%">Tenho 18 anos ou mais</button></div></div>
-<div class="toast" id="toast"></div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script>
-(()=>{const K='clubewins_final_v1',A='clubewins_age_v1';const d=()=>{let x=new Date;x.setDate(x.getDate()+4);return x.toISOString().slice(0,10)};const defaults={name:'Pessoa da comunidade',avatar:'💜',bio:'',points:450,events:[{id:'1',title:'Encontro da comunidade',date:d(),time:'18:30',place:'Brasília',category:'Social',desc:'Um encontro para conversar e conhecer pessoas.'}],posts:[{id:'1',text:'Bem-vindos ao Clubewins 💜',name:'Clubewins',avatar:'💜',likes:0,created:Date.now()}],theme:'dark',cookie:false};let s=(()=>{try{return {...defaults,...JSON.parse(localStorage.getItem(K)||'{}')}}catch{return {...defaults}}})();const $=x=>document.getElementById(x),esc=x=>String(x??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',\"'\":'&#39;','"':'&quot;'}[c]));function save(){localStorage.setItem(K,JSON.stringify(s));render()}function toast(x){let t=$('toast');t.textContent=x;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}function level(){return s.points>=1200?'Diamante':s.points>=800?'Ouro':s.points>=500?'Prata':'Bronze'}function date(x){return new Date(x+'T12:00').toLocaleDateString('pt-BR')}function event(e){return `<article class="card event"><span class="tag">${esc(e.category)}</span><h3>${esc(e.title)}</h3><div class="event-meta">📅 ${date(e.date)} às ${esc(e.time)}<br>📍 ${esc(e.place)}</div><p class="muted">${esc(e.desc)}</p><div class="event-actions"><button class="secondary" onclick="join('${e.id}')">Quero participar</button></div></article>`}function post(p){return `<article class="card"><div class="post-head"><div class="avatar">${esc(p.avatar)}</div><strong>${esc(p.name)}</strong></div><div class="post-body">${esc(p.text).replace(/\\n/g,'<br>')}</div><div class="post-actions"><button onclick="like('${p.id}')">💜 ${p.likes||0}</button></div></article>`}function render(){document.documentElement.classList.toggle('light',s.theme==='light');document.body.classList.toggle('ghost',s.ghost);document.body.style.fontSize=s.largeText?'17px':'';$('levelText').textContent=level();$('pointsText').textContent=s.points+' pontos';$('profilePoints').textContent=s.points;$('profileLevel').textContent='Nível '+level();$('profilePreview').textContent=s.name;$('bigAvatar').textContent=s.avatar;$('profileName').value=s.name;$('profileAvatar').value=s.avatar;$('profileBio').value=s.bio||'';$('year').textContent=new Date().getFullYear();$('eventsList').innerHTML=s.events.map(event).join('');$('homeEvents').innerHTML=s.events.slice(0,3).map(event).join('');let p=[...s.posts].reverse();$('postsList').innerHTML=p.map(post).join('');$('homePosts').innerHTML=p.slice(0,2).map(post).join('');$('discreet').checked=!!s.discreet;$('largeText').checked=!!s.largeText;$('ghostMode').checked=!!s.ghost}function go(p){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+p));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===p));$('pageTitle').textContent={home:'Início',events:'Eventos',profile:'Perfil',wall:'Mural',map:'Mapa',settings:'Configurações',about:'Sobre'}[p]||'Clubewins';if(p==='map')setTimeout(initMap,50)}document.addEventListener('click',e=>{let b=e.target.closest('[data-page],[data-go]');if(b)go(b.dataset.page||b.dataset.go)});$('themeBtn').onclick=()=>{s.theme=s.theme==='light'?'dark':'light';save()};$('dailyBtn').onclick=()=>{s.points+=10;save();toast('+10 pontos!')};$('acceptCookie').onclick=()=>{$('cookie').style.display='none';s.cookie=true;save()};$('ageYes').onclick=()=>{localStorage.setItem(A,'1');$('ageModal').classList.remove('show')};$('newEventBtn').onclick=()=>{$('eventFormCard').style.display='block';$('ed').value=d()};$('cancelEvent').onclick=()=>{$('eventFormCard').style.display='none'};$('eventForm').onsubmit=e=>{e.preventDefault();s.events.push({id:Date.now()+'',title:$('et').value,date:$('ed').value,time:$('eh').value,place:$('el').value,category:$('ec').value,desc:$('edesc').value});s.points+=50;$('eventForm').reset();$('eventFormCard').style.display='none';save();toast('Evento criado. +50 pontos!')};$('postForm').onsubmit=e=>{e.preventDefault();s.posts.push({id:Date.now()+'',text:$('postText').value,name:s.name,avatar:s.avatar,likes:0,created:Date.now()});s.points+=20;$('postText').value='';save();toast('Publicado. +20 pontos!')};$('saveProfile').onclick=()=>{s.name=$('profileName').value.trim()||'Pessoa da comunidade';s.avatar=$('profileAvatar').value;s.bio=$('profileBio').value;s.points+=10;save();toast('Perfil salvo. +10 pontos!')};$('discreet').onchange=e=>{s.discreet=e.target.checked;save()};$('largeText').onchange=e=>{s.largeText=e.target.checked;save()};$('ghostMode').onchange=e=>{s.ghost=e.target.checked;save()};$('exportData').onclick=()=>{let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(s,null,2)],{type:'application/json'}));a.download='clubewins-backup.json';a.click()};$('importData').onclick=()=>$('importFile').click();$('importFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader;r.onload=()=>{try{s={...defaults,...JSON.parse(r.result)};save();toast('Backup importado')}catch{toast('Backup inválido')}};r.readAsText(f)};$('clearData').onclick=()=>{if(confirm('Apagar os dados locais do Clubewins?')){localStorage.removeItem(K);location.reload()}};function panic(){document.body.innerHTML='<main style="min-height:100vh;display:grid;place-items:center;background:#fff;color:#222;font-family:Arial;padding:30px;text-align:center"><div><h1>Página fechada</h1><p>Você pode fechar esta aba.</p></div></main>'}$('panicBtn').onclick=panic;$('panicBtn2').onclick=panic;window.like=id=>{let p=s.posts.find(x=>x.id===id);if(p){p.likes=(p.likes||0)+1;save()}};window.join=id=>{s.points+=5;save();toast('+5 pontos! Participação registrada.')};let map;function initMap(){if(map||!window.L)return;map=L.map('map').setView([-15.7939,-47.8828],12);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);L.marker([-15.7939,-47.8828]).addTo(map).bindPopup('Brasília').openPopup();setTimeout(()=>map.invalidateSize(),100)}if(localStorage.getItem(A)==='1')$('ageModal').classList.remove('show');if(s.cookie)$('cookie').style.display='none';render()})();
-</script>
+    <script src="js/main.js"></script>
 </body>
 </html>
