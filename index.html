@@ -1,266 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clubewins 💜 — O TikTok do Amor</title>
-<style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-  :root{--roxo:#7928CA;--rosa:#FF0080;--azul:#00E5FF;--ouro:#FBBF24;--escuro:#0F0F1A;--meio:#1A1A2E;--claro:#E8E8F0;--cinza:#6B7280;}
-  body{background:var(--escuro);color:var(--claro);line-height:1.6;}
-  body.modo-discreto *{background:#fff !important;color:#000 !important;filter:none !important;}
-  body.modo-discreto .botao-panico,body.modo-discreto .esconder-modo{display:none !important;}
-  
-  header{background:linear-gradient(135deg,var(--roxo),var(--rosa));padding:1rem 1.5rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.3);}
-  .cabecalho{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
-  .logo{font-size:1.4rem;font-weight:900;color:white;text-decoration:none;}
-  .navegacao{display:flex;gap:0.4rem;flex-wrap:wrap;}
-  .navegacao a{color:white;padding:0.4rem 0.7rem;border-radius:6px;text-decoration:none;font-size:0.85rem;transition:background .2s;}
-  .navegacao a:hover,.navegacao a.ativo{background:rgba(255,255,255,.25);}
-  .botao-panico{background:red;color:white;border:none;padding:0.5rem 1rem;border-radius:6px;font-weight:bold;cursor:pointer;}
-  
-  main{max-width:1200px;margin:0 auto;padding:1.5rem;}
-  section{display:none;animation:aparecer .3s ease;}
-  section.ativa{display:block;}
-  @keyframes aparecer{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-  
-  h2{font-size:1.8rem;margin-bottom:1.5rem;color:var(--rosa);border-bottom:2px solid var(--roxo);padding-bottom:0.5rem;}
-  h3{font-size:1.3rem;margin:1.2rem 0 0.8rem;color:var(--azul);}
-  .card{background:var(--meio);border-radius:12px;padding:1.25rem;margin-bottom:1rem;box-shadow:0 4px 12px rgba(0,0,0,.2);}
-  
-  /* Sub-abas do Feed TikTok */
-  .sub-abas{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1.5rem;}
-  .sub-aba{background:transparent;border:none;color:#888;font-size:1.1rem;font-weight:bold;cursor:pointer;padding-bottom:5px;border-bottom:2px solid transparent;}
-  .sub-aba.ativa-aba{color:#fff;border-bottom:2px solid var(--rosa);}
-
-  /* Hashtags em Alta */
-  .hashtags-container{display:flex;gap:0.5rem;overflow-x:auto;padding-bottom:10px;margin-bottom:1.5rem;white-space:nowrap;}
-  .tag-pill{background:rgba(121,40,202,0.2);border:1px solid var(--roxo);color:var(--azul);padding:0.4rem 0.9rem;border-radius:20px;font-size:0.85rem;cursor:pointer;}
-  .tag-pill:hover{background:var(--roxo);color:#fff;}
-
-  /* Feed Estilo TikTok */
-  .feed-tiktok{max-width:420px;margin:0 auto;display:flex;flex-direction:column;gap:2rem;}
-  .video-card{background:#000;border-radius:18px;overflow:hidden;position:relative;height:520px;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 10px 30px rgba(0,0,0,.6);border:1px solid #333;}
-  .video-placeholder{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#1f1f38,#2c1654);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;text-align:center;padding:1.5rem;}
-  .video-info{position:relative;z-index:2;background:linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4), transparent);padding:1.5rem;color:#fff;}
-  
-  /* Botões de Ação na Lateral do Vídeo */
-  .video-acoes{position:absolute;right:15px;bottom:90px;z-index:3;display:flex;flex-direction:column;gap:1.2rem;align-items:center;}
-  .btn-acao{background:rgba(0,0,0,0.65);border:none;color:#fff;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:transform .2s;}
-  .btn-acao:hover{transform:scale(1.15);background:var(--rosa);}
-  .contador-acao{font-size:0.75rem;color:#fff;text-align:center;margin-top:-1rem;}
-
-  /* Bloco de Anúncio Monetizado */
-  .anuncio-banner{background:linear-gradient(135deg, rgba(251,191,36,0.18), rgba(255,0,128,0.18));border:2px dashed var(--ouro);border-radius:14px;padding:1.2rem;text-align:center;margin:1rem 0;}
-  
-  .botao{background:linear-gradient(135deg,var(--roxo),var(--rosa));color:white;border:none;padding:0.75rem 1.25rem;border-radius:8px;font-weight:bold;cursor:pointer;font-size:1rem;transition:transform .2s;}
-  .botao:hover{transform:scale(1.03);}
-  .botao-secundario{background:transparent;border:2px solid var(--azul);color:var(--azul);}
-  input,textarea,select{width:100%;padding:0.75rem;border-radius:6px;border:1px solid #333;background:#252538;color:white;margin:0.5rem 0 1rem;}
-  
-  .caixa-confirmacao{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;z-index:200;}
-  .conteudo-confirmacao{background:var(--meio);padding:2rem;border-radius:14px;max-width:400px;text-align:center;}
-  .escondido{display:none !important;}
-  
-  footer{background:var(--meio);padding:2rem 1.5rem;text-align:center;margin-top:3rem;border-top:1px solid #333;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clube Wins</title>
+    
+    <!-- Metatag de verificação do Google AdSense -->
+    <meta name="google-adsense-account" content="ca-pub-8005983262078707">
+    
+    <!-- Se você tiver outros estilos CSS ou links, eles continuam aqui -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Verificação de Idade (18+) -->
-  <div id="caixa-idade" class="caixa-confirmacao">
-    <div class="conteudo-confirmacao">
-      <h2 style="color:var(--rosa)">🔒 Verificação de Idade</h2>
-      <p>O Clubewins é um espaço seguro, 100% gratuito e exclusivo para maiores de 18 anos.</p>
-      <p style="margin-top:1rem;">Você tem 18 anos ou mais?</p>
-      <div style="display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;">
-        <button class="botao" onclick="liberarSite()">Sim, entrar grátis</button>
-        <button class="botao botao-secundario" onclick="fecharSite()">Não</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Cabeçalho -->
-  <header id="cabecalho" class="escondido">
-    <div class="cabecalho">
-      <a href="#" class="logo">💜 Clubewins (TikTok do Amor)</a>
-      <nav class="navegacao">
-        <a href="#" onclick="mostrarSecao('feed')" class="ativo">Início</a>
-        <a href="#" onclick="mostrarSecao('enviar')">📤 Postar</a>
-        <a href="#" onclick="mostrarSecao('perfil')">⭐ Perfil & Presentes</a>
-        <a href="#" onclick="mostrarSecao('seguranca')">🛡️ Segurança</a>
-      </nav>
-      <button class="botao-panico" onclick="botaoPanico()">🚨 Sair Agora</button>
-    </div>
-  </header>
-
-  <!-- Conteúdo Principal -->
-  <main id="conteudo-principal" class="escondido">
-    
-    <!-- Feed de Vídeos Estilo TikTok -->
-    <section id="feed" class="ativa">
-      
-      <!-- Abas Estilo TikTok -->
-      <div class="sub-abas">
-        <button class="sub-aba" onclick="mudarAbaFeed(this)">Seguindo</button>
-        <button class="sub-aba ativa-aba" onclick="mudarAbaFeed(this)">Para Você</button>
-      </div>
-
-      <!-- Hashtags em Alta -->
-      <div class="hashtags-container">
-        <span class="tag-pill">🔥 #AmorLivre</span>
-        <span class="tag-pill">✨ #MeuSorrisoHoje</span>
-        <span class="tag-pill">🏳️‍🌈 #OrgulhoClubewins</span>
-        <span class="tag-pill">☕ #CaféEConversa</span>
-        <span class="tag-pill">🚀 #MomentosFelizes</span>
-      </div>
-
-      <div class="feed-tiktok">
-        
-        <!-- Vídeo 1 -->
-        <div class="video-card">
-          <div class="video-placeholder">🎥 Pôr do sol inesquecível na praia 🌅</div>
-          <div class="video-acoes">
-            <div>
-              <button class="btn-acao" onclick="curtir(this)">💜</button>
-              <div class="contador-acao" id="c-1">1.2k</div>
-            </div>
-            <div>
-              <button class="btn-acao" onclick="comentar()">💬</button>
-              <div class="contador-acao">142</div>
-            </div>
-            <div>
-              <button class="btn-acao" onclick="dueto()">👥</button>
-              <div class="contador-acao">Dueto</div>
-            </div>
-            <div>
-              <button class="btn-acao" onclick="enviarPresente()">🎁</button>
-              <div class="contador-acao">Presente</div>
-            </div>
-          </div>
-          <div class="video-info">
-            <h4>@carlos_sp</h4>
-            <p>Curtindo a liberdade e a paz de espírito por São Paulo! 💜✨ #AmorLivre #MomentosFelizes</p>
-          </div>
-        </div>
-
-        <!-- Bloco de Anúncio Monetizado 1 (Para gerar sua renda) -->
-        <div class="anuncio-banner">
-          <span style="font-size:0.75rem;color:var(--ouro);font-weight:bold;text-transform:uppercase;">Publicidade Patrocinada 💰</span>
-          <h4 style="color:#fff;margin:0.4rem 0;">Anuncie no Clubewins Ads</h4>
-          <p style="font-size:0.85rem;color:#ccc;">Espaço monetizado para manter o site 100% gratuito para todos os usuários!</p>
-        </div>
-
-        <!-- Vídeo 2 -->
-        <div class="video-card">
-          <div class="video-placeholder">🎶 Música boa e muita energia positiva 😊</div>
-          <div class="video-acoes">
-            <div>
-              <button class="btn-acao" onclick="curtir(this)">💜</button>
-              <div class="contador-acao" id="c-2">3.4k</div>
-            </div>
-            <div>
-              <button class="btn-acao" onclick="comentar()">💬</button>
-              <div class="contador-acao">310</div>
-            </div>
-            <div>
-              <button class="btn-acao" onclick="dueto()">👥</button>
-              <div class="contador-acao">Dueto</div>
-            </div>
-            <div>
-              <button class="btn-acao" onclick="enviarPresente()">🎁</button>
-              <div class="contador-acao">Presente</div>
-            </div>
-          </div>
-          <div class="video-info">
-            <h4>@mariana_rj</h4>
-            <p>Seja você mesma sempre, sem medo de julgamentos! 🏳️‍🌈🚀 #OrgulhoClubewins</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Enviar Vídeo -->
-    <section id="enviar">
-      <h2>📤 Publicar Novo Vídeo Curto</h2>
-      <div class="card">
-        <p>Compartilhe seu momento com toda a comunidade de forma totalmente gratuita e segura.</p>
-        <label>Título ou Legenda (com hashtags)</label>
-        <input type="text" placeholder="Ex: Meu final de semana incrível... #AmorLivre">
-        <label>Seu @ usuário</label>
-        <input type="text" placeholder="@seu_apelido">
-        <label>Arquivo de Vídeo (MP4 em formato vertical)</label>
-        <input type="file" accept="video/*">
-        <button class="botao" onclick="alert('✅ Vídeo publicado com sucesso no feed do TikTok do Amor!')">Publicar Vídeo Agora</button>
-      </div>
-    </section>
-
-    <!-- Perfil e Sistema de Pontos / Presentes -->
-    <section id="perfil">
-      <h2>⭐ Meu Perfil e Carteira de Pontos</h2>
-      <div class="card" style="background:linear-gradient(135deg, rgba(121,40,202,0.2), rgba(255,0,128,0.2));">
-        <h3>🪙 Seus Pontos de Atividade</h3>
-        <p style="font-size:2rem;font-weight:bold;color:var(--ouro);margin:0.5rem 0;">450 Pontos</p>
-        <p style="font-size:0.85rem;color:#ccc;">Use seus pontos para enviar presentes virtuais (Corações e Cafés ☕) nos vídeos dos seus criadores favoritos!</p>
-      </div>
-      <div class="card">
-        <h3>⚙️ Configurações da Conta</h3>
-        <label>Alterar Apelido</label>
-        <input type="text" value="@usuario">
-        <button class="botao">Salvar Alterações</button>
-      </div>
-    </section>
-
-    <!-- Segurança -->
-    <section id="seguranca">
-      <h2>🛡️ Sua Segurança — Nossa Prioridade</h2>
-      <div class="card">
-        <h3>🚨 Botão de Pânico</h3>
-        <p>O botão <strong>🚨 Sair Agora</strong> no topo da página redireciona você instantaneamente para o Google caso precise de discrição imediata.</p>
-      </div>
-      <div class="card">
-        <h3>🕶️ Modo Discreto</h3>
-        <p>Ative para ocultar cores e elementos visuais sensíveis da tela em locais públicos.</p>
-        <button class="botao botao-secundario" onclick="document.body.classList.toggle('modo-discreto')" style="margin-top:1rem;">Alternar Modo Discreto</button>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Rodapé -->
-  <footer id="rodape" class="escondido">
-    <div class="logo">💜 Clubewins — O TikTok do Amor</div>
-    <p>Plataforma 100% gratuita, sustentada por anúncios para apoiar e acolher a comunidade.</p>
-    <p style="font-size:0.8rem;color:#888;margin-top:1rem;">© 2026 Clubewins. Todos os direitos reservados. Maiores de 18 anos.</p>
-  </footer>
-
-  <script>
-    function liberarSite(){document.getElementById('caixa-idade').style.display='none';document.getElementById('cabecalho').classList.remove('escondido');document.getElementById('conteudo-principal').classList.remove('escondido');document.getElementById('rodape').classList.remove('escondido');}
-    function fecharSite(){window.location.href='https://google.com'}
-    function mostrarSecao(id){document.querySelectorAll('section').forEach(s=>s.classList.remove('ativa'));document.getElementById(id).classList.add('ativa');window.scrollTo(0,0);}
-    function botaoPanico(){window.location.href='https://google.com'}
-    
-    function curtir(btn){
-      btn.style.color='#FF0080';
-      btn.style.transform='scale(1.3)';
-      setTimeout(()=>btn.style.transform='scale(1)', 200);
-      alert('💜 Você curtiu este vídeo!');
-    }
-    function comentar(){
-      let comentario = prompt("Digite seu comentário carinhoso:");
-      if(comentario) alert("💬 Comentário enviado com sucesso!");
-    }
-    function dueto(){
-      alert("👥 Modo Dueto ativado! Selecione um vídeo da sua galeria para gravar ao lado deste momento.");
-    }
-    function enviarPresente(){
-      alert("🎁 Presente virtual (☕ Café / 💜 Coração) enviado com sucesso usando seus pontos!");
-    }
-    function mudarAbaFeed(btn){
-      document.querySelectorAll('.sub-aba').forEach(b=>b.classList.remove('ativa-aba'));
-      btn.classList.add('ativa-aba');
-    }
-  </script>
+    <h1>Bem-vindo ao Clube Wins</h1>
+    <p>O site está no ar e pronto para o sucesso!</p>
 </body>
 </html>
