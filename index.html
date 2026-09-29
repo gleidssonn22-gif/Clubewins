@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TikTok do Amor - Clube Wins</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body, html { width: 100%; height: 100%; background: #0b0b0b; color: #fff; overflow: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        body, html { width: 100%; height: 100%; background: #030305; color: #fff; overflow: hidden; }
 
         .app-container {
             position: relative;
@@ -14,23 +14,25 @@
             max-width: 480px;
             height: 100vh;
             margin: 0 auto;
-            background: #111;
+            background: #0d0d12;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 25px rgba(255, 51, 102, 0.2);
+            box-shadow: 0 0 40px rgba(255, 51, 102, 0.2);
+            overflow: hidden;
         }
 
-        /* Top Header */
+        /* Top Header Estilizado */
         .top-header {
             position: absolute;
             top: 0; left: 0; width: 100%;
-            display: flex; justify-content: center; gap: 20px;
-            padding: 15px; z-index: 10;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent);
-            font-weight: bold; font-size: 0.95rem;
+            display: flex; justify-content: center; gap: 25px;
+            padding: 18px; z-index: 10;
+            background: linear-gradient(to bottom, rgba(13,13,18,0.95), rgba(13,13,18,0));
+            font-weight: 600; font-size: 1rem;
+            letter-spacing: 0.5px;
         }
-        .top-header span { opacity: 0.5; cursor: pointer; transition: opacity 0.2s; }
-        .top-header span.active { opacity: 1; border-bottom: 2px solid #ff3366; padding-bottom: 2px; }
+        .top-header span { opacity: 0.4; cursor: pointer; transition: all 0.3s ease; }
+        .top-header span.active { opacity: 1; color: #ff3366; text-shadow: 0 0 12px rgba(255,51,102,0.6); }
 
         /* Telas (Views) */
         .view-section {
@@ -63,106 +65,144 @@
             object-fit: cover;
         }
 
-        /* Card de Anúncio Monetizado */
+        /* Card de Anúncio Monetizado Moderno */
         .ad-card {
-            background: linear-gradient(145deg, #181124, #2a1b3d);
+            background: linear-gradient(135deg, #161022, #241635);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px;
+            padding: 35px;
             text-align: center;
+            border-left: 3px solid #ff3366;
         }
-        .ad-badge { background: #ff3366; font-size: 0.65rem; padding: 4px 10px; border-radius: 4px; margin-bottom: 15px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
-        .ad-content h3 { margin-bottom: 10px; font-size: 1.4rem; color: #fff; }
-        .ad-content p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 25px; line-height: 1.4; }
-        .ad-btn { background: #fff; color: #000; padding: 12px 28px; border-radius: 25px; font-weight: bold; text-decoration: none; box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
+        .ad-badge { 
+            background: rgba(255, 51, 102, 0.15); color: #ff3366; border: 1px solid rgba(255,51,102,0.4);
+            font-size: 0.7rem; padding: 5px 12px; border-radius: 20px; margin-bottom: 20px; 
+            text-transform: uppercase; font-weight: 700; letter-spacing: 1.5px; 
+        }
+        .ad-content h3 { margin-bottom: 12px; font-size: 1.4rem; color: #fff; font-weight: 700; }
+        .ad-content p { font-size: 0.9rem; opacity: 0.75; margin-bottom: 25px; line-height: 1.5; }
+        .ad-btn { 
+            background: linear-gradient(135deg, #ff3366, #ff5c8a); color: #fff; padding: 14px 32px; 
+            border-radius: 30px; font-weight: bold; text-decoration: none; 
+            box-shadow: 0 6px 20px rgba(255,51,102,0.4); transition: transform 0.2s;
+            display: inline-block;
+        }
+        .ad-btn:active { transform: scale(0.95); }
 
         /* Gradientes e Informações do Vídeo */
         .gradient-bottom {
             position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            background: linear-gradient(transparent, rgba(13,13,18,0.9));
             pointer-events: none;
         }
 
         .video-info {
-            position: absolute; bottom: 75px; left: 15px; right: 80px; z-index: 4;
+            position: absolute; bottom: 75px; left: 20px; right: 85px; z-index: 4;
+            pointer-events: none;
         }
-        .author { font-weight: bold; font-size: 1rem; margin-bottom: 6px; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
-        .caption { font-size: 0.9rem; line-height: 1.3; opacity: 0.9; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+        .author { font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .caption { font-size: 0.9rem; line-height: 1.4; opacity: 0.9; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 
-        /* Ações Laterais (Curtidas, Comentários) */
+        /* Ações Laterais (Curtidas, Comentários, Partilha) */
         .actions-sidebar {
             position: absolute; right: 15px; bottom: 85px; z-index: 4;
-            display: flex; flex-direction: column; align-items: center; gap: 18px;
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
         }
-        .action-icon-btn { background: none; border: none; color: #fff; text-align: center; cursor: pointer; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
-        .action-icon-btn span { font-size: 1.7rem; display: block; margin-bottom: 2px; transition: transform 0.2s; }
+        .action-icon-btn { background: none; border: none; color: #fff; text-align: center; cursor: pointer; text-shadow: 0 2px 4px rgba(0,0,0,0.6); }
+        .action-icon-btn span { font-size: 1.8rem; display: block; margin-bottom: 3px; transition: transform 0.2s; }
         .action-icon-btn:active span { transform: scale(1.3); }
-        .action-icon-btn small { font-size: 0.75rem; font-weight: 600; }
+        .action-icon-btn small { font-size: 0.75rem; font-weight: 700; opacity: 0.9; }
 
-        /* Coração Flutuante Animado */
+        /* Coração Flutuante Animado (Duplo Clique) */
         .floating-heart {
-            position: absolute; color: #ff3366; font-size: 2.2rem;
-            animation: floatUp 1s ease-out forwards; z-index: 10; pointer-events: none;
+            position: absolute; color: #ff3366; font-size: 4rem;
+            animation: floatUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+            z-index: 10; pointer-events: none; transform: translate(-50%, -50%);
+            filter: drop-shadow(0 0 10px rgba(255,51,102,0.6));
         }
         @keyframes floatUp {
-            0% { transform: translateY(0) scale(0.6); opacity: 1; }
-            100% { transform: translateY(-130px) scale(1.4); opacity: 0; }
+            0% { transform: scale(0.4) rotate(-15deg); opacity: 1; }
+            50% { transform: scale(1.3) translateY(-50px) rotate(10deg); opacity: 1; }
+            100% { transform: scale(1) translateY(-120px) rotate(0deg); opacity: 0; }
         }
 
-        /* Telas Internas (Em Alta, Envio, Chat, Perfil) */
-        .static-view {
-            padding: 70px 20px 80px 20px;
-            overflow-y: auto;
-            height: 100%;
-            background: #121212;
+        /* Gaveta de Comentários Estilizada */
+        .comments-drawer {
+            position: absolute; bottom: -100%; left: 0; width: 100%; height: 60%;
+            background: #14141c; border-radius: 24px 24px 0 0; z-index: 20;
+            transition: bottom 0.35s cubic-bezier(0.1, 0.9, 0.2, 1); display: flex; flex-direction: column;
+            border-top: 1px solid rgba(255,255,255,0.08); box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
         }
-        .section-title { font-size: 1.3rem; margin-bottom: 20px; color: #ff3366; display: flex; align-items: center; gap: 8px; }
-        
-        /* Ranking de Casais (Em Alta) */
-        .ranking-item {
-            display: flex; align-items: center; background: #1a1a1a; padding: 12px;
-            border-radius: 12px; margin-bottom: 12px; border: 1px solid #222;
-        }
-        .rank-number { font-size: 1.2rem; font-weight: bold; width: 35px; color: #ff3366; text-align: center; }
-        .rank-details { flex: 1; margin-left: 10px; }
-        .rank-name { font-weight: bold; font-size: 0.95rem; }
-        .rank-likes { font-size: 0.8rem; opacity: 0.6; }
+        .comments-drawer.open { bottom: 0; }
+        .drawer-header { padding: 18px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 700; position: relative; }
+        .close-drawer { position: absolute; right: 20px; top: 15px; background: none; border: none; color: #aaa; font-size: 1.2rem; cursor: pointer; }
+        .comments-list { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .comment-item { font-size: 0.9rem; line-height: 1.4; }
+        .comment-user { font-weight: 700; color: #ff3366; margin-right: 8px; }
+        .comment-input-area { padding: 15px 20px; background: #0d0d12; display: flex; gap: 12px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .comment-input { flex: 1; padding: 12px 18px; background: #1c1c28; border: 1px solid rgba(255,255,255,0.08); border-radius: 25px; color: #fff; outline: none; font-size: 0.9rem; }
+        .comment-input:focus { border-color: #ff3366; }
+        .send-comment-btn { background: #ff3366; border: none; color: #fff; padding: 0 20px; border-radius: 25px; font-weight: 700; cursor: pointer; }
 
-        /* Formulário de Envio */
-        .upload-form { display: flex; flex-direction: column; gap: 15px; }
-        .form-group label { font-size: 0.85rem; opacity: 0.7; display: block; margin-bottom: 5px; }
-        .form-input {
-            width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333;
-            color: #fff; border-radius: 8px; font-size: 0.95rem; outline: none;
+        /* Telas Estáticas (Em Alta, Upload, Enquetes, Perfil) */
+        .static-view { padding: 80px 20px 90px 20px; overflow-y: auto; height: 100%; background: #0d0d12; }
+        .section-title { font-size: 1.4rem; margin-bottom: 8px; color: #fff; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .section-subtitle { font-size: 0.85rem; opacity: 0.6; margin-bottom: 25px; }
+
+        /* Cartão de Enquete Interativa */
+        .poll-card {
+            background: #161622; border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 20px; margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        .submit-btn {
-            background: #ff3366; color: #fff; border: none; padding: 14px;
-            border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 10px;
+        .poll-question { font-size: 1rem; font-weight: 700; margin-bottom: 15px; color: #ff5c8a; }
+        .poll-option {
+            background: #1f1f30; border: 1px solid rgba(255,255,255,0.08); padding: 12px 16px;
+            border-radius: 10px; margin-bottom: 10px; cursor: pointer; font-size: 0.9rem;
+            transition: all 0.2s; display: flex; justify-content: space-between; align-items: center;
+        }
+        .poll-option:hover { border-color: #ff3366; background: #26263d; }
+
+        /* Formulários */
+        .upload-form { display: flex; flex-direction: column; gap: 18px; }
+        .form-group label { font-size: 0.85rem; opacity: 0.7; display: block; margin-bottom: 6px; font-weight: 600; }
+        .form-input { width: 100%; padding: 14px; background: #161622; border: 1px solid rgba(255,255,255,0.08); color: #fff; border-radius: 12px; font-size: 0.95rem; outline: none; }
+        .form-input:focus { border-color: #ff3366; }
+        .submit-btn { background: linear-gradient(135deg, #ff3366, #ff5c8a); color: #fff; border: none; padding: 15px; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(255,51,102,0.4); margin-top: 5px; }
+
+        /* Carteira de Diamantes / Recompensas no Perfil */
+        .wallet-card {
+            background: linear-gradient(135deg, #1f1225, #2f1938);
+            border: 1px solid rgba(255, 51, 102, 0.3);
+            border-radius: 20px; padding: 22px; text-align: center; margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(255,51,102,0.15);
+        }
+        .wallet-balance { font-size: 2rem; font-weight: 800; color: #ff3366; margin: 8px 0; text-shadow: 0 0 15px rgba(255,51,102,0.4); }
+        .watch-ad-reward-btn {
+            background: #ff3366; color: #fff; border: none; padding: 10px 20px;
+            border-radius: 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255,51,102,0.4); margin-top: 10px; display: inline-flex; align-items: center; gap: 6px;
         }
 
-        /* Perfil do Usuário */
-        .profile-header { text-align: center; padding: 20px 0; border-bottom: 1px solid #222; margin-bottom: 20px; }
-        .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: #ff3366; display: flex; justify-content: center; align-items: center; font-size: 2rem; margin: 0 auto 10px auto; }
-        .badge-box { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
-        .badge { background: #222; border: 1px solid #444; font-size: 0.75rem; padding: 4px 10px; border-radius: 15px; color: #ff3366; }
-
-        /* Barra Inferior de Navegação */
+        /* Barra Inferior de Navegação Estilizada */
         .bottom-nav {
             position: absolute; bottom: 0; left: 0; width: 100%;
-            height: 65px; background: #000; display: flex; justify-content: space-around;
-            align-items: center; border-top: 1px solid #222; z-index: 10;
+            height: 70px; background: rgba(13, 13, 18, 0.95); backdrop-filter: blur(10px);
+            display: flex; justify-content: space-around; align-items: center; 
+            border-top: 1px solid rgba(255,255,255,0.06); z-index: 10;
         }
-        .nav-item { background: none; border: none; color: #666; font-size: 0.75rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: color 0.2s; }
-        .nav-item.active { color: #fff; }
-        .nav-item span { font-size: 1.3rem; }
+        .nav-item { background: none; border: none; color: rgba(255,255,255,0.4); font-size: 0.7rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: color 0.2s; font-weight: 600; }
+        .nav-item.active { color: #ff3366; }
+        .nav-item span { font-size: 1.4rem; }
         
         .upload-center-btn {
-            background: #ff3366; color: #fff; width: 42px; height: 42px; border-radius: 12px;
-            border: none; font-size: 1.5rem; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 12px rgba(255, 51, 102, 0.4);
+            background: linear-gradient(135deg, #ff3366, #ff5c8a); color: #fff; width: 45px; height: 45px; border-radius: 14px;
+            border: none; font-size: 1.6rem; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.5); transition: transform 0.2s;
         }
+        .upload-center-btn:active { transform: scale(0.9); }
     </style>
 </head>
 <body>
@@ -171,157 +211,170 @@
         
         <!-- Topo do Feed -->
         <div class="top-header" id="topHeaderBar">
-            <span onclick="switchTab('feed', 0)" class="active">Pra Você</span>
-            <span onclick="switchTab('feed', 0)">Seguindo</span>
+            <span onclick="switchTab('feed')" class="active">Pra Você</span>
+            <span onclick="switchTab('feed')">Seguindo</span>
         </div>
 
-        <!-- 1. ABA DE INÍCIO / FEED (Com Anúncios Monetizados Inseridos) -->
+        <!-- 1. FEED DE VÍDEOS E ANÚNCIOS (In-Feed Ads) -->
         <div id="view-feed" class="view-section active-view">
             
             <!-- Vídeo 1 -->
-            <div class="reel-item">
-                <video class="reel-video" autoplay loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-romantic-couple-holding-hands-at-sunset-41699-large.mp4"></video>
+            <div class="reel-item" ondblclick="doubleClickLike(event)">
+                <video class="reel-video" loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-romantic-couple-holding-hands-at-sunset-41699-large.mp4"></video>
                 <div class="gradient-bottom"></div>
                 <div class="video-info">
                     <div class="author">@casal_wins</div>
-                    <div class="caption">O amor está no ar e no Clube Wins! ❤️✨ #TikTokDoAmor</div>
+                    <div class="caption">O amor está no ar! ❤️✨ #TikTokDoAmor</div>
                 </div>
                 <div class="actions-sidebar">
-                    <button class="action-icon-btn" onclick="likeVideo(event)">
-                        <span id="heart1">❤️</span>
-                        <small id="cnt1">14.2K</small>
+                    <button class="action-icon-btn like-btn" onclick="likeVideo(event)">
+                        <span>❤️</span>
+                        <small>14.2K</small>
                     </button>
-                    <button class="action-icon-btn"><span>💬</span><small>320</small></button>
-                    <button class="action-icon-btn"><span>🎁</span><small>Moedas</small></button>
-                    <button class="action-icon-btn"><span>↗️</span><small>Share</small></button>
+                    <button class="action-icon-btn" onclick="toggleComments(true)">
+                        <span>💬</span>
+                        <small>320</small>
+                    </button>
+                    <button class="action-icon-btn" onclick="shareVideo()">
+                        <span>↗️</span>
+                        <small>Share</small>
+                    </button>
                 </div>
             </div>
 
-            <!-- ANÚNCIO MONETIZADO 1 -->
+            <!-- ANÚNCIO NO FEED 1 (Insira seu script de anúncio aqui) -->
             <div class="reel-item ad-card">
-                <div class="ad-badge">Patrocinado / Monetização</div>
+                <div class="ad-badge">Patrocinado</div>
                 <div class="ad-content">
-                    <h3>Clube Wins VIP</h3>
-                    <p>Desbloqueie benefícios exclusivos, bônus diários e experiências incríveis hoje!</p>
-                    <a href="https://clubewins.com.br" target="_blank" class="ad-btn">Acessar Plataforma</a>
+                    <h3>Clube Wins - Ofertas Exclusivas</h3>
+                    <p>Aproveite as melhores novidades e experiências agora mesmo na plataforma!</p>
+                    <a href="https://clubewins.com.br" target="_blank" class="ad-btn">Ver Ofertas</a>
                 </div>
             </div>
 
             <!-- Vídeo 2 -->
-            <div class="reel-item">
-                <video class="reel-video" autoplay loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-burning-sparkler-42995-large.mp4"></video>
+            <div class="reel-item" ondblclick="doubleClickLike(event)">
+                <video class="reel-video" loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-burning-sparkler-42995-large.mp4"></video>
                 <div class="gradient-bottom"></div>
                 <div class="video-info">
                     <div class="author">@amor_eterno</div>
-                    <div class="caption">Curtindo cada segundo com quem a gente ama! 🔥🚀</div>
+                    <div class="caption">Curtindo cada segundo! 🔥🚀</div>
                 </div>
                 <div class="actions-sidebar">
-                    <button class="action-icon-btn" onclick="likeVideo(event)">
+                    <button class="action-icon-btn like-btn" onclick="likeVideo(event)">
                         <span>❤️</span>
                         <small>9.5K</small>
                     </button>
-                    <button class="action-icon-btn"><span>💬</span><small>180</small></button>
-                    <button class="action-icon-btn"><span>🎁</span><small>Moedas</small></button>
-                    <button class="action-icon-btn"><span>↗️</span><small>Share</small></button>
+                    <button class="action-icon-btn" onclick="toggleComments(true)">
+                        <span>💬</span>
+                        <small>180</small>
+                    </button>
+                    <button class="action-icon-btn" onclick="shareVideo()">
+                        <span>↗️</span>
+                        <small>Share</small>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ANÚNCIO NO FEED 2 -->
+            <div class="reel-item ad-card">
+                <div class="ad-badge">Patrocinado</div>
+                <div class="ad-content">
+                    <h3>Descubra Mais no Clube Wins</h3>
+                    <p>Continue navegando e descubra conteúdos incríveis todos os dias!</p>
+                    <a href="https://clubewins.com.br" target="_blank" class="ad-btn">Explorar Agora</a>
                 </div>
             </div>
 
         </div>
 
-        <!-- 2. ABA EM ALTA (Ranking de Casais & Desafios) -->
+        <!-- 2. ABA DE ENQUETES E DESAFIOS (Interatividade) -->
         <div id="view-trending" class="static-view view-section">
-            <div class="section-title">🔥 Casais em Alta (Top da Semana)</div>
-            
-            <div class="ranking-item">
-                <div class="rank-number">#1</div>
-                <div class="rank-details">
-                    <div class="rank-name">@julia_e_carlos</div>
-                    <div class="rank-likes">❤️ 48.2K curtidas • Desafio Romântico</div>
-                </div>
+            <div class="section-title">📊 Enquetes de Casal</div>
+            <div class="section-subtitle">Vote e veja o que a comunidade acha!</div>
+
+            <div class="poll-card">
+                <div class="poll-question">Quem é o mais romântico do relacionamento?</div>
+                <div class="poll-option" onclick="votePoll(this)">Ele <span>42%</span></div>
+                <div class="poll-option" onclick="votePoll(this)">Ela <span>58%</span></div>
             </div>
-            <div class="ranking-item">
-                <div class="rank-number">#2</div>
-                <div class="rank-details">
-                    <div class="rank-name">@amorpuro_wins</div>
-                    <div class="rank-likes">❤️ 39.1K curtidas • Declaração Surpresa</div>
-                </div>
-            </div>
-            <div class="ranking-item">
-                <div class="rank-number">#3</div>
-                <div class="rank-details">
-                    <div class="rank-name">@casal_fitness</div>
-                    <div class="rank-likes">❤️ 27.8K curtidas • Viagem a Dois</div>
-                </div>
+
+            <div class="poll-card">
+                <div class="poll-question">Qual o melhor programa para o fim de semana?</div>
+                <div class="poll-option" onclick="votePoll(this)">Filme e pipoca em casa <span>71%</span></div>
+                <div class="poll-option" onclick="votePoll(this)">Sair para jantar / Viajar <span>29%</span></div>
             </div>
         </div>
 
-        <!-- 3. ABA DE UPLOAD (Postagem de Vídeo para Usuários e Você) -->
+        <!-- 3. ABA DE UPLOAD -->
         <div id="view-upload" class="static-view view-section">
-            <div class="section-title">➕ Publicar Vídeo no Feed</div>
+            <div class="section-title">➕ Postar seu Vídeo</div>
+            <div class="section-subtitle">Compartilhe momentos especiais com todo mundo</div>
             <div class="upload-form">
                 <div>
-                    <label>Escolher Vídeo (MP4)</label>
+                    <label>Escolher Vídeo do Celular</label>
                     <input type="file" class="form-input" accept="video/*">
                 </div>
                 <div>
-                    <label>Legenda / Frase Romântica</label>
-                    <input type="text" class="form-input" placeholder="Ex: Meu amor eterno... #TikTokDoAmor">
+                    <label>Legenda</label>
+                    <input type="text" class="form-input" placeholder="Escreva uma legenda romântica...">
                 </div>
-                <div>
-                    <label>Trilha Sonora / Música de Fundo</label>
-                    <select class="form-input">
-                        <option>Funk Romântico (Hit Viral)</option>
-                        <option>Piseiro Apaixonado</option>
-                        <option>Sertanejo Acústico</option>
-                    </select>
-                </div>
-                <button class="submit-btn" onclick="alert('Vídeo enviado com sucesso para moderação e exibição no feed!')">Publicar Agora 🚀</button>
+                <button class="submit-btn" onclick="alert('Vídeo enviado com sucesso para o feed!')">Publicar Gratuitamente</button>
             </div>
         </div>
 
-        <!-- 4. ABA DE CHAT / INTERAÇÃO -->
+        <!-- 4. ABA DE CHAT COMUNIDADE -->
         <div id="view-chat" class="static-view view-section">
-            <div class="section-title">💬 Mensagens e Comunidade</div>
-            <div style="text-align: center; opacity: 0.6; margin-top: 50px;">
-                <p>Suas conversas e interações com outros casais aparecerão aqui em breve.</p>
+            <div class="section-title">💬 Mural do Amor</div>
+            <div class="section-subtitle">Recados públicos deixados pelos casais</div>
+            <div class="comments-list" style="padding:0;">
+                <div class="comment-item" style="background:#161622; padding:12px; border-radius:12px;"><span class="comment-user">@carlos_m:</span> Te amo meu amor, para sempre juntos! ❤️</div>
+                <div class="comment-item" style="background:#161622; padding:12px; border-radius:12px;"><span class="comment-user">@juliana_s:</span> plataforma linda demais!</div>
             </div>
         </div>
 
-        <!-- 5. ABA DE PERFIL DO USUÁRIO -->
+        <!-- 5. ABA DE PERFIL E CARTEIRA DE RECOMPENSAS POR ANÚNCIO -->
         <div id="view-profile" class="static-view view-section">
-            <div class="profile-header">
-                <div class="profile-avatar">👑</div>
-                <h3>Gleidson (Criador)</h3>
-                <p style="font-size: 0.850rem; opacity: 0.6; margin-top: 4px;">@admin_clubewins</p>
-                <div class="badge-box">
-                    <span class="badge">⭐ Administrador</span>
-                    <span class="badge">💎 Conta VIP</span>
-                </div>
+            <div class="section-title">👤 Meu Perfil</div>
+            <div class="section-subtitle">Gerencie sua conta e ganhos</div>
+
+            <div class="wallet-card">
+                <div style="font-size: 0.85rem; opacity: 0.8;">Seus Diamantes do Amor</div>
+                <div class="wallet-balance" id="diamondBalance">150 💎</div>
+                <div style="font-size: 0.75rem; opacity: 0.6; margin-bottom: 5px;">Assista a um anúncio rápido e ganhe +50 diamantes grátis:</div>
+                <button class="watch-ad-reward-btn" onclick="watchAdForDiamonds()">▶️ Ver Anúncio Premiado</button>
             </div>
-            <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 25px;">
-                <div><strong>12</strong><br><small style="opacity:0.6">Postados</small></div>
-                <div><strong>45.2K</strong><br><small style="opacity:0.6">Curtidas</small></div>
-                <div><strong>1.2K</strong><br><small style="opacity:0.6">Moedas</small></div>
+
+            <div style="font-weight: 700; margin-bottom: 12px; font-size: 0.95rem;">Seus Vídeos Publicados</div>
+            <div style="opacity: 0.5; font-size: 0.85rem; text-align: center; padding: 20px; background: #161622; border-radius: 12px;">Nenhum vídeo postado ainda.</div>
+        </div>
+
+        <!-- GAVETA DE COMENTÁRIOS -->
+        <div class="comments-drawer" id="commentsDrawer">
+            <div class="drawer-header">
+                Comentários
+                <button class="close-drawer" onclick="toggleComments(false)">✕</button>
             </div>
-            <div class="section-title" style="font-size: 1.1rem;">Meus Vídeos</div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px;">
-                <div style="background: #222; aspect-ratio: 9/16; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; opacity: 0.5;">Vídeo 1</div>
-                <div style="background: #222; aspect-ratio: 9/16; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; opacity: 0.5;">Vídeo 2</div>
-                <div style="background: #222; aspect-ratio: 9/16; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; opacity: 0.5;">Vídeo 3</div>
+            <div class="comments-list" id="commentsList">
+                <div class="comment-item"><span class="comment-user">@mariana:</span> Muito lindo o vídeo! 💕</div>
+            </div>
+            <div class="comment-input-area">
+                <input type="text" class="comment-input" id="commentInput" placeholder="Comente algo...">
+                <button class="send-comment-btn" onclick="addComment()">Enviar</button>
             </div>
         </div>
 
-        <!-- Barra Inferior de Navegação (Fixa) -->
+        <!-- Barra Inferior de Navegação -->
         <div class="bottom-nav">
             <button class="nav-item active" onclick="switchTab('feed', this); toggleHeader(true)">
                 <span>🏠</span>Início
             </button>
             <button class="nav-item" onclick="switchTab('trending', this); toggleHeader(false)">
-                <span>🔥</span>Em Alta
+                <span>📊</span>Enquetes
             </button>
             <button class="upload-center-btn" onclick="switchTab('upload', this); toggleHeader(false)">+</button>
             <button class="nav-item" onclick="switchTab('chat', this); toggleHeader(false)">
-                <span>💬</span>Chat
+                <span>💬</span>Mural
             </button>
             <button class="nav-item" onclick="switchTab('profile', this); toggleHeader(false)">
                 <span>👤</span>Perfil
@@ -330,54 +383,123 @@
     </div>
 
     <script>
-        // Função para alternar abas do menu inferior
         function switchTab(viewName, buttonElement) {
-            // Esconde todas as telas
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-view'));
-            // Mostra a tela selecionada
             document.getElementById('view-' + viewName).classList.add('active-view');
 
-            // Atualiza botões ativos da barra inferior (se clicado via menu)
             if (buttonElement && buttonElement.classList.contains('nav-item')) {
                 document.querySelectorAll('.bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
                 buttonElement.classList.add('active');
             }
         }
 
-        // Controla se a barra do topo (Pra Você / Seguindo) aparece apenas no feed
         function toggleHeader(show) {
-            const header = document.getElementById('topHeaderBar');
-            header.style.display = show ? 'flex' : 'none';
+            document.getElementById('topHeaderBar').style.display = show ? 'flex' : 'none';
         }
 
-        // Sistema de Curtida e Corações Flutuantes
-        let liked = false;
+        // --- AUTOPLAY INTELIGENTE AO ROLAR O FEED ---
+        const observerOptions = { root: document.querySelector('#view-feed'), threshold: 0.6 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target.querySelector('video');
+                if (video) {
+                    if (entry.isIntersecting) {
+                        video.play().catch(() => {});
+                    } else {
+                        video.pause();
+                        video.currentTime = 0;
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reel-item').forEach(item => {
+            if(item.querySelector('video')) observer.observe(item);
+        });
+
+        // --- SISTEMA DE CURTIDAS E DUPLO CLIQUE ---
         function likeVideo(e) {
             const btn = e.currentTarget;
             const countElem = btn.querySelector('small');
             let val = parseFloat(countElem.innerText);
+            const spanIcon = btn.querySelector('span');
 
-            if (!liked) {
-                liked = true;
-                btn.querySelector('span').style.color = '#ff3366';
-                countElem.innerText = (val + 0.1).toFixed(1) + 'K';
-            } else {
-                liked = false;
-                btn.querySelector('span').style.color = '#fff';
+            if (spanIcon.style.color === 'rgb(255, 51, 102)') {
+                spanIcon.style.color = '#fff';
                 countElem.innerText = (val - 0.1).toFixed(1) + 'K';
+            } else {
+                spanIcon.style.color = '#ff3366';
+                countElem.innerText = (val + 0.1).toFixed(1) + 'K';
             }
+        }
 
-            // Criar animação de coração flutuante
+        function doubleClickLike(e) {
+            const reel = e.currentTarget;
+            const rect = reel.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
             const heart = document.createElement('div');
             heart.classList.add('floating-heart');
-            heart.innerHTML = '💖';
-            
-            const rect = btn.getBoundingClientRect();
-            heart.style.left = `${rect.left - 10}px`;
-            heart.style.top = `${rect.top - 20}px`;
+            heart.innerHTML = '❤️';
+            heart.style.left = `${x}px`;
+            heart.style.top = `${y}px`;
 
-            document.getElementById('appContainer').appendChild(heart);
-            setTimeout(() => heart.remove(), 1000);
+            reel.appendChild(heart);
+            setTimeout(() => heart.remove(), 800);
+
+            const likeBtn = reel.querySelector('.like-btn');
+            if (likeBtn && likeBtn.querySelector('span').style.color !== 'rgb(255, 51, 102)') {
+                likeBtn.click();
+            }
+        }
+
+        function toggleComments(open) {
+            const drawer = document.getElementById('commentsDrawer');
+            if (open) drawer.classList.add('open');
+            else drawer.classList.remove('open');
+        }
+
+        function addComment() {
+            const input = document.getElementById('commentInput');
+            if (input.value.trim() === '') return;
+
+            const list = document.getElementById('commentsList');
+            const newComment = document.createElement('div');
+            newComment.classList.add('comment-item');
+            newComment.innerHTML = `<span class="comment-user">@voce:</span>${input.value}`;
+            list.appendChild(newComment);
+            
+            input.value = '';
+            list.scrollTop = list.scrollHeight;
+        }
+
+        function shareVideo() {
+            if (navigator.share) {
+                navigator.share({ title: 'TikTok do Amor - Clube Wins', url: window.location.href });
+            } else {
+                alert('Link copiado para a área de transferência!');
+            }
+        }
+
+        // --- SIMULAÇÃO DE ANÚNCIO RECOMPENSADO ---
+        function watchAdForDiamonds() {
+            alert('🎥 Carregando anúncio patrocinado de parceiro...');
+            setTimeout(() => {
+                const balanceElem = document.getElementById('diamondBalance');
+                let current = parseInt(balanceElem.innerText);
+                current += 50;
+                balanceElem.innerText = current + ' 💎';
+                alert('🎉 Parabéns! Você assistiu ao anúncio e ganhou +50 Diamantes do Amor!');
+            }, 1500);
+        }
+
+        function votePoll(element) {
+            alert('✨ Voto computado com sucesso! Obrigado por participar.');
+            const options = element.parentElement.querySelectorAll('.poll-option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            element.style.borderColor = '#ff3366';
+            element.style.background = 'rgba(255,51,102,0.15)';
         }
     </script>
 </body>
