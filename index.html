@@ -22,46 +22,72 @@
             overflow: hidden;
         }
 
-        /* Top Header Estilo TikTok */
+        /* Top Header com Botão do Menu Lateral */
         .top-header {
             position: absolute;
             top: 0; left: 0; width: 100%;
-            display: flex; justify-content: center; gap: 20px;
-            padding: 18px; z-index: 10;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 20px; z-index: 10;
             background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
-            font-weight: 600; font-size: 1rem;
             pointer-events: none;
         }
-        .top-header span { opacity: 0.5; cursor: pointer; transition: all 0.2s ease; pointer-events: auto; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
-        .top-header span.active { opacity: 1; color: #fff; border-bottom: 2px solid #fff; padding-bottom: 2px; }
+        .menu-toggle-btn {
+            background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer;
+            pointer-events: auto; text-shadow: 0 1px 3px rgba(0,0,0,0.8); display: flex; align-items: center;
+        }
+        .header-tabs {
+            display: flex; gap: 20px; font-weight: 600; font-size: 1rem; pointer-events: auto;
+        }
+        .header-tabs span { opacity: 0.5; cursor: pointer; transition: all 0.2s ease; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+        .header-tabs span.active { opacity: 1; color: #fff; border-bottom: 2px solid #fff; padding-bottom: 2px; }
+        .header-right-placeholder { width: 24px; } /* Para equilibrar o layout */
+
+        /* --- MENU LATERAL (DRAWER) --- */
+        .side-menu {
+            position: absolute; top: 0; left: -280px; width: 280px; height: 100%;
+            background: #16161c; z-index: 50; transition: left 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
+            display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+        }
+        .side-menu.open { left: 0; }
+        
+        .side-menu-header {
+            padding: 25px 20px; display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .side-menu-profile { display: flex; align-items: center; gap: 12px; }
+        .side-avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #ff3366, #ff5c8a); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; }
+        .side-user-info h4 { font-size: 0.95rem; font-weight: 700; }
+        .side-user-info p { font-size: 0.75rem; opacity: 0.5; }
+
+        .side-menu-links { flex: 1; padding: 15px 0; overflow-y: auto; }
+        .side-link-item {
+            display: flex; align-items: center; gap: 15px; padding: 14px 20px; color: #fff;
+            text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background 0.2s;
+        }
+        .side-link-item:hover { background: rgba(255,255,255,0.04); }
+        .side-link-item span { font-size: 1.2rem; width: 24px; text-align: center; }
+
+        .side-menu-footer {
+            padding: 15px 20px; border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.75rem; opacity: 0.4; text-align: center;
+        }
 
         /* Views */
         .view-section {
-            display: none;
-            flex: 1;
-            width: 100%;
-            height: 100%;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
+            display: none; flex: 1; width: 100%; height: 100%;
+            overflow-y: scroll; scroll-snap-type: y mandatory;
+            scrollbar-width: none; -webkit-overflow-scrolling: touch;
         }
         .view-section.active-view { display: block; }
         .view-section::-webkit-scrollbar { display: none; }
 
         /* Reel Item */
         .reel-item {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #000;
+            position: relative; width: 100%; height: 100%;
+            scroll-snap-align: start; scroll-snap-stop: always;
+            display: flex; justify-content: center; align-items: center; background: #000;
         }
-
         .reel-video { width: 100%; height: 100%; object-fit: cover; }
 
         /* Ad Card */
@@ -86,13 +112,10 @@
         /* Video Details */
         .gradient-bottom {
             position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(transparent, rgba(0,0,0,0.85));
-            pointer-events: none;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85)); pointer-events: none;
         }
-
         .video-info {
-            position: absolute; bottom: 75px; left: 16px; right: 80px; z-index: 4;
-            pointer-events: none;
+            position: absolute; bottom: 75px; left: 16px; right: 80px; z-index: 4; pointer-events: none;
         }
         .author { font-weight: 700; font-size: 1rem; margin-bottom: 6px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
         .caption { font-size: 0.88rem; line-height: 1.35; opacity: 0.9; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
@@ -130,10 +153,10 @@
         }
         .toast-notification.show { top: 20px; }
 
-        /* Overlay */
+        /* Overlay Geral */
         .modal-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 20;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 40;
             opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
@@ -141,7 +164,7 @@
         /* Comentários Gaveta */
         .comments-drawer {
             position: absolute; bottom: -100%; left: 0; width: 100%; height: 60%;
-            background: #16161c; border-radius: 20px 20px 0 0; z-index: 25;
+            background: #16161c; border-radius: 20px 20px 0 0; z-index: 45;
             transition: bottom 0.35s cubic-bezier(0.1, 0.9, 0.2, 1); display: flex; flex-direction: column;
             border-top: 1px solid rgba(255,255,255,0.08); box-shadow: 0 -10px 40px rgba(0,0,0,0.9);
         }
@@ -158,7 +181,7 @@
         /* Share Modal */
         .share-modal {
             position: absolute; bottom: -100%; left: 0; width: 100%;
-            background: #16161c; border-radius: 20px 20px 0 0; z-index: 30;
+            background: #16161c; border-radius: 20px 20px 0 0; z-index: 45;
             padding: 22px; transition: bottom 0.3s ease; border-top: 1px solid rgba(255,255,255,0.08);
         }
         .share-modal.open { bottom: 0; }
@@ -189,7 +212,7 @@
         .wallet-balance { font-size: 2rem; font-weight: 800; color: #ff3366; margin: 6px 0; }
         .watch-ad-reward-btn { background: #ff3366; color: #fff; border: none; padding: 9px 18px; border-radius: 18px; font-weight: 700; font-size: 0.82rem; cursor: pointer; margin-top: 8px; }
 
-        /* --- BARRA INFERIOR ESTILO TIKTOK --- */
+        /* --- BARRA INFERIOR TIKTOK --- */
         .bottom-nav {
             position: absolute; bottom: 0; left: 0; width: 100%;
             height: 60px; background: #000; 
@@ -204,7 +227,7 @@
         .nav-item.active { color: #fff; font-weight: 700; }
         .nav-item span { font-size: 1.35rem; }
         
-        /* Botão Central de Postagem Estilo TikTok (Quadrado com cantos arredondados e gradiente/branco) */
+        /* Botão Central de Postagem */
         .upload-center-btn {
             background: #fff; color: #000; width: 38px; height: 28px; border-radius: 8px;
             border: none; font-size: 1.2rem; font-weight: bold; cursor: pointer; 
@@ -212,7 +235,6 @@
             box-shadow: 0 0 10px rgba(255,255,255,0.3); position: relative;
             transition: transform 0.1s;
         }
-        /* Efeito clássico de abas coloridas no botão de postagem estilo TikTok (+ com detalhe ciano/rosa ou fundo branco) */
         .upload-center-btn::before {
             content: ''; position: absolute; left: -4px; width: 100%; height: 100%;
             background: rgba(45, 233, 218, 0.5); border-radius: 8px; z-index: -1;
@@ -231,9 +253,38 @@
         <div class="toast-notification" id="toastNotification">Notificação</div>
         <div class="modal-overlay" id="modalOverlay" onclick="closeAllModals()"></div>
 
+        <!-- MENU LATERAL (DRAWER) -->
+        <div class="side-menu" id="sideMenu">
+            <div class="side-menu-header">
+                <div class="side-menu-profile">
+                    <div class="side-avatar">CW</div>
+                    <div class="side-user-info">
+                        <h4>Clube Wins</h4>
+                        <p>@clubewins.oficial</p>
+                    </div>
+                </div>
+                <button onclick="toggleSideMenu(false)" style="background:none; border:none; color:#aaa; font-size:1.2rem; cursor:pointer;">✕</button>
+            </div>
+            <div class="side-menu-links">
+                <a href="#" class="side-link-item" onclick="toggleSideMenu(false); switchTab('profile', document.querySelector('.bottom-nav .nav-item:last-child')); toggleHeader(false);"><span>💎</span> Meus Diamantes</a>
+                <a href="#" class="side-link-item" onclick="toggleSideMenu(false); switchTab('trending', document.querySelector('.bottom-nav .nav-item:nth-child(2)')); toggleHeader(false);"><span>📊</span> Enquetes Ativas</a>
+                <a href="https://clubewins.com.br" target="_blank" class="side-link-item"><span>🌐</span> Site Oficial Clube Wins</a>
+                <a href="#" class="side-link-item" onclick="toggleSideMenu(false); showToast('Configurações em breve!');"><span>⚙️</span> Configurações</a>
+                <a href="#" class="side-link-item" onclick="toggleSideMenu(false); showToast('Termos e Políticas de Privacidade');"><span>📜</span> Termos de Uso</a>
+            </div>
+            <div class="side-menu-footer">
+                TikTok do Amor v1.2 • Clube Wins
+            </div>
+        </div>
+
+        <!-- Top Header com Botão de Menu Lateral -->
         <div class="top-header" id="topHeaderBar">
-            <span onclick="switchTab('feed')" class="active">Pra Você</span>
-            <span onclick="switchTab('feed')">Seguindo</span>
+            <button class="menu-toggle-btn" onclick="toggleSideMenu(true)">☰</button>
+            <div class="header-tabs">
+                <span onclick="switchTab('feed')" class="active">Pra Você</span>
+                <span onclick="switchTab('feed')">Seguindo</span>
+            </div>
+            <div class="header-right-placeholder"></div>
         </div>
 
         <!-- 1. FEED -->
@@ -384,7 +435,7 @@
             <button class="submit-btn" style="margin-top: 18px; padding: 11px;" onclick="closeAllModals()">Cancelar</button>
         </div>
 
-        <!-- Barra Inferior Idêntica ao TikTok -->
+        <!-- Barra Inferior -->
         <div class="bottom-nav">
             <button class="nav-item active" onclick="switchTab('feed', this); toggleHeader(true)">
                 <span>🏠</span>Início
@@ -409,6 +460,18 @@
                 document.getElementById('diamondBalance').innerText = savedDiamonds + ' 💎';
             }
         });
+
+        function toggleSideMenu(open) {
+            const menu = document.getElementById('sideMenu');
+            const overlay = document.getElementById('modalOverlay');
+            if (open) {
+                menu.classList.add('open');
+                overlay.classList.add('active');
+            } else {
+                menu.classList.remove('open');
+                overlay.classList.remove('active');
+            }
+        }
 
         function switchTab(viewName, buttonElement) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-view'));
@@ -513,6 +576,7 @@
         }
 
         function closeAllModals() {
+            document.getElementById('sideMenu').classList.remove('open');
             document.getElementById('commentsDrawer').classList.remove('open');
             document.getElementById('shareModal').classList.remove('open');
             document.getElementById('modalOverlay').classList.remove('active');
