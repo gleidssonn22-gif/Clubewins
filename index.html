@@ -3,73 +3,382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clube Wins</title>
-    
-    <!-- Metatag de verificação oficial do Google AdSense -->
-    <meta name="google-adsense-account" content="ca-pub-8005983262078707">
-    
-    <!-- Estilos gerais da aplicação -->
+    <title>TikTok do Amor - Clube Wins</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            background-color: #f4f4f9;
-            color: #333;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body, html { width: 100%; height: 100%; background: #0b0b0b; color: #fff; overflow: hidden; }
+
+        .app-container {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            margin: 0 auto;
+            background: #111;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            box-shadow: 0 0 25px rgba(255, 51, 102, 0.2);
         }
-        header {
-            background-color: #1a1a2e;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
+
+        /* Top Header */
+        .top-header {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            display: flex; justify-content: center; gap: 20px;
+            padding: 15px; z-index: 10;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent);
+            font-weight: bold; font-size: 0.95rem;
         }
-        main {
+        .top-header span { opacity: 0.5; cursor: pointer; transition: opacity 0.2s; }
+        .top-header span.active { opacity: 1; border-bottom: 2px solid #ff3366; padding-bottom: 2px; }
+
+        /* Telas (Views) */
+        .view-section {
+            display: none;
             flex: 1;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scrollbar-width: none;
         }
-        h1 {
-            color: #1a1a2e;
-            margin-bottom: 20px;
+        .view-section.active-view { display: block; }
+        .view-section::-webkit-scrollbar { display: none; }
+
+        /* Feed Reel Item */
+        .reel-item {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
         }
-        p {
-            line-height: 1.6;
-            margin-bottom: 15px;
+
+        .reel-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        footer {
+
+        /* Card de Anúncio Monetizado */
+        .ad-card {
+            background: linear-gradient(145deg, #181124, #2a1b3d);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
             text-align: center;
-            padding: 15px;
-            background-color: #e2e8f0;
-            color: #4a5568;
-            font-size: 14px;
+        }
+        .ad-badge { background: #ff3366; font-size: 0.65rem; padding: 4px 10px; border-radius: 4px; margin-bottom: 15px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
+        .ad-content h3 { margin-bottom: 10px; font-size: 1.4rem; color: #fff; }
+        .ad-content p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 25px; line-height: 1.4; }
+        .ad-btn { background: #fff; color: #000; padding: 12px 28px; border-radius: 25px; font-weight: bold; text-decoration: none; box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
+
+        /* Gradientes e Informações do Vídeo */
+        .gradient-bottom {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            pointer-events: none;
+        }
+
+        .video-info {
+            position: absolute; bottom: 75px; left: 15px; right: 80px; z-index: 4;
+        }
+        .author { font-weight: bold; font-size: 1rem; margin-bottom: 6px; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+        .caption { font-size: 0.9rem; line-height: 1.3; opacity: 0.9; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+
+        /* Ações Laterais (Curtidas, Comentários) */
+        .actions-sidebar {
+            position: absolute; right: 15px; bottom: 85px; z-index: 4;
+            display: flex; flex-direction: column; align-items: center; gap: 18px;
+        }
+        .action-icon-btn { background: none; border: none; color: #fff; text-align: center; cursor: pointer; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+        .action-icon-btn span { font-size: 1.7rem; display: block; margin-bottom: 2px; transition: transform 0.2s; }
+        .action-icon-btn:active span { transform: scale(1.3); }
+        .action-icon-btn small { font-size: 0.75rem; font-weight: 600; }
+
+        /* Coração Flutuante Animado */
+        .floating-heart {
+            position: absolute; color: #ff3366; font-size: 2.2rem;
+            animation: floatUp 1s ease-out forwards; z-index: 10; pointer-events: none;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.6); opacity: 1; }
+            100% { transform: translateY(-130px) scale(1.4); opacity: 0; }
+        }
+
+        /* Telas Internas (Em Alta, Envio, Chat, Perfil) */
+        .static-view {
+            padding: 70px 20px 80px 20px;
+            overflow-y: auto;
+            height: 100%;
+            background: #121212;
+        }
+        .section-title { font-size: 1.3rem; margin-bottom: 20px; color: #ff3366; display: flex; align-items: center; gap: 8px; }
+        
+        /* Ranking de Casais (Em Alta) */
+        .ranking-item {
+            display: flex; align-items: center; background: #1a1a1a; padding: 12px;
+            border-radius: 12px; margin-bottom: 12px; border: 1px solid #222;
+        }
+        .rank-number { font-size: 1.2rem; font-weight: bold; width: 35px; color: #ff3366; text-align: center; }
+        .rank-details { flex: 1; margin-left: 10px; }
+        .rank-name { font-weight: bold; font-size: 0.95rem; }
+        .rank-likes { font-size: 0.8rem; opacity: 0.6; }
+
+        /* Formulário de Envio */
+        .upload-form { display: flex; flex-direction: column; gap: 15px; }
+        .form-group label { font-size: 0.85rem; opacity: 0.7; display: block; margin-bottom: 5px; }
+        .form-input {
+            width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333;
+            color: #fff; border-radius: 8px; font-size: 0.95rem; outline: none;
+        }
+        .submit-btn {
+            background: #ff3366; color: #fff; border: none; padding: 14px;
+            border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 10px;
+        }
+
+        /* Perfil do Usuário */
+        .profile-header { text-align: center; padding: 20px 0; border-bottom: 1px solid #222; margin-bottom: 20px; }
+        .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: #ff3366; display: flex; justify-content: center; align-items: center; font-size: 2rem; margin: 0 auto 10px auto; }
+        .badge-box { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
+        .badge { background: #222; border: 1px solid #444; font-size: 0.75rem; padding: 4px 10px; border-radius: 15px; color: #ff3366; }
+
+        /* Barra Inferior de Navegação */
+        .bottom-nav {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            height: 65px; background: #000; display: flex; justify-content: space-around;
+            align-items: center; border-top: 1px solid #222; z-index: 10;
+        }
+        .nav-item { background: none; border: none; color: #666; font-size: 0.75rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: color 0.2s; }
+        .nav-item.active { color: #fff; }
+        .nav-item span { font-size: 1.3rem; }
+        
+        .upload-center-btn {
+            background: #ff3366; color: #fff; width: 42px; height: 42px; border-radius: 12px;
+            border: none; font-size: 1.5rem; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 12px rgba(255, 51, 102, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h2>Clube Wins</h2>
-    </header>
+    <div class="app-container" id="appContainer">
+        
+        <!-- Topo do Feed -->
+        <div class="top-header" id="topHeaderBar">
+            <span onclick="switchTab('feed', 0)" class="active">Pra Você</span>
+            <span onclick="switchTab('feed', 0)">Seguindo</span>
+        </div>
 
-    <main>
-        <h1>Bem-vindo ao Clube Wins</h1>
-        <p>Esta é a página principal oficial do domínio <strong>clubewins.com.br</strong>, estruturada para atender a todos os requisitos de navegação e exibição de conteúdos e serviços da nossa plataforma.</p>
-        <p>Explore as funcionalidades integradas e aproveite a nossa experiência completa diretamente por aqui.</p>
-    </main>
+        <!-- 1. ABA DE INÍCIO / FEED (Com Anúncios Monetizados Inseridos) -->
+        <div id="view-feed" class="view-section active-view">
+            
+            <!-- Vídeo 1 -->
+            <div class="reel-item">
+                <video class="reel-video" autoplay loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-romantic-couple-holding-hands-at-sunset-41699-large.mp4"></video>
+                <div class="gradient-bottom"></div>
+                <div class="video-info">
+                    <div class="author">@casal_wins</div>
+                    <div class="caption">O amor está no ar e no Clube Wins! ❤️✨ #TikTokDoAmor</div>
+                </div>
+                <div class="actions-sidebar">
+                    <button class="action-icon-btn" onclick="likeVideo(event)">
+                        <span id="heart1">❤️</span>
+                        <small id="cnt1">14.2K</small>
+                    </button>
+                    <button class="action-icon-btn"><span>💬</span><small>320</small></button>
+                    <button class="action-icon-btn"><span>🎁</span><small>Moedas</small></button>
+                    <button class="action-icon-btn"><span>↗️</span><small>Share</small></button>
+                </div>
+            </div>
 
-    <footer>
-        &copy; 2026 Clube Wins. Todos os direitos reservados.
-    </footer>
+            <!-- ANÚNCIO MONETIZADO 1 -->
+            <div class="reel-item ad-card">
+                <div class="ad-badge">Patrocinado / Monetização</div>
+                <div class="ad-content">
+                    <h3>Clube Wins VIP</h3>
+                    <p>Desbloqueie benefícios exclusivos, bônus diários e experiências incríveis hoje!</p>
+                    <a href="https://clubewins.com.br" target="_blank" class="ad-btn">Acessar Plataforma</a>
+                </div>
+            </div>
 
+            <!-- Vídeo 2 -->
+            <div class="reel-item">
+                <video class="reel-video" autoplay loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-burning-sparkler-42995-large.mp4"></video>
+                <div class="gradient-bottom"></div>
+                <div class="video-info">
+                    <div class="author">@amor_eterno</div>
+                    <div class="caption">Curtindo cada segundo com quem a gente ama! 🔥🚀</div>
+                </div>
+                <div class="actions-sidebar">
+                    <button class="action-icon-btn" onclick="likeVideo(event)">
+                        <span>❤️</span>
+                        <small>9.5K</small>
+                    </button>
+                    <button class="action-icon-btn"><span>💬</span><small>180</small></button>
+                    <button class="action-icon-btn"><span>🎁</span><small>Moedas</small></button>
+                    <button class="action-icon-btn"><span>↗️</span><small>Share</small></button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 2. ABA EM ALTA (Ranking de Casais & Desafios) -->
+        <div id="view-trending" class="static-view view-section">
+            <div class="section-title">🔥 Casais em Alta (Top da Semana)</div>
+            
+            <div class="ranking-item">
+                <div class="rank-number">#1</div>
+                <div class="rank-details">
+                    <div class="rank-name">@julia_e_carlos</div>
+                    <div class="rank-likes">❤️ 48.2K curtidas • Desafio Romântico</div>
+                </div>
+            </div>
+            <div class="ranking-item">
+                <div class="rank-number">#2</div>
+                <div class="rank-details">
+                    <div class="rank-name">@amorpuro_wins</div>
+                    <div class="rank-likes">❤️ 39.1K curtidas • Declaração Surpresa</div>
+                </div>
+            </div>
+            <div class="ranking-item">
+                <div class="rank-number">#3</div>
+                <div class="rank-details">
+                    <div class="rank-name">@casal_fitness</div>
+                    <div class="rank-likes">❤️ 27.8K curtidas • Viagem a Dois</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. ABA DE UPLOAD (Postagem de Vídeo para Usuários e Você) -->
+        <div id="view-upload" class="static-view view-section">
+            <div class="section-title">➕ Publicar Vídeo no Feed</div>
+            <div class="upload-form">
+                <div>
+                    <label>Escolher Vídeo (MP4)</label>
+                    <input type="file" class="form-input" accept="video/*">
+                </div>
+                <div>
+                    <label>Legenda / Frase Romântica</label>
+                    <input type="text" class="form-input" placeholder="Ex: Meu amor eterno... #TikTokDoAmor">
+                </div>
+                <div>
+                    <label>Trilha Sonora / Música de Fundo</label>
+                    <select class="form-input">
+                        <option>Funk Romântico (Hit Viral)</option>
+                        <option>Piseiro Apaixonado</option>
+                        <option>Sertanejo Acústico</option>
+                    </select>
+                </div>
+                <button class="submit-btn" onclick="alert('Vídeo enviado com sucesso para moderação e exibição no feed!')">Publicar Agora 🚀</button>
+            </div>
+        </div>
+
+        <!-- 4. ABA DE CHAT / INTERAÇÃO -->
+        <div id="view-chat" class="static-view view-section">
+            <div class="section-title">💬 Mensagens e Comunidade</div>
+            <div style="text-align: center; opacity: 0.6; margin-top: 50px;">
+                <p>Suas conversas e interações com outros casais aparecerão aqui em breve.</p>
+            </div>
+        </div>
+
+        <!-- 5. ABA DE PERFIL DO USUÁRIO -->
+        <div id="view-profile" class="static-view view-section">
+            <div class="profile-header">
+                <div class="profile-avatar">👑</div>
+                <h3>Gleidson (Criador)</h3>
+                <p style="font-size: 0.850rem; opacity: 0.6; margin-top: 4px;">@admin_clubewins</p>
+                <div class="badge-box">
+                    <span class="badge">⭐ Administrador</span>
+                    <span class="badge">💎 Conta VIP</span>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 25px;">
+                <div><strong>12</strong><br><small style="opacity:0.6">Postados</small></div>
+                <div><strong>45.2K</strong><br><small style="opacity:0.6">Curtidas</small></div>
+                <div><strong>1.2K</strong><br><small style="opacity:0.6">Moedas</small></div>
+            </div>
+            <div class="section-title" style="font-size: 1.1rem;">Meus Vídeos</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px;">
+                <div style="background: #222; aspect-ratio: 9/16; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; opacity: 0.5;">Vídeo 1</div>
+                <div style="background: #222; aspect-ratio: 9/16; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; opacity: 0.5;">Vídeo 2</div>
+                <div style="background: #222; aspect-ratio: 9/16; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; opacity: 0.5;">Vídeo 3</div>
+            </div>
+        </div>
+
+        <!-- Barra Inferior de Navegação (Fixa) -->
+        <div class="bottom-nav">
+            <button class="nav-item active" onclick="switchTab('feed', this); toggleHeader(true)">
+                <span>🏠</span>Início
+            </button>
+            <button class="nav-item" onclick="switchTab('trending', this); toggleHeader(false)">
+                <span>🔥</span>Em Alta
+            </button>
+            <button class="upload-center-btn" onclick="switchTab('upload', this); toggleHeader(false)">+</button>
+            <button class="nav-item" onclick="switchTab('chat', this); toggleHeader(false)">
+                <span>💬</span>Chat
+            </button>
+            <button class="nav-item" onclick="switchTab('profile', this); toggleHeader(false)">
+                <span>👤</span>Perfil
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Função para alternar abas do menu inferior
+        function switchTab(viewName, buttonElement) {
+            // Esconde todas as telas
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-view'));
+            // Mostra a tela selecionada
+            document.getElementById('view-' + viewName).classList.add('active-view');
+
+            // Atualiza botões ativos da barra inferior (se clicado via menu)
+            if (buttonElement && buttonElement.classList.contains('nav-item')) {
+                document.querySelectorAll('.bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
+                buttonElement.classList.add('active');
+            }
+        }
+
+        // Controla se a barra do topo (Pra Você / Seguindo) aparece apenas no feed
+        function toggleHeader(show) {
+            const header = document.getElementById('topHeaderBar');
+            header.style.display = show ? 'flex' : 'none';
+        }
+
+        // Sistema de Curtida e Corações Flutuantes
+        let liked = false;
+        function likeVideo(e) {
+            const btn = e.currentTarget;
+            const countElem = btn.querySelector('small');
+            let val = parseFloat(countElem.innerText);
+
+            if (!liked) {
+                liked = true;
+                btn.querySelector('span').style.color = '#ff3366';
+                countElem.innerText = (val + 0.1).toFixed(1) + 'K';
+            } else {
+                liked = false;
+                btn.querySelector('span').style.color = '#fff';
+                countElem.innerText = (val - 0.1).toFixed(1) + 'K';
+            }
+
+            // Criar animação de coração flutuante
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = '💖';
+            
+            const rect = btn.getBoundingClientRect();
+            heart.style.left = `${rect.left - 10}px`;
+            heart.style.top = `${rect.top - 20}px`;
+
+            document.getElementById('appContainer').appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
+        }
+    </script>
 </body>
 </html>
