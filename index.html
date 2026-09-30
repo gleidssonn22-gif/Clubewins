@@ -2,1230 +2,233 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TikTok do Amor - Clube Wins</title>
-    <link rel="icon" href="data:,">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clube Wins - Inovação, Jogos e Conteúdo</title>
+    <meta name="description" content="Bem-vindo ao Clube Wins. Explore conteúdos exclusivos, divirta-se com nossos minigames e fique por dentro das novidades.">
+    <link rel="stylesheet" href="css/style.css">
     <style>
         :root {
-            --bg-gradient: radial-gradient(circle at top, rgba(255, 51, 102, 0.18), transparent 35%),
-                           radial-gradient(circle at bottom, rgba(69, 117, 255, 0.14), transparent 35%), #05070b;
-            --primary-color: #ff3366;
-            --accent-color: #ff5c8a;
-        }
-        body.theme-sunset {
-            --bg-gradient: radial-gradient(circle at top, rgba(255, 120, 51, 0.22), transparent 35%),
-                           radial-gradient(circle at bottom, rgba(117, 69, 255, 0.14), transparent 35%), #0b0507;
-            --primary-color: #ff5c33;
-            --accent-color: #ff8a5c;
-        }
-        body.theme-midnight {
-            --bg-gradient: radial-gradient(circle at top, rgba(51, 150, 255, 0.18), transparent 35%),
-                           radial-gradient(circle at bottom, rgba(160, 51, 255, 0.14), transparent 35%), #030508;
-            --primary-color: #3388ff;
-            --accent-color: #5cb8ff;
+            --bg-color: #f4f4f9;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --primary-color: #0066ff;
+            --primary-hover: #0052cc;
+            --border-color: #dddddd;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'TikTokFont', 'Segoe UI', system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-        body, html { width: 100%; height: 100%; background: var(--bg-gradient); color: #fff; overflow: hidden; transition: background 0.3s ease; }
-
-        .app-container {
-            position: relative; width: 100%; max-width: 480px; height: 100vh; height: 100dvh;
-            margin: 0 auto; background: linear-gradient(180deg, #090b10 0%, #090a0d 100%);
-            display: flex; flex-direction: column; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255,255,255,0.05);
-            overflow: hidden; border-left: 1px solid rgba(255,255,255,0.06); border-right: 1px solid rgba(255,255,255,0.06);
+        [data-theme="dark"] {
+            --bg-color: #121216;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e24;
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --border-color: #2d2d38;
         }
 
-        .top-header {
-            position: absolute; top: 0; left: 0; width: 100%;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 18px 20px; z-index: 10; background: linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0));
-            pointer-events: none; backdrop-filter: blur(8px);
-        }
-        .menu-toggle-btn {
-            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); color: #fff; font-size: 1.4rem; cursor: pointer;
-            pointer-events: auto; display: flex; align-items: center; border-radius: 12px; width: 40px; height: 40px; justify-content: center; box-shadow: 0 10px 18px rgba(0,0,0,0.2);
-        }
-        .view-menu-toggle { position: absolute; top: 14px; right: 14px; z-index: 12; }
-        .header-tabs {
-            display: flex; gap: 18px; font-weight: 700; font-size: 0.95rem; pointer-events: auto;
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 8px 12px; border-radius: 999px; backdrop-filter: blur(10px);
-        }
-        .header-tabs button { background: none; border: 0; color: rgba(255,255,255,0.7); cursor: pointer; font-size: inherit; font-weight: inherit; padding: 4px 8px; border-radius: 10px; }
-        .header-tabs button.active { color: #fff; background: linear-gradient(135deg, rgba(255,51,102,0.28), rgba(106,90,205,0.18)); border: 1px solid rgba(255,255,255,0.08); }
-        .header-right-placeholder { width: 40px; }
-
-        .side-menu {
-            position: absolute; top: 0; left: -280px; width: 280px; height: 100%;
-            background: linear-gradient(180deg, rgba(18,18,26,0.98), rgba(12,12,15,0.98)); z-index: 50; transition: left 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
-            display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.08); box-shadow: 12px 0 36px rgba(0,0,0,0.82); backdrop-filter: blur(16px);
-        }
-        .side-menu.open { left: 0; }
-        .side-menu-header {
-            padding: 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.06); background: linear-gradient(135deg, rgba(255,51,102,0.14), rgba(104,91,255,0.08));
-        }
-        .side-menu-profile { display: flex; align-items: center; gap: 12px; }
-        .side-profile-action { flex: 1; min-width: 0; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; }
-        .side-menu-close { flex: 0 0 36px; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; }
-        .side-avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; }
-        .side-user-info h4 { font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 4px; }
-        .side-user-info p { font-size: 0.75rem; opacity: 0.5; }
-        .verified-badge { color: #3388ff; font-size: 0.85rem; }
-
-        .side-menu-links { flex: 1; padding: 10px 0; overflow-y: auto; }
-        .side-menu-section-label { padding: 10px 22px 4px; color: rgba(255,255,255,0.42); font-size: 0.62rem; font-weight: 800; text-transform: uppercase; }
-        .side-link-item {
-            display: flex; align-items: center; gap: 12px; width: calc(100% - 20px); padding: 10px 18px; color: #fff;
-            background: transparent; border: 0; text-align: left; font-size: 0.85rem; font-weight: 500; cursor: pointer;
-            transition: background 0.2s, transform 0.2s; border-left: 2px solid transparent; margin: 2px 10px; border-radius: 10px;
-        }
-        .side-link-item:hover { background: rgba(255,255,255,0.04); transform: translateX(2px); border-left-color: var(--primary-color); }
-        .side-menu-footer { padding: 12px 20px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.72rem; opacity: 0.4; text-align: center; }
-
-        .view-section {
-            display: none; flex: 1; width: 100%; height: 100%;
-            overflow-y: auto; scrollbar-width: none; background: linear-gradient(180deg, rgba(6,7,11,1), rgba(9,10,15,1));
-        }
-        .view-section.active-view { display: block; }
-        .view-section::-webkit-scrollbar { display: none; }
-
-        #view-feed {
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .reel-item {
-            position: relative; width: 100%; height: 100%; scroll-snap-align: start; scroll-snap-stop: always;
-            display: flex; justify-content: center; align-items: center; background: #000; border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .reel-video { width: 100%; height: 100%; object-fit: cover; }
-        .filter-warm { filter: sepia(0.3) saturate(1.4) contrast(1.1); }
-        .filter-vintage { filter: contrast(1.2) brightness(0.9) grayscale(0.2); }
-        .video-sticker-overlay {
-            position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; z-index: 5; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .ad-card {
-            background: linear-gradient(135deg, #120c1c 0%, #1a1122 35%, #0a0912 100%);
-            display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 35px; text-align: center; border-left: 3px solid var(--primary-color); position: relative; overflow: hidden;
-        }
-        .ad-badge { background: rgba(255, 51, 102, 0.15); color: var(--primary-color); border: 1px solid rgba(255,51,102,0.4); font-size: 0.7rem; padding: 5px 12px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase; font-weight: 700; }
-        .ad-content h3 { margin-bottom: 12px; font-size: 1.4rem; color: #fff; font-weight: 700; }
-        .ad-content p { font-size: 0.9rem; opacity: 0.75; margin-bottom: 25px; line-height: 1.5; }
-        .ad-btn { background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); color: #fff; padding: 14px 32px; border-radius: 30px; font-weight: bold; text-decoration: none; box-shadow: 0 12px 26px rgba(255,51,102,0.35); display: inline-block; }
-
-        .gradient-bottom { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(transparent, rgba(0,0,0,0.85)); pointer-events: none; }
-        .video-info { position: absolute; bottom: 75px; left: 16px; right: 80px; z-index: 4; pointer-events: none; }
-        .author { font-weight: 700; font-size: 1rem; margin-bottom: 6px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
-        button.author { display: block; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; pointer-events: auto; }
-        .caption { font-size: 0.88rem; line-height: 1.35; opacity: 0.9; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
-        .report-btn { margin-top: 8px; padding: 4px 0; border: 0; color: rgba(255,255,255,0.8); background: transparent; font-size: 0.72rem; cursor: pointer; pointer-events: auto; }
-
-        .actions-sidebar { position: absolute; right: 12px; bottom: 75px; z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-        .action-icon-btn { background: rgba(17,17,22,0.42); border: 1px solid rgba(255,255,255,0.08); color: #fff; text-align: center; cursor: pointer; border-radius: 20px; padding: 10px 8px; backdrop-filter: blur(8px); box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
-        .action-icon-btn span { font-size: 1.6rem; display: block; margin-bottom: 2px; transition: transform 0.2s; }
-        .action-icon-btn:active span { transform: scale(1.3); }
-        .action-icon-btn small { font-size: 0.68rem; font-weight: 600; opacity: 0.9; }
-
-        .burst-heart {
-            position: absolute; font-size: 5.5rem; color: var(--primary-color);
-            animation: burstAnim 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; z-index: 12; pointer-events: none; transform: translate(-50%, -50%) scale(0);
-        }
-        @keyframes burstAnim {
-            0% { transform: translate(-50%, -50%) scale(0.2) rotate(-15deg); opacity: 1; }
-            50% { transform: translate(-50%, -50%) scale(1.25) rotate(10deg); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(1.1) rotate(0deg); opacity: 0; }
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        .toast-notification {
-            position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
-            background: rgba(255, 51, 102, 0.95); color: #fff; padding: 12px 24px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; z-index: 100; box-shadow: 0 8px 25px rgba(255,51,102,0.4); transition: top 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); white-space: nowrap; pointer-events: none;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
         }
-        .toast-notification.show { top: 20px; }
 
-        .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 40; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-
-        .comments-drawer {
-            position: absolute; bottom: -100%; left: 0; width: 100%; height: 60%; background: #16161c; border-radius: 20px 20px 0 0; z-index: 45; transition: bottom 0.35s cubic-bezier(0.1, 0.9, 0.2, 1); display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.08);
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
         }
-        .comments-drawer.open { bottom: 0; }
-        .drawer-header { padding: 16px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 700; position: relative; font-size: 0.95rem; }
-        .close-drawer { position: absolute; right: 18px; top: 14px; background: none; border: none; color: #aaa; font-size: 1.1rem; cursor: pointer; }
-        .comments-list { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
-        .comment-item { font-size: 0.88rem; line-height: 1.4; }
-        .comment-user { font-weight: 700; color: var(--primary-color); margin-right: 8px; }
-        .comment-input-area { padding: 12px 16px; background: #0c0c10; display: flex; gap: 10px; border-top: 1px solid rgba(255,255,255,0.06); }
-        .comment-input { flex: 1; padding: 10px 16px; background: #202028; border: none; border-radius: 20px; color: #fff; outline: none; font-size: 0.88rem; }
-        .send-comment-btn { background: var(--primary-color); border: none; color: #fff; padding: 0 18px; border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
 
-        .share-modal {
-            position: absolute; bottom: -100%; left: 0; width: 100%; background: #16161c; border-radius: 20px 20px 0 0; z-index: 45; padding: 22px; transition: bottom 0.3s ease; border-top: 1px solid rgba(255,255,255,0.08);
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
         }
-        .share-modal.open { bottom: 0; }
-        .share-grid { display: flex; justify-content: space-around; margin-top: 18px; }
-        .share-option { background: none; border: none; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; font-size: 0.78rem; font-weight: 600; }
-        .share-option span { font-size: 1.8rem; background: #23232f; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
 
-        .static-view { padding: 75px 20px 85px 20px; overflow-y: auto; height: 100%; background: #000; }
-        .section-title { font-size: 1.3rem; margin-bottom: 4px; color: #fff; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-        .section-subtitle { font-size: 0.82rem; opacity: 0.55; margin-bottom: 22px; }
-
-        .poll-card { background: #121218; border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 18px; margin-bottom: 16px; }
-        .poll-question { font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: var(--accent-color); }
-        .poll-option { background: #1a1a24; border: 1px solid rgba(255,255,255,0.06); padding: 11px 14px; border-radius: 10px; margin-bottom: 8px; cursor: pointer; font-size: 0.88rem; display: flex; justify-content: space-between; align-items: center; }
-        .poll-option.voted { border-color: var(--primary-color); background: rgba(255,51,102,0.15); pointer-events: none; }
-
-        .upload-form { display: flex; flex-direction: column; gap: 16px; }
-        .form-group label { font-size: 0.82rem; opacity: 0.7; display: block; margin-bottom: 6px; font-weight: 600; }
-        .form-input { width: 100%; padding: 12px; background: #121218; border: 1px solid rgba(255,255,255,0.08); color: #fff; border-radius: 10px; font-size: 0.9rem; outline: none; }
-        .form-input:focus { border-color: var(--primary-color); }
-        .ai-caption-btn { background: rgba(255,51,102,0.2); border: 1px solid var(--primary-color); color: var(--accent-color); padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer; margin-top: 6px; display: inline-block; }
-        .submit-btn { background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); color: #fff; border: none; padding: 14px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; cursor: pointer; width: 100%; text-align: center; }
-
-        .wallet-card { background: linear-gradient(135deg, #180c20, #2b1438); border: 1px solid rgba(255, 51, 102, 0.3); border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 22px; }
-        .wallet-balance { font-size: 2rem; font-weight: 800; color: var(--primary-color); margin: 6px 0; }
-        .creator-card, .creator-video-item, .policy-section { margin: 12px 0; padding: 16px; background: #121218; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; }
-        .creator-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-        .creator-card button, .creator-video-item button { padding: 8px 10px; border: 1px solid rgba(255,255,255,0.18); border-radius: 6px; background: #202028; color: #fff; cursor: pointer; }
-        .creator-follow-btn, .back-link { padding: 10px 14px; border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; background: #202028; color: #fff; font-weight: 700; cursor: pointer; }
-
-        .bottom-nav {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 68px; background: rgba(4,5,8,0.92);
-            display: flex; justify-content: space-around; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.09); z-index: 10; backdrop-filter: blur(12px); box-shadow: 0 -10px 30px rgba(0,0,0,0.35);
+        button:hover {
+            background-color: var(--primary-hover);
         }
-        .nav-item {
-            background: none; border: none; color: rgba(255, 255, 255, 0.45); font-size: 0.65rem; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; font-weight: 600; border-radius: 12px; padding: 6px 8px; min-width: 60px;
+
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
-        .nav-item.active { color: #fff; font-weight: 700; background: rgba(255,255,255,0.04); }
-        .nav-item span { font-size: 1.35rem; }
-        .upload-center-btn {
-            background: linear-gradient(135deg, #ffffff 0%, #f3f4ff 50%, #f5e8ff 100%); color: #000; width: 42px; height: 30px; border-radius: 10px; border: none; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 18px rgba(255,255,255,0.18);
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            text-align: center;
+        }
+
+        /* Espaço reservado para o AdSense */
+        .adsense-box {
+            background: var(--card-bg);
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Minigame de cliques */
+        .game-container {
+            margin-top: 15px;
+        }
+
+        #score {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: #888;
         }
     </style>
 </head>
-<body id="appBody">
+<body>
 
-    <div class="app-container" id="appContainer">
-        
-        <div class="toast-notification" id="toastNotification">Notificação</div>
-        <div class="modal-overlay" id="modalOverlay" onclick="closeAllModals()"></div>
+    <header>
+        <div class="logo">Clube Wins 🚀</div>
+        <div class="nav-buttons">
+            <button id="themeToggle" onclick="toggleTheme()">🌓 Tema</button>
+            <button onclick="surpresa()">✨ Surpresa</button>
+        </div>
+    </header>
 
-        <!-- MENU LATERAL (DRAWER) V4.4 -->
-        <div class="side-menu" id="sideMenu" role="dialog" aria-label="Menu principal" aria-hidden="true" inert>
-            <div class="side-menu-header">
-                <button type="button" class="side-menu-profile side-profile-action" onclick="openMenuView('profile')" aria-label="Perfil">
-                    <div class="side-avatar">CW</div>
-                    <div class="side-user-info">
-                        <h4>Clube Wins <span class="verified-badge" title="Casal Verificado">✔</span></h4>
-                        <p id="menuDaysCount">Juntos há -- dias</p>
-                    </div>
-                </button>
-                <button type="button" class="side-menu-close" onclick="toggleSideMenu(false)" aria-label="Fechar menu">✕</button>
-            </div>
-            <nav class="side-menu-links" aria-label="Navegação do app">
-                <p class="side-menu-section-label">Feed & Comunidade</p>
-                <button type="button" class="side-link-item" onclick="openMenuView('feed', 'for-you')"><span class="side-icon">🏠</span>Para você</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('feed', 'following')"><span class="side-icon">👥</span>Seguindo</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('favorites')"><span class="side-icon">⭐</span>Favoritos e Salvos</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('challenges')"><span class="side-icon">🎯</span>Desafios & Placar</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('stories')"><span class="side-icon">📖</span>Crónicas de Amor</button>
-
-                <p class="side-menu-section-label">Ferramentas a Dois</p>
-                <button type="button" class="side-link-item" onclick="openMenuView('bucketlist')"><span class="side-icon">🎯</span>Metas a Dois (Bucket List)</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('truthordare')"><span class="side-icon">🔥</span>Verdade ou Desafio</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('daterandomizer')"><span class="side-icon">🎲</span>Roleta de Encontros</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('capsule')"><span class="side-icon">⏳</span>Cápsula do Tempo</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('invites')"><span class="side-icon">🎟️</span>Bilhetes de Encontro</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('journal')"><span class="side-icon">📔</span>Diário de Gratidão</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('recipes')"><span class="side-icon">🍳</span>Chef Romântico (Receitas)</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('foodpicker')"><span class="side-icon">🍕</span>Onde Vamos Comer?</button>
-
-                <p class="side-menu-section-label">Música, Lazer & Memórias</p>
-                <button type="button" class="side-link-item" onclick="openMenuView('playlist')"><span class="side-icon">🎧</span>Nossa Playlist</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('moviereviews')"><span class="side-icon">🎬</span>Crítica de Filmes</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('map')"><span class="side-icon">🗺️</span>Mapa de Aventuras</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('polaroid')"><span class="side-icon">📸</span>Álbum Polaroid</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('decider')"><span class="side-icon">🪙</span>Quem Manda Hoje?</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('morningmsg')"><span class="side-icon">💌</span>Mensagem ao Acordar</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('promises')"><span class="side-icon">📜</span>Promessas de Amor</button>
-
-                <p class="side-menu-section-label">Criação & Jogos</p>
-                <button type="button" class="side-link-item" onclick="openMenuView('upload')"><span class="side-icon">➕</span>Publicar Vídeo / Sticker</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('audiohub')"><span class="side-icon">🎵</span>Curadoria de Músicas</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('trending')"><span class="side-icon">📊</span>Enquetes & Duelos</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('trivia')"><span class="side-icon">🧠</span>Quem Conhece Melhor?</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('missions')"><span class="side-icon">🎖️</span>Missões Diárias</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('chat')"><span class="side-icon">💬</span>Mural com Áudio</button>
-
-                <p class="side-menu-section-label">Conta & Privacidade</p>
-                <button type="button" class="side-link-item" onclick="openMenuView('profile')"><span class="side-icon">👤</span>Perfil & Mosaico</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('giveaways')"><span class="side-icon">🎁</span>Sorteios & Experiências</button>
-                <button type="button" class="side-link-item" onclick="openMenuView('settings')"><span class="side-icon">⚙️</span>Temas & Privacidade</button>
-                <button type="button" class="side-link-item" onclick="shareAction('Mais')"><span class="side-icon">↗</span>Exportar e Partilhar</button>
-            </nav>
-            <div class="side-menu-footer">Clube Wins • v4.4 Ultimate</div>
+    <main>
+        <!-- Bloco de Anúncio Superior (AdSense) -->
+        <div class="adsense-box">
+            <span>[Espaço reservado para Anúncio do Google AdSense - Topo]</span>
+            <!-- Cole o código do AdSense aqui futuramente -->
         </div>
 
-        <!-- Top Header -->
-        <div class="top-header" id="topHeaderBar">
-            <button id="mainMenuToggle" class="menu-toggle-btn" type="button" onclick="toggleSideMenu(true)" aria-label="Abrir menu">☰</button>
-            <div class="header-tabs">
-                <button type="button" class="active" onclick="setFeedMode('for-you', this)">Pra Você</button>
-                <button type="button" onclick="setFeedMode('following', this)">Seguindo</button>
+        <section class="card">
+            <h1>Bem-vindo ao Novo Clube Wins</h1>
+            <p>Seu portal interativo de conteúdos, jogos e entretenimento. Navegue, interaja e divirta-se!</p>
+        </section>
+
+        <!-- Minigame Integrado para Viralizar / Reter Usuários -->
+        <section class="card">
+            <h2>🕹️ Desafio do Clique Rápido</h2>
+            <p>Quantas vezes você consegue clicar no botão abaixo em 10 segundos?</p>
+            <div class="game-container">
+                <p>Pontuação: <span id="score">0</span></p>
+                <button id="gameBtn" onclick="incrementScore()">Clique Aqui!</button>
+                <p id="timer" style="margin-top: 10px; font-weight: bold;"></p>
             </div>
-            <div class="header-right-placeholder"></div>
+        </section>
+
+        <!-- Bloco de Anúncio Inferior (AdSense) -->
+        <div class="adsense-box">
+            <span>[Espaço reservado para Anúncio do Google AdSense - Rodapé]</span>
+            <!-- Cole o código do AdSense aqui futuramente -->
         </div>
-        <button id="viewMenuToggle" class="menu-toggle-btn view-menu-toggle" type="button" onclick="toggleSideMenu(true)" hidden>☰</button>
+    </main>
 
-        <!-- 1. FEED -->
-        <div id="view-feed" class="view-section active-view">
-            <div class="reel-item" data-post-id="demo-casal" data-creator="casal_wins" ondblclick="doubleClickLike(event)">
-                <div class="video-sticker-overlay">✨ #AmorEterno</div>
-                <video class="reel-video" loop muted playsinline src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
-                <div class="gradient-bottom"></div>
-                <div class="video-info">
-                    <button class="author" type="button" onclick="openCreator('casal_wins')">@casal_wins ✔</button>
-                    <div class="caption">Que o amor floresça todos os dias! 🌷 #TikTokDoAmor</div>
-                    <button class="report-btn" type="button" onclick="openReport(this)">⚑ Denunciar vídeo</button>
-                </div>
-                <div class="actions-sidebar">
-                    <button class="action-icon-btn like-btn" onclick="playClickSound(); likeVideo(event)"><span>❤️</span><small data-count="14.2" data-unit="K">14.2K</small></button>
-                    <button class="action-icon-btn" onclick="playClickSound(); toggleComments(true, this)"><span>💬</span><small>320</small></button>
-                    <button class="action-icon-btn" onclick="playClickSound(); toggleFavorite(this)"><span>⭐</span><small>Salvar</small></button>
-                    <button class="action-icon-btn" onclick="playClickSound(); toggleShare(true)"><span>↗</span><small>Exportar</small></button>
-                </div>
-            </div>
-
-            <div class="reel-item ad-card house-promotion">
-                <div class="ad-badge">Divulgação própria</div>
-                <div class="ad-content">
-                    <h3>Clube Wins - Ofertas Exclusivas</h3>
-                    <p>Aproveite as melhores novidades e experiências agora mesmo na plataforma!</p>
-                    <a href="https://clubewins.com.br" target="_blank" class="ad-btn">Ver Ofertas</a>
-                </div>
-            </div>
-            <div id="followingEmpty" class="reel-item ad-card" hidden>
-                <div class="ad-content">
-                    <h3>Seu feed está começando</h3>
-                    <p>Siga criadores para ver os vídeos deles nesta aba.</p>
-                    <button class="creator-follow-btn" type="button" onclick="openCreators()">Encontrar criadores</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. ENQUETES & DUELO -->
-        <div id="view-trending" class="static-view view-section">
-            <div class="section-title">📊 Enquetes & Duelo de Casais</div>
-            <div class="section-subtitle">Vote e participe das interações semanais da comunidade.</div>
-            <div class="poll-card" id="poll1">
-                <div class="poll-question">Quem é o mais romântico do relacionamento?</div>
-                <div class="poll-option" data-option-id="ele" onclick="votePoll(this, 'poll1')">Ele <span class="pct">42%</span></div>
-                <div class="poll-option" data-option-id="ela" onclick="votePoll(this, 'poll1')">Ela <span class="pct">58%</span></div>
-            </div>
-            <div class="poll-card">
-                <div class="poll-question">⚔️ Duelo de Fotos: Casal A vs Casal B</div>
-                <p style="font-size:0.82rem; opacity:0.8; margin-bottom:10px;">Quem tem a melhor foto de pôr do sol?</p>
-                <div style="display:flex; gap:10px;">
-                    <button class="submit-btn" onclick="showToast('Voto computado para o Casal A! 💙')">Votar Casal A (65%)</button>
-                    <button class="submit-btn" style="background:#3388ff;" onclick="showToast('Voto computado para o Casal B! 💙')">Votar Casal B (35%)</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. UPLOAD DE VÍDEO -->
-        <div id="view-upload" class="static-view view-section">
-            <div class="section-title">➕ Publicar Vídeo & Stickers</div>
-            <div class="section-subtitle">Envie seu momento romântico com efeitos e stickers exclusivos.</div>
-            <form class="upload-form" id="uploadForm" onsubmit="publishVideo(event)">
-                <div class="form-group">
-                    <label for="videoInput">Vídeo do Celular</label>
-                    <input type="file" class="form-input" id="videoInput" accept="video/*" required>
-                </div>
-                <div class="form-group">
-                    <label for="captionInput">Legenda com IA Romântica</label>
-                    <input type="text" class="form-input" id="captionInput" maxlength="300" placeholder="Escreva ou gere uma legenda...">
-                    <button type="button" class="ai-caption-btn" onclick="generateAiCaption()">✨ Gerar Legenda Mágica</button>
-                </div>
-                <div class="form-group">
-                    <label for="videoSticker">Sticker Decorativo</label>
-                    <select class="form-input" id="videoSticker">
-                        <option value="✨ #AmorEterno">✨ #AmorEterno</option>
-                        <option value="❤️ #CoupleGoals">❤️ #CoupleGoals</option>
-                        <option value="🌹 #MeuAmor">🌹 #MeuAmor</option>
-                        <option value="💍 #PedidoPerfeito">💍 #PedidoPerfeito</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="videoFilter">Filtro de Vídeo</label>
-                    <select class="form-input" id="videoFilter">
-                        <option value="none">Normal (Sem filtro)</option>
-                        <option value="filter-warm">Tom Quente (Romântico)</option>
-                        <option value="filter-vintage">Vintage / Polaroid</option>
-                    </select>
-                </div>
-                <button class="submit-btn" type="submit">Publicar no Feed</button>
-            </form>
-        </div>
-
-        <!-- 4. FAVORITOS -->
-        <div id="view-favorites" class="static-view view-section">
-            <div class="section-title">⭐ Favoritos e Salvos</div>
-            <div class="section-subtitle">Seus vídeos guardados com carinho neste dispositivo.</div>
-            <div id="favoritesList" style="text-align: center; opacity: 0.6; padding: 40px;">Nenhum vídeo salvo nos favoritos ainda.</div>
-        </div>
-
-        <!-- 5. DESAFIOS & PLACAR -->
-        <div id="view-challenges" class="static-view view-section">
-            <div class="section-title">🎯 Desafios & Placar Semanal</div>
-            <div class="section-subtitle">Participe das trends e veja o ranking de destaque.</div>
-            <div class="poll-card">
-                <div class="poll-question">🔥 Trend Ativa: Desafio do Beijo Surpresa</div>
-                <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 12px;">Surpreenda seu amor e poste com a hashtag #BeijoWins.</p>
-                <button class="submit-btn" type="button" onclick="openMenuView('upload')">Participar da Trend</button>
-            </div>
-            <div class="poll-card" style="display: flex; align-items: center; gap: 15px;">
-                <div style="font-size: 1.8rem;">👑</div>
-                <div style="flex: 1;">
-                    <strong>1º Lugar da Semana: @casal_wins</strong>
-                    <p style="font-size: 0.78rem; opacity: 0.7;">14.2K curtidas • 45 trends</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 6. METAS A DOIS (BUCKET LIST) COM PERSISTÊNCIA -->
-        <div id="view-bucketlist" class="static-view view-section">
-            <div class="section-title">🎯 Metas a Dois (Bucket List)</div>
-            <div class="section-subtitle">Sonhos e planos conjuntos para realizarem juntos.</div>
-            <div class="poll-card">
-                <div class="poll-question" style="display:flex; justify-content:space-between;"><span>✈️ Viajar para Paris</span> <input type="checkbox" id="bucket1" onchange="saveBucketState(1)"></div>
-                <div class="poll-question" style="display:flex; justify-content:space-between; margin-top:10px;"><span>🐶 Adotar um cachorrinho</span> <input type="checkbox" id="bucket2" onchange="saveBucketState(2)"></div>
-                <div class="poll-question" style="display:flex; justify-content:space-between; margin-top:10px;"><span>🏡 Comprar nossa casa própria</span> <input type="checkbox" id="bucket3" onchange="saveBucketState(3)"></div>
-            </div>
-        </div>
-
-        <!-- 7. VERDADE OU DESAFIO A DOIS -->
-        <div id="view-truthordare" class="static-view view-section">
-            <div class="section-title">🔥 Verdade ou Desafio a Dois</div>
-            <div class="section-subtitle">Descubra segredos e divirta-se com o seu amor.</div>
-            <div class="poll-card" style="text-align: center; padding: 35px 20px;">
-                <div id="truthOrDareBox" style="font-size: 1.15rem; font-weight: bold; color: var(--primary-color); margin-bottom: 25px; min-height: 60px; display:flex; align-items:center; justify-content:center;">
-                    Escolha uma categoria para começar o jogo! 😉
-                </div>
-                <div style="display:flex; gap:12px;">
-                    <button class="submit-btn" onclick="spinTruthOrDare('Verdade')">Verdade 💬</button>
-                    <button class="submit-btn" style="background:#3388ff;" onclick="spinTruthOrDare('Desafio')">Desafio 🔥</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 8. ROLETA DE ENCONTROS -->
-        <div id="view-daterandomizer" class="static-view view-section">
-            <div class="section-title">🎲 Roleta de Encontros</div>
-            <div class="section-subtitle">Sem ideias para o programa de hoje? Gire a roleta!</div>
-            <div class="poll-card" style="text-align: center; padding: 30px 20px;">
-                <div id="dateIdeaResult" style="font-size: 1.15rem; font-weight: bold; color: var(--primary-color); margin-bottom: 20px; min-height: 50px; display: flex; align-items: center; justify-content: center;">
-                    Toque no botão abaixo para sortear um encontro especial! 🍷
-                </div>
-                <button class="submit-btn" type="button" onclick="spinDateRandomizer()">Sortear Encontro 🎡</button>
-            </div>
-        </div>
-
-        <!-- 9. CÁPSULA DO TEMPO -->
-        <div id="view-capsule" class="static-view view-section">
-            <div class="section-title">⏳ Cápsula do Tempo</div>
-            <div class="section-subtitle">Escreva uma mensagem de amor guardada para o futuro.</div>
-            <div class="poll-card">
-                <form onsubmit="saveTimeCapsule(event)">
-                    <div class="form-group" style="margin-bottom: 12px;">
-                        <label for="capsuleMessage">Mensagem de Amor</label>
-                        <textarea class="form-input" id="capsuleMessage" rows="4" placeholder="Escreva o que deseja reler com seu amor no futuro..." required></textarea>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 16px;">
-                        <label for="capsuleDate">Data de Desbloqueio</label>
-                        <input type="date" class="form-input" id="capsuleDate" required>
-                    </div>
-                    <button class="submit-btn" type="submit">Trancar Cápsula 🔒</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- 10. BILHETES DE ENCONTRO -->
-        <div id="view-invites" class="static-view view-section">
-            <div class="section-title">🎟️ Bilhetes de Encontro</div>
-            <div class="section-subtitle">Envie um convite romântico personalizado para o WhatsApp do seu amor.</div>
-            <div class="poll-card">
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label>Tipo de Encontro</label>
-                    <select id="inviteType" class="form-input">
-                        <option>🍷 Jantar romântico à luz de velas</option>
-                        <option>🍿 Sessão de cinema em casa</option>
-                        <option>🌅 Piquenique surpresa no parque</option>
-                    </select>
-                </div>
-                <button class="submit-btn" onclick="sendInviteWhatsApp()">Enviar Convite via WhatsApp 💚</button>
-            </div>
-        </div>
-
-        <!-- 11. DIÁRIO DE GRATIDÃO -->
-        <div id="view-journal" class="static-view view-section">
-            <div class="section-title">📔 Diário de Gratidão Encriptado</div>
-            <div class="section-subtitle">Registe diariamente algo positivo que admira no seu parceiro.</div>
-            <div class="poll-card">
-                <textarea id="gratitudeText" class="form-input" rows="4" placeholder="Hoje sou grato(a) por..."></textarea>
-                <button class="submit-btn" style="margin-top: 12px;" onclick="saveGratitudeEntry()">Salvar no Diário 🔒</button>
-            </div>
-        </div>
-
-        <!-- 12. CHEF ROMÂNTICO (RECEITAS) -->
-        <div id="view-recipes" class="static-view view-section">
-            <div class="section-title">🍳 Chef Romântico (Receitas a Dois)</div>
-            <div class="section-subtitle">Ideias culinárias práticas e deliciosas para cozinharem juntos.</div>
-            <div class="poll-card">
-                <div class="poll-question">🍝 Fondue de Queijo Caseiro</div>
-                <p style="font-size:0.85rem; opacity:0.8;">Ingredientes simples: Queijo Gruyère, Emmental, vinho branco e pão artesanal.</p>
-            </div>
-            <div class="poll-card">
-                <div class="poll-question">🍓 Morangos com Chocolate Trufado</div>
-                <p style="font-size:0.85rem; opacity:0.8;">A sobremesa mais rápida, elegante e perfeita para uma noite romântica.</p>
-            </div>
-        </div>
-
-        <!-- NOVA FERRAMENTA: ONDE VAMOS COMER? -->
-        <div id="view-foodpicker" class="static-view view-section">
-            <div class="section-title">🍕 Onde Vamos Comer Hoje?</div>
-            <div class="section-subtitle">Filtre o tipo de refeição ou deixe a roleta escolher!</div>
-            <div class="poll-card" style="text-align: center; padding: 30px 20px;">
-                <div id="foodResult" style="font-size: 1.15rem; font-weight: bold; color: var(--primary-color); margin-bottom: 20px; min-height: 50px; display: flex; align-items: center; justify-content: center;">
-                    Clique para sortear a culinária do dia! 🍣
-                </div>
-                <button class="submit-btn" onclick="spinFoodPicker()">Sortear Culinária 🍽️</button>
-            </div>
-        </div>
-
-        <!-- NOSSA PLAYLIST -->
-        <div id="view-playlist" class="static-view view-section">
-            <div class="section-title">🎧 Nossa Playlist do Casal</div>
-            <div class="section-subtitle">A trilha sonora oficial da vossa relação.</div>
-            <div class="poll-card">
-                <div class="form-group" style="margin-bottom: 10px;">
-                    <label>Música / Artista Favorito</label>
-                    <input type="text" id="coupleSongInput" class="form-input" placeholder="Ex: Ed Sheeran - Perfect">
-                </div>
-                <button class="submit-btn" onclick="saveCoupleSong()">Definir Música do Casal 🎵</button>
-                <div id="currentSongDisplay" style="margin-top: 15px; font-size: 0.9rem; text-align: center; color: var(--accent-color);"></div>
-            </div>
-        </div>
-
-        <!-- CRÍTICA DE FILMES -->
-        <div id="view-moviereviews" class="static-view view-section">
-            <div class="section-title">🎬 Crítica de Filmes a Dois</div>
-            <div class="section-subtitle">Registo das vossas maratonas de cinema e séries.</div>
-            <div class="poll-card">
-                <div class="form-group" style="margin-bottom: 8px;"><input type="text" id="movieTitle" class="form-input" placeholder="Nome do Filme / Série"></div>
-                <div class="form-group" style="margin-bottom: 8px;"><input type="text" id="movieReview" class="form-input" placeholder="Mini-review ou nota (ex: 10/10)"></div>
-                <button class="submit-btn" onclick="addMovieReview()">Adicionar ao Registo 🍿</button>
-                <div id="movieListContainer" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;"></div>
-            </div>
-        </div>
-
-        <!-- MAPA DE AVENTURAS -->
-        <div id="view-map" class="static-view view-section">
-            <div class="section-title">🗺️ Mapa de Aventuras do Casal</div>
-            <div class="section-subtitle">Destinos visitados e lugares dos vossos sonhos.</div>
-            <div class="poll-card">
-                <div class="form-group" style="margin-bottom: 8px;"><input type="text" id="travelPlace" class="form-input" placeholder="Nome do local (Ex: Rio de Janeiro)"></div>
-                <button class="submit-btn" onclick="addTravelPlace()">Registar Destino ✈️</button>
-                <div id="travelListContainer" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;"></div>
-            </div>
-        </div>
-
-        <!-- ÁLBUM POLAROID -->
-        <div id="view-polaroid" class="static-view view-section">
-            <div class="section-title">📸 Álbum Polaroid Digital</div>
-            <div class="section-subtitle">Recordações visuais em estilo de fotografia antiga.</div>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;">
-                <div style="background: #fff; color: #000; padding: 10px 10px 20px 10px; border-radius: 4px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); text-align: center;">
-                    <div style="background: #ddd; height: 110px; border-radius: 2px; display: grid; place-items:center; font-size: 2rem;">🌅</div>
-                    <p style="font-size: 0.78rem; margin-top: 8px; font-weight: bold;">Pôr do sol juntos</p>
-                </div>
-                <div style="background: #fff; color: #000; padding: 10px 10px 20px 10px; border-radius: 4px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); text-align: center;">
-                    <div style="background: #ddd; height: 110px; border-radius: 2px; display: grid; place-items:center; font-size: 2rem;">🍷</div>
-                    <p style="font-size: 0.78rem; margin-top: 8px; font-weight: bold;">Primeiro Jantar</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- QUEM MANDA HOJE? -->
-        <div id="view-decider" class="static-view view-section">
-            <div class="section-title">🪙 Quem Manda Hoje?</div>
-            <div class="section-subtitle">Decisor rápido para resolver pequenas dúvidas do dia a dia.</div>
-            <div class="poll-card" style="text-align: center; padding: 30px 20px;">
-                <div id="deciderResult" style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color); margin-bottom: 20px; min-height: 50px; display: flex; align-items: center; justify-content: center;">
-                    Toque no botão para decidir quem escolhe! 😉
-                </div>
-                <button class="submit-btn" onclick="spinDecider()">Girar Sorteio 🎲</button>
-            </div>
-        </div>
-
-        <!-- MENSAGEM AO ACORDAR -->
-        <div id="view-morningmsg" class="static-view view-section">
-            <div class="section-title">💌 Mensagem Surpresa ao Acordar</div>
-            <div class="section-subtitle">Deixe um recado especial para o seu amor ver logo cedo.</div>
-            <div class="poll-card">
-                <textarea id="morningText" class="form-input" rows="4" placeholder="Ex: Bom dia meu amor, és a razão do meu sorriso..."></textarea>
-                <button class="submit-btn" style="margin-top: 12px;" onclick="saveMorningMsg()">Guardar Mensagem ☀️</button>
-                <div id="displayMorningMsg" style="margin-top: 15px; font-size: 0.88rem; opacity: 0.8; text-align: center;"></div>
-            </div>
-        </div>
-
-        <!-- NOVA FERRAMENTA: PROMESSAS DE AMOR -->
-        <div id="view-promises" class="static-view view-section">
-            <div class="section-title">📜 Gerador de Promessas de Amor</div>
-            <div class="section-subtitle">Sorteie uma promessa fofa para cumprir com o seu amor esta semana.</div>
-            <div class="poll-card" style="text-align: center; padding: 30px 20px;">
-                <div id="promiseBox" style="font-size: 1.15rem; font-weight: bold; color: var(--primary-color); margin-bottom: 20px; min-height: 60px; display: flex; align-items: center; justify-content: center;">
-                    Toque para gerar a promessa da semana! 💖
-                </div>
-                <button class="submit-btn" onclick="generatePromise()">Sortear Promessa 📜</button>
-            </div>
-        </div>
-
-        <!-- 13. CURADORIA DE MÚSICAS -->
-        <div id="view-audiohub" class="static-view view-section">
-            <div class="section-title">🎵 Curadoria de Músicas por Emoção</div>
-            <div class="section-subtitle">Escolha a trilha perfeita para acompanhar seus momentos.</div>
-            <div class="poll-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><strong>Acústico Apaixonado</strong><p style="font-size:0.78rem; opacity:0.7;">Violão suave e romântico</p></div>
-                <button class="submit-btn" style="width:auto; padding:8px 16px;" onclick="showToast('Áudio selecionado para upload! 🎵')">Usar Trilha</button>
-            </div>
-            <div class="poll-card" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                <div><strong>Funk Melódico Relax</strong><p style="font-size:0.78rem; opacity:0.7;">Batida leve e envolvente</p></div>
-                <button class="submit-btn" style="width:auto; padding:8px 16px;" onclick="showToast('Áudio selecionado para upload! 🎵')">Usar Trilha</button>
-            </div>
-        </div>
-
-        <!-- 14. CRÓNICAS DE AMOR -->
-        <div id="view-stories" class="static-view view-section">
-            <div class="section-title">📖 Crónicas de Amor</div>
-            <div class="section-subtitle">Histórias inspiradoras enviadas pela nossa comunidade de casais.</div>
-            <div class="poll-card">
-                <div class="poll-question">"De amigos de infância a marido e mulher"</div>
-                <p style="font-size:0.85rem; opacity:0.8; line-height:1.4;">"Nós conhecemo-nos na escola primária e nunca imaginámos que 15 anos depois estaríamos a casar..." — @carlos_m & @juliana_s</p>
-            </div>
-        </div>
-
-        <!-- 15. QUEM CONHECE MELHOR? -->
-        <div id="view-trivia" class="static-view view-section">
-            <div class="section-title">🧠 Quem Conhece Melhor?</div>
-            <div class="section-subtitle">Teste rápido de intimidade do casal!</div>
-            <div class="poll-card" id="triviaCard">
-                <div class="poll-question" id="triviaQuestion">Qual é a cor favorita do(a) seu(sua) parceiro(a)?</div>
-                <div id="triviaOptions">
-                    <div class="poll-option" onclick="answerTrivia(true)">Acertou em cheio! ❤</div>
-                    <div class="poll-option" onclick="answerTrivia(false)">Errou feio, vai ter que pagar um jantar! 🍕</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 16. MISSÕES DIÁRIAS -->
-        <div id="view-missions" class="static-view view-section">
-            <div class="section-title">🎖️ Missões Diárias de Carinho</div>
-            <div class="section-subtitle">Pequenas atitudes diárias que fortalecem a relação.</div>
-            <div class="poll-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><strong>Enviar uma mensagem de bom dia surpresa</strong><p style="font-size:0.78rem; opacity:0.7;">Recompensa: +50 Pontos de Casal</p></div>
-                <button class="submit-btn" style="width:auto; padding:8px 16px;" onclick="showToast('Missão cumprida! Parabéns pelo carinho! 💖')">Concluir</button>
-            </div>
-        </div>
-
-        <!-- 17. QUIZ DE COMPATIBILIDADE -->
-        <div id="view-quiz" class="static-view view-section">
-            <div class="section-title">🧩 Quiz Expresso de Casal</div>
-            <div class="section-subtitle">Descubra o nível de sintonia de vocês agora!</div>
-            <div class="poll-card" id="quizCard">
-                <div class="poll-question">Quem canta mais alto desafinado no carro? 🎤</div>
-                <div class="poll-option" onclick="answerQuiz('Ele')">Ele</div>
-                <div class="poll-option" onclick="answerQuiz('Ela')">Ela</div>
-                <div class="poll-option" onclick="answerQuiz('Os dois!')">Os dois! Juntos e misturados 😂</div>
-            </div>
-        </div>
-
-        <!-- 18. MODO CASAL -->
-        <div id="view-couplemode" class="static-view view-section">
-            <div class="section-title">🔗 Modo Casal (Perfil Conjunto)</div>
-            <div class="section-subtitle">Conecte a conta do seu parceiro para gerenciarem juntos.</div>
-            <div class="poll-card">
-                <div class="poll-question">Vincular Parceiro(a)</div>
-                <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 12px;">Gere um código de convite exclusivo para unirem os perfis no feed.</p>
-                <button class="submit-btn" type="button" onclick="showToast('Código de convite copiado para o WhatsApp!')">Gerar Código de Convite</button>
-            </div>
-        </div>
-
-        <!-- 19. MURAL COM ÁUDIO DE VOZ -->
-        <div id="view-chat" class="static-view view-section">
-            <div class="section-title">💬 Mural com Áudio</div>
-            <div class="section-subtitle">Deixe recados de texto ou grave um micro-áudio de amor!</div>
-            <div class="poll-card" style="text-align: center; margin-bottom: 16px;">
-                <button class="submit-btn" type="button" id="recordAudioBtn" onclick="toggleRecordAudio()" style="background: linear-gradient(135deg, #28a745, #20c997);">🎙️ Gravar Áudio de Voz (5s)</button>
-                <p id="recordStatus" style="font-size: 0.78rem; opacity: 0.7; margin-top: 8px;">Microfone pronto.</p>
-            </div>
-            <div class="comments-list" id="muralList" style="padding:0; gap:10px;">
-                <div class="comment-item" style="background:#121218; padding:12px; border-radius:10px;"><span class="comment-user">@carlos_m:</span> Te amo meu amor, para sempre juntos! ❤️</div>
-            </div>
-        </div>
-
-        <!-- 20. PERFIL & MOSAICO DE MEMÓRIAS -->
-        <div id="view-profile" class="static-view view-section">
-            <div class="section-title">👤 Meu Perfil & Mosaico</div>
-            <div class="section-subtitle">Gerencie seu contador de tempo e recordações.</div>
-            
-            <div class="wallet-card" style="background: linear-gradient(135deg, #200c14, #381422); border-color: var(--primary-color);">
-                <div style="font-size: 0.82rem; opacity: 0.8;">Nosso Amor em Contagem</div>
-                <div class="wallet-balance" id="profileDaysDisplay">-- Dias</div>
-                <div style="font-size: 0.78rem; opacity: 0.7; margin-bottom: 10px;">Data em que começaram a namorar:</div>
-                <input type="date" id="relationshipStartDate" class="form-input" onchange="updateRelationshipDate(this.value)">
-            </div>
-
-            <div style="margin: 18px 0 10px; font-weight: 800; font-size: 0.95rem;">📸 Grelha de Memórias (Mosaico)</div>
-            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:6px;">
-                <div style="background:#1a1a24; height:90px; border-radius:8px; display:grid; place-items:center; font-size:1.5rem;">🌸</div>
-                <div style="background:#1a1a24; height:90px; border-radius:8px; display:grid; place-items:center; font-size:1.5rem;">🌅</div>
-                <div style="background:#1a1a24; height:90px; border-radius:8px; display:grid; place-items:center; font-size:1.5rem;">🍷</div>
-            </div>
-        </div>
-
-        <!-- SORTEIOS E EXPERIÊNCIAS -->
-        <div id="view-giveaways" class="static-view view-section">
-            <div class="section-title">🎁 Sorteios & Experiências</div>
-            <div class="section-subtitle">Campanhas exclusivas para casais parceiros do Clube Wins.</div>
-            <div class="poll-card">
-                <div class="poll-question">🌟 Sorteio: Jantar Romântico em Brasília</div>
-                <p style="font-size:0.85rem; opacity:0.8; margin-bottom:12px;">Concorra a um voucher duplo num restaurante parceiro.</p>
-                <button class="submit-btn" onclick="showToast('Inscrição no sorteio realizada com sucesso! 🍀')">Participar do Sorteio</button>
-            </div>
-        </div>
-
-        <!-- CONFIGURAÇÕES & PRIVACIDADE -->
-        <div id="view-settings" class="static-view view-section">
-            <div class="section-title">⚙ Temas & Privacidade</div>
-            <div class="section-subtitle">Personalize cores e gerencie a visibilidade do perfil.</div>
-            
-            <div class="poll-card">
-                <div class="poll-question">🎨 Escolher Tema de Cores</div>
-                <div style="display: flex; gap: 8px; margin-top: 10px;">
-                    <button class="submit-btn" style="background: #ff3366; font-size:0.75rem;" onclick="setTheme('theme-rose')">Rosa</button>
-                    <button class="submit-btn" style="background: #ff5c33; font-size:0.75rem;" onclick="setTheme('theme-sunset')">Pôr do Sol</button>
-                    <button class="submit-btn" style="background: #3388ff; font-size:0.75rem;" onclick="setTheme('theme-midnight')">Noite</button>
-                </div>
-            </div>
-
-            <div class="poll-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><strong>Modo Privado Temporário</strong><p style="font-size:0.75rem; opacity:0.7;">Ocultar perfil do feed público</p></div>
-                <input type="checkbox" onchange="showToast('Modo privado alterado com sucesso!')">
-            </div>
-
-            <button class="submit-btn" style="background: #dc3545; margin-top: 10px;" onclick="clearLocalData()">Limpar Dados Locais</button>
-        </div>
-
-        <!-- TELAS DE CRIADOR -->
-        <div id="view-creators" class="static-view view-section">
-            <button class="back-link" onclick="returnToFeed()">← Voltar ao Início</button>
-            <div class="section-title" style="margin-top:15px;">✨ Criadores Parceiros</div>
-            <div id="creatorDirectory">
-                <div class="creator-card">
-                    <div><strong>@casal_wins</strong><p style="font-size:0.75rem; opacity:0.7;">Perfil oficial da comunidade.</p></div>
-                    <button onclick="openCreator('casal_wins')">Ver Perfil</button>
-                </div>
-            </div>
-        </div>
-        
-        <div id="view-creator" class="static-view view-section">
-            <button class="back-link" onclick="returnToFeed()">← Voltar</button>
-            <h2 id="creatorName" style="margin-top:15px; font-size:1.4rem;"></h2>
-            <p id="creatorBio" style="font-size:0.9rem; opacity:0.8; margin-top:8px;"></p>
-        </div>
-
-        <!-- COMENTÁRIOS DRAWER -->
-        <div class="comments-drawer" id="commentsDrawer">
-            <div class="drawer-header">Comentários<button class="close-drawer" onclick="closeAllModals()">✕</button></div>
-            <div class="comments-list" id="commentsList"><div class="comment-item"><span class="comment-user">@mariana:</span> Muito lindo o vídeo! 💕</div></div>
-            <div class="comment-input-area">
-                <input type="text" class="comment-input" id="commentInput" placeholder="Adicione um comentário...">
-                <button class="send-comment-btn" onclick="addComment()">Publicar</button>
-            </div>
-        </div>
-
-        <!-- SHARE MODAL -->
-        <div class="share-modal" id="shareModal">
-            <div style="font-weight: 700; text-align: center; margin-bottom: 5px;">Exportar e Partilhar</div>
-            <div class="share-grid">
-                <button class="share-option" onclick="shareAction('WhatsApp')"><span>💚</span> WhatsApp</button>
-                <button class="share-option" onclick="shareAction('Copiar')"><span>🔗</span> Copiar Link</button>
-            </div>
-            <button class="submit-btn" style="margin-top: 18px;" onclick="closeAllModals()">Cancelar</button>
-        </div>
-
-        <!-- Barra Inferior -->
-        <div class="bottom-nav">
-            <button class="nav-item active" onclick="switchTab('feed', this); toggleHeader(true)"><span>🏠</span>Início</button>
-            <button class="nav-item" onclick="switchTab('trending', this); toggleHeader(false)"><span>📊</span>Enquetes</button>
-            <button class="upload-center-btn" onclick="switchTab('upload', this); toggleHeader(false)">+</button>
-            <button class="nav-item" onclick="switchTab('chat', this); toggleHeader(false)"><span>💬</span>Mural</button>
-            <button class="nav-item" onclick="switchTab('profile', this); toggleHeader(false)"><span>👤</span>Perfil</button>
-        </div>
-    </div>
+    <footer>
+        <p>&copy; 2026 Clube Wins. Todos os direitos reservados.</p>
+    </footer>
 
     <script>
-        let followedCreators = new Set();
-        let feedMode = 'for-you';
-        let savedFavorites = new Set();
-        let isRecording = false;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadRelationshipData();
-            loadSavedTheme();
-            loadSavedExtras();
-            loadPersistentLists();
-        });
-
-        function playClickSound() {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(580, ctx.currentTime);
-                gain.gain.setValueAtTime(0.03, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.08);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.08);
-            } catch (e) {}
-        }
-
-        function toggleSideMenu(open) {
-            const menu = document.getElementById('sideMenu');
-            const overlay = document.getElementById('modalOverlay');
-            if (open) { menu.classList.add('open'); overlay.classList.add('active'); }
-            else { menu.classList.remove('open'); overlay.classList.remove('active'); }
-        }
-
-        function switchTab(viewName, buttonElement) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-view'));
-            const target = document.getElementById('view-' + viewName);
-            if(target) target.classList.add('active-view');
-            document.querySelectorAll('.bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
-            if (buttonElement) buttonElement.classList.add('active');
-            toggleHeader(viewName === 'feed');
-        }
-
-        function openMenuView(viewName) {
-            toggleSideMenu(false);
-            switchTab(viewName, null);
-            toggleHeader(viewName === 'feed');
-        }
-
-        function toggleHeader(show) {
-            document.getElementById('topHeaderBar').style.display = show ? 'flex' : 'none';
-        }
-
-        function setFeedMode(mode, button) {
-            document.querySelectorAll('.header-tabs button').forEach(tab => tab.classList.remove('active'));
-            button.classList.add('active');
-        }
-
-        function votePoll(element, pollId) {
-            const card = document.getElementById(pollId);
-            if(card) {
-                card.querySelectorAll('.poll-option').forEach(opt => opt.classList.add('voted'));
-            }
-            element.classList.add('voted');
-            showToast('Voto registado com sucesso! Obrigado pela participação. 📊');
-        }
-
-        function openReport(btn) {
-            showToast('Vídeo denunciado. A moderação irá analisar em breve.');
-        }
-
-        function openCreator(name) {
-            const nameEl = document.getElementById('creatorName');
-            const bioEl = document.getElementById('creatorBio');
-            if(nameEl) nameEl.innerText = `@${name}`;
-            if(bioEl) bioEl.innerText = `Perfil verificado e criador de conteúdos parceiro no Clube Wins.`;
-            switchTab('creator', null);
-            toggleHeader(false);
-        }
-
-        function openCreators() {
-            switchTab('creators', null);
-            toggleHeader(false);
-        }
-
-        function returnToFeed() {
-            switchTab('feed', document.querySelector('.bottom-nav .nav-item'));
-            toggleHeader(true);
-        }
-
-        function generateAiCaption() {
-            const suggestions = [
-                "O amor da minha vida em um só vídeo! ❤️✨ #Casal #AmorEterno",
-                "Com você, cada segundo é especial. 🌹 #TikTokDoAmor",
-                "Nossas loucuras combinam perfeitamente! 😂❤️ #CoupleGoals",
-                "Construindo momentos inesquecíveis juntos. 🌅💍"
-            ];
-            const random = suggestions[Math.floor(Math.random() * suggestions.length)];
-            document.getElementById('captionInput').value = random;
-            showToast('Legenda mágica gerada com sucesso! ✨');
-        }
-
-        function spinTruthOrDare(type) {
-            const items = type === 'Verdade' ? [
-                "Qual foi o exato momento em que percebeu que estava apaixonado(a)?",
-                "Qual é a mania mais fofa do seu parceiro(a)?",
-                "Se pudessem viajar para qualquer lugar agora, para onde iriam?"
-            ] : [
-                "Faça uma declaração de amor cantando a vossa música favorita.",
-                "Dê um abraço de 30 segundos sem falar nada.",
-                "Imite a forma como o seu amor acorda de manhã."
-            ];
-            const chosen = items[Math.floor(Math.random() * items.length)];
-            document.getElementById('truthOrDareBox').innerText = `${type}: ${chosen}`;
-            showToast(`Novo desafio de ${type} sorteado! 🔥`);
-        }
-
-        function spinDateRandomizer() {
-            const ideas = [
-                "🍝 Noite de Fondue ou Jantar à luz de velas em casa",
-                "🌅 Ver o pôr do sol em um lugar alto com lanches",
-                "🍿 Maratona de filmes com pipoca e pijama combinando",
-                "🚗 Passeio de carro sem rumo ouvindo a vossa playlist favorita",
-                "🥞 Café da manhã reforçado servido na cama"
-            ];
-            const chosen = ideas[Math.floor(Math.random() * ideas.length)];
-            document.getElementById('dateIdeaResult').innerText = chosen;
-            showToast('Ideia de encontro sorteada! 🎉');
-        }
-
-        function saveTimeCapsule(e) {
-            e.preventDefault();
-            const msg = document.getElementById('capsuleMessage').value;
-            const date = document.getElementById('capsuleDate').value;
-            if(!msg || !date) return;
-            showToast('Cápsula trancada com sucesso! 🔒 Guardada para ' + date);
-            document.getElementById('capsuleMessage').value = '';
-            document.getElementById('capsuleDate').value = '';
-        }
-
-        function sendInviteWhatsApp() {
-            const type = document.getElementById('inviteType').value;
-            const text = encodeURIComponent(`Olá meu amor! 💖 Foste convidado(a) para: ${type}. Aceitas? Aceita no Clube Wins!`);
-            window.open(`https://wa.me/?text=${text}`, '_blank');
-        }
-
-        function saveGratitudeEntry() {
-            const text = document.getElementById('gratitudeText').value;
-            if(!text) return;
-            showToast('Mensagem guardada no Diário de Gratidão com segurança! 📔');
-            document.getElementById('gratitudeText').value = '';
-        }
-
-        function saveCoupleSong() {
-            const song = document.getElementById('coupleSongInput').value;
-            if(!song) return;
-            localStorage.setItem('clubewins_song', song);
-            document.getElementById('currentSongDisplay').innerText = `🎵 Música Oficial: "${song}"`;
-            showToast('Música do casal definida com sucesso! ❤️');
-        }
-
-        function addMovieReview() {
-            const title = document.getElementById('movieTitle').value;
-            const review = document.getElementById('movieReview').value;
-            if(!title) return;
-            
-            let movies = JSON.parse(localStorage.getItem('clubewins_movies') || '[]');
-            movies.push({ title, review });
-            localStorage.setItem('clubewins_movies', JSON.stringify(movies));
-
-            renderMovies();
-            document.getElementById('movieTitle').value = '';
-            document.getElementById('movieReview').value = '';
-            showToast('Filme adicionado ao registo! 🍿');
-        }
-
-        function renderMovies() {
-            const container = document.getElementById('movieListContainer');
-            if(!container) return;
-            container.innerHTML = '';
-            let movies = JSON.parse(localStorage.getItem('clubewins_movies') || '[]');
-            movies.forEach(m => {
-                const item = document.createElement('div');
-                item.style.background = '#1a1a24';
-                item.style.padding = '10px';
-                item.style.borderRadius = '8px';
-                item.style.fontSize = '0.85rem';
-                item.innerHTML = `<strong>🎬 ${m.title}</strong><br><span style="opacity:0.7;">${m.review || 'Sem nota'}</span>`;
-                container.prepend(item);
-            });
-        }
-
-        function addTravelPlace() {
-            const place = document.getElementById('travelPlace').value;
-            if(!place) return;
-
-            let places = JSON.parse(localStorage.getItem('clubewins_places') || '[]');
-            places.push(place);
-            localStorage.setItem('clubewins_places', JSON.stringify(places));
-
-            renderTravels();
-            document.getElementById('travelPlace').value = '';
-            showToast('Destino registado com sucesso! 🗺️');
-        }
-
-        function renderTravels() {
-            const container = document.getElementById('travelListContainer');
-            if(!container) return;
-            container.innerHTML = '';
-            let places = JSON.parse(localStorage.getItem('clubewins_places') || '[]');
-            places.forEach(p => {
-                const item = document.createElement('div');
-                item.style.background = '#1a1a24';
-                item.style.padding = '10px';
-                item.style.borderRadius = '8px';
-                item.style.fontSize = '0.85rem';
-                item.innerHTML = `✈️ ${p}`;
-                container.prepend(item);
-            });
-        }
-
-        function spinDecider() {
-            const options = ["Ele escolhe o filme!", "Ela escolhe o filme!", "Ele lava a louça!", "Ela lava a louça!", "Pedir pizza hoje! 🍕", "Sair para jantar fora! 🍷"];
-            const chosen = options[Math.floor(Math.random() * options.length)];
-            document.getElementById('deciderResult').innerText = chosen;
-            showToast('Sorteio realizado! 🪙');
-        }
-
-        function spinFoodPicker() {
-            const foods = ["🍕 Pizza Artesanal", "🍔 Smash Burgers", "🍣 Comida Japonesa (Sushi)", "🍝 Massa Italiana", "🌮 Comida Mexicana", "🥗 Leve e Saudável"];
-            const chosen = foods[Math.floor(Math.random() * foods.length)];
-            document.getElementById('foodResult').innerText = chosen;
-            showToast('Culinária sorteada! Bom apetite! 🍽️');
-        }
-
-        function generatePromise() {
-            const promises = [
-                "Prometo fazer o teu café favorito amanhã de manhã. ☕",
-                "Prometo dar-te um abraço apertado de 1 minuto sem motivo especial. 🤗",
-                "Prometo deixar-te escolher o próximo filme sem reclamar. 🎬",
-                "Prometo enviar uma mensagem fofa a meio do teu dia de trabalho. 💌"
-            ];
-            const chosen = promises[Math.floor(Math.random() * promises.length)];
-            document.getElementById('promiseBox').innerText = chosen;
-            showToast('Promessa da semana gerada! 📜');
-        }
-
-        function saveMorningMsg() {
-            const msg = document.getElementById('morningText').value;
-            if(!msg) return;
-            localStorage.setItem('clubewins_morning', msg);
-            document.getElementById('displayMorningMsg').innerText = `"${msg}"`;
-            showToast('Mensagem ao acordar guardada com sucesso! ☀️');
-            document.getElementById('morningText').value = '';
-        }
-
-        function saveBucketState(id) {
-            const checked = document.getElementById('bucket' + id).checked;
-            localStorage.setItem('bucket_' + id, checked);
-            showToast('Meta atualizada com sucesso! 🎯');
-        }
-
-        function loadPersistentLists() {
-            renderMovies();
-            renderTravels();
-            
-            const song = localStorage.getItem('clubewins_song');
-            if(song) document.getElementById('currentSongDisplay').innerText = `🎵 Música Oficial: "${song}"`;
-
-            const morning = localStorage.getItem('clubewins_morning');
-            if(morning) document.getElementById('displayMorningMsg').innerText = `"${morning}"`;
-
-            for(let i=1; i<=3; i++) {
-                const state = localStorage.getItem('bucket_' + i) === 'true';
-                const el = document.getElementById('bucket' + i);
-                if(el) el.checked = state;
-            }
-        }
-
-        function loadSavedExtras() {
-            loadPersistentLists();
-        }
-
-        function updateRelationshipDate(dateStr) {
-            if(!dateStr) return;
-            localStorage.setItem('clubewins_start_date', dateStr);
-            calculateDaysTogether(dateStr);
-            showToast('Data de relacionamento salva com sucesso! ❤');
-        }
-
-        function calculateDaysTogether(startDateStr) {
-            const [year, month, day] = startDateStr.split('-').map(Number);
-            const start = new Date(year, month - 1, day);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            start.setHours(0, 0, 0, 0);
-            const diffTime = today - start;
-            const diffDays = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
-            document.getElementById('profileDaysDisplay').innerText = `${diffDays} Dias`;
-            document.getElementById('menuDaysCount').innerText = `Juntos há ${diffDays} dias`;
-        }
-
-        function loadRelationshipData() {
-            const saved = localStorage.getItem('clubewins_start_date');
-            if(saved) {
-                document.getElementById('relationshipStartDate').value = saved;
-                calculateDaysTogether(saved);
-            }
-        }
-
-        function setTheme(themeName) {
-            const body = document.getElementById('appBody');
-            body.classList.remove('theme-rose', 'theme-sunset', 'theme-midnight');
-            if (themeName !== 'theme-rose') {
-                body.classList.add(themeName);
-            }
-            localStorage.setItem('clubewins_theme', themeName);
-            showToast('Tema atualizado com sucesso! 🎨');
-        }
-
-        function loadSavedTheme() {
-            const savedTheme = localStorage.getItem('clubewins_theme');
-            if(savedTheme && savedTheme !== 'theme-rose') {
-                document.getElementById('appBody').classList.add(savedTheme);
-            }
-        }
-
-        function answerTrivia(isCorrect) {
-            if(isCorrect) showToast('Resposta certa! Vocês se conhecem perfeitamente! 🥰');
-            else showToast('Ops! Errou, vale um abraço apertado de castigo! 🤗');
-        }
-
-        function toggleRecordAudio() {
-            const status = document.getElementById('recordStatus');
-            const btn = document.getElementById('recordAudioBtn');
-            if(!isRecording) {
-                isRecording = true;
-                btn.style.background = '#dc3545';
-                btn.innerText = '⏹️ Gravando áudio...';
-                status.innerText = 'Fale agora o seu recado romântico...';
-                setTimeout(() => {
-                    isRecording = false;
-                    btn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
-                    btn.innerText = '🎙️ Gravar Áudio de Voz (5s)';
-                    status.innerText = 'Áudio gravado e publicado no mural com sucesso! 🎵';
-                    appendMuralAudioItem();
-                }, 4000);
-            }
-        }
-
-        function appendMuralAudioItem() {
-            const list = document.getElementById('muralList');
-            const item = document.createElement('div');
-            item.className = 'comment-item';
-            item.style.background = '#121218';
-            item.style.padding = '12px';
-            item.style.borderRadius = '10px';
-            item.innerHTML = `<span class="comment-user">@voce:</span> 🎵 <i>[Áudio de voz enviado - 0:04]</i> ❤️`;
-            list.prepend(item);
-        }
-
-        function toggleFavorite(btn) {
-            const reel = btn.closest('.reel-item');
-            const postId = reel.dataset.postId;
-            if (savedFavorites.has(postId)) {
-                savedFavorites.delete(postId);
-                btn.querySelector('span').style.color = '#fff';
-                showToast('Removido dos favoritos.');
+        // Função de Modo Escuro / Claro
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute("data-theme");
+            if (currentTheme === "dark") {
+                html.removeAttribute("data-theme");
+                localStorage.setItem("theme", "light");
             } else {
-                savedFavorites.add(postId);
-                btn.querySelector('span').style.color = 'var(--primary-color)';
-                showToast('Vídeo salvo nos favoritos! ⭐');
+                html.setAttribute("data-theme", "dark");
+                localStorage.setItem("theme", "dark");
             }
         }
 
-        function answerQuiz(option) {
-            showToast(`Você votou em: "${option}". Nível de sintonia: 100% compatíveis! ❤️`);
-            document.getElementById('quizCard').innerHTML = `<div class="poll-question">🎉 Resultado Registrado!</div><p style="font-size:0.9rem; text-align:center;">Vocês têm uma sintonia incrível de casal!</p>`;
+        // Carregar preferência salva do usuário
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
         }
 
-        function showToast(msg) {
-            const toast = document.getElementById('toastNotification');
-            toast.innerText = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
+        // Botão Surpresa (Ideia 5)
+        function surpresa() {
+            const mensagens = [
+                "🎉 Parabéns! Você encontrou o easter egg secreto do Clube Wins!",
+                "💡 Dica de ouro: Compartilhe o site com seus amigos para desbloquear novidades.",
+                "🚀 Grandes atualizações estão chegando em breve no Clube Wins!"
+            ];
+            const randomMsg = mensagens[Math.floor(Math.random() * mensagens.length)];
+            alert(randomMsg);
         }
 
-        function closeAllModals() {
-            document.getElementById('sideMenu').classList.remove('open');
-            document.getElementById('commentsDrawer').classList.remove('open');
-            document.getElementById('shareModal').classList.remove('open');
-            document.getElementById('modalOverlay').classList.remove('active');
-        }
+        // Lógica do Minigame
+        let score = 0;
+        let gameActive = false;
+        let timeLeft = 10;
+        let timerInterval;
 
-        function likeVideo(e) {
-            const btn = e.currentTarget;
-            const span = btn.querySelector('span');
-            span.style.color = span.style.color === 'rgb(255, 51, 102)' ? '#fff' : 'var(--primary-color)';
-        }
+        function incrementScore() {
+            const scoreDisplay = document.getElementById("score");
+            const timerDisplay = document.getElementById("timer");
+            const btn = document.getElementById("gameBtn");
 
-        function doubleClickLike(e) {
-            const reel = e.currentTarget;
-            const heart = document.createElement('div');
-            heart.className = 'burst-heart';
-            heart.innerHTML = '❤️';
-            heart.style.left = `${e.clientX - reel.getBoundingClientRect().left}px`;
-            heart.style.top = `${e.clientY - reel.getBoundingClientRect().top}px`;
-            reel.appendChild(heart);
-            setTimeout(() => heart.remove(), 750);
-        }
+            if (!gameActive) {
+                // Iniciar o jogo no primeiro clique
+                gameActive = true;
+                score = 0;
+                timeLeft = 10;
+                scoreDisplay.textContent = score;
+                btn.textContent = "Clique o mais rápido que puder!";
 
-        function publishVideo(e) {
-            e.preventDefault();
-            showToast('Vídeo publicado com sucesso com efeitos e stickers aplicados!');
-            switchTab('feed', document.querySelector('.bottom-nav .nav-item'));
-            toggleHeader(true);
-        }
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    timerDisplay.textContent = `Tempo restante: ${timeLeft}s`;
 
-        function toggleComments(open) {
-            document.getElementById('commentsDrawer').classList.toggle('open', open);
-            document.getElementById('modalOverlay').classList.toggle('active', open);
-        }
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        gameActive = false;
+                        btn.textContent = "Jogar de Novo";
+                        alert(`Fim de jogo! Sua pontuação final foi: ${score} cliques.`);
+                        timerDisplay.textContent = "";
+                    }
+                }, 1000);
+            }
 
-        function toggleShare(open) {
-            document.getElementById('shareModal').classList.toggle('open', open);
-            document.getElementById('modalOverlay').classList.toggle('active', open);
-        }
-
-        function addComment() {
-            const input = document.getElementById('commentInput');
-            if(!input.value) return;
-            const list = document.getElementById('commentsList');
-            const item = document.createElement('div');
-            item.className = 'comment-item';
-            item.innerHTML = `<span class="comment-user">@voce:</span> ${input.value}`;
-            list.append(item);
-            input.value = '';
-            showToast('Comentário enviado!');
-        }
-
-        function shareAction(type) {
-            closeAllModals();
-            showToast('Link do Clube Wins copiado para exportação!');
-        }
-
-        function clearLocalData() {
-            if(confirm('Deseja limpar os dados salvos neste dispositivo?')) {
-                localStorage.clear();
-                location.reload();
+            if (gameActive) {
+                score++;
+                scoreDisplay.textContent = score;
             }
         }
     </script>
