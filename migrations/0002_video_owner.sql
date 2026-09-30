@@ -1,0 +1,1 @@
+ALTER TABLE videos ADD COLUMN uploader_id TEXT NOT NULL DEFAULT '';
