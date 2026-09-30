@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TikTok do Amor - Clube Wins</title>
+    <link rel="icon" href="data:,">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'TikTokFont', 'Segoe UI', system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-        body, html { width: 100%; height: 100%; background: #000; color: #fff; overflow: hidden; }
+        body, html { width: 100%; height: 100%; background:
+            radial-gradient(circle at top, rgba(255, 51, 102, 0.18), transparent 35%),
+            radial-gradient(circle at bottom, rgba(69, 117, 255, 0.14), transparent 35%),
+            #05070b; color: #fff; overflow: hidden; }
 
         .app-container {
             position: relative;
@@ -15,11 +19,13 @@
             height: 100vh;
             height: 100dvh;
             margin: 0 auto;
-            background: #000;
+            background: linear-gradient(180deg, #090b10 0%, #090a0d 100%);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255,255,255,0.05);
             overflow: hidden;
+            border-left: 1px solid rgba(255,255,255,0.06);
+            border-right: 1px solid rgba(255,255,255,0.06);
         }
 
         /* Top Header com Botão do Menu Lateral */
@@ -28,45 +34,58 @@
             top: 0; left: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
             padding: 18px 20px; z-index: 10;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
+            background: linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0));
             pointer-events: none;
+            backdrop-filter: blur(8px);
         }
         .menu-toggle-btn {
-            background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); color: #fff; font-size: 1.4rem; cursor: pointer;
             pointer-events: auto; text-shadow: 0 1px 3px rgba(0,0,0,0.8); display: flex; align-items: center;
+            border-radius: 12px; width: 40px; height: 40px; justify-content: center; box-shadow: 0 10px 18px rgba(0,0,0,0.2);
         }
+        .view-menu-toggle { position: absolute; top: 14px; right: 14px; z-index: 12; }
         .header-tabs {
-            display: flex; gap: 20px; font-weight: 600; font-size: 1rem; pointer-events: auto;
+            display: flex; gap: 18px; font-weight: 700; font-size: 0.95rem; pointer-events: auto;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 8px 12px; border-radius: 999px;
+            backdrop-filter: blur(10px);
         }
-        .header-tabs span { opacity: 0.5; cursor: pointer; transition: all 0.2s ease; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
-        .header-tabs span.active { opacity: 1; color: #fff; border-bottom: 2px solid #fff; padding-bottom: 2px; }
-        .header-right-placeholder { width: 24px; } /* Para equilibrar o layout */
+        .header-tabs button { background: none; border: 0; color: rgba(255,255,255,0.7); opacity: 1; cursor: pointer; font-size: inherit; font-weight: inherit; text-shadow: 0 1px 3px rgba(0,0,0,0.8); padding: 4px 8px; border-radius: 10px; }
+        .header-tabs button.active { opacity: 1; color: #fff; background: linear-gradient(135deg, rgba(255,51,102,0.28), rgba(106,90,205,0.18)); border: 1px solid rgba(255,255,255,0.08); }
+        .header-right-placeholder { width: 40px; }
 
         /* --- MENU LATERAL (DRAWER) --- */
         .side-menu {
             position: absolute; top: 0; left: -280px; width: 280px; height: 100%;
-            background: #16161c; z-index: 50; transition: left 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
+            background: linear-gradient(180deg, rgba(18,18,26,0.98), rgba(12,12,15,0.98)); z-index: 50; transition: left 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
             display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+            box-shadow: 12px 0 36px rgba(0,0,0,0.82);
+            backdrop-filter: blur(16px);
         }
         .side-menu.open { left: 0; }
         
         .side-menu-header {
             padding: 25px 20px; display: flex; align-items: center; justify-content: space-between;
+            gap: 12px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(135deg, rgba(255,51,102,0.14), rgba(104,91,255,0.08));
         }
         .side-menu-profile { display: flex; align-items: center; gap: 12px; }
-        .side-avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #ff3366, #ff5c8a); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; }
+        .side-profile-action { flex: 1; min-width: 0; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; }
+        .side-menu-close { flex: 0 0 36px; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; background: rgba(255,255,255,0.05); color: #fff; font-size: 1rem; cursor: pointer; }
+        .side-avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #ff3366, #ff5c8a); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; box-shadow: 0 10px 25px rgba(255,51,102,0.4); }
         .side-user-info h4 { font-size: 0.95rem; font-weight: 700; }
         .side-user-info p { font-size: 0.75rem; opacity: 0.5; }
 
         .side-menu-links { flex: 1; padding: 15px 0; overflow-y: auto; }
+        .side-menu-section-label { padding: 12px 22px 4px; color: rgba(255,255,255,0.42); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; }
         .side-link-item {
-            display: flex; align-items: center; gap: 15px; padding: 14px 20px; color: #fff;
-            text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background 0.2s;
+            display: flex; align-items: center; gap: 15px; width: calc(100% - 20px); padding: 12px 20px; color: #fff;
+            background: transparent; border: 0; text-align: left; font: inherit; font-size: 0.88rem; font-weight: 500; cursor: pointer;
+            transition: background 0.2s, transform 0.2s; border-left: 2px solid transparent; margin: 3px 10px; border-radius: 12px;
         }
-        .side-link-item:hover { background: rgba(255,255,255,0.04); }
-        .side-link-item span { font-size: 1.2rem; width: 24px; text-align: center; }
+        .side-link-item:hover { background: rgba(255,255,255,0.04); transform: translateX(2px); border-left-color: rgba(255,51,102,0.8); }
+        .side-link-item:focus-visible, .side-menu-close:focus-visible, .side-profile-action:focus-visible { outline: 2px solid #ff5c8a; outline-offset: 2px; }
+        .side-link-item .side-icon { flex: 0 0 24px; font-size: 1.2rem; text-align: center; }
 
         .side-menu-footer {
             padding: 15px 20px; border-top: 1px solid rgba(255,255,255,0.06);
@@ -78,6 +97,7 @@
             display: none; flex: 1; width: 100%; height: 100%;
             overflow-y: scroll; scroll-snap-type: y mandatory;
             scrollbar-width: none; -webkit-overflow-scrolling: touch;
+            background: linear-gradient(180deg, rgba(6,7,11,1), rgba(9,10,15,1));
         }
         .view-section.active-view { display: block; }
         .view-section::-webkit-scrollbar { display: none; }
@@ -87,26 +107,39 @@
             position: relative; width: 100%; height: 100%;
             scroll-snap-align: start; scroll-snap-stop: always;
             display: flex; justify-content: center; align-items: center; background: #000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .reel-video { width: 100%; height: 100%; object-fit: cover; }
+        .video-fallback {
+            position: absolute; inset: 0; display: flex; justify-content: center; align-items: center;
+            padding: 30px; background: linear-gradient(145deg, #30151f, #090909 70%);
+            color: rgba(255,255,255,0.75); text-align: center; font-size: 0.9rem;
+        }
 
         /* Ad Card */
         .ad-card {
-            background: linear-gradient(135deg, #120c1c, #1f122e);
+            background: linear-gradient(135deg, #120c1c 0%, #1a1122 35%, #0a0912 100%);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 35px; text-align: center; border-left: 3px solid #ff3366;
+            padding: 35px; text-align: center; border-left: 3px solid #ff3366; position: relative; overflow: hidden;
+        }
+        .ad-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.16), transparent 25%);
+            pointer-events: none;
         }
         .ad-badge { 
             background: rgba(255, 51, 102, 0.15); color: #ff3366; border: 1px solid rgba(255,51,102,0.4);
             font-size: 0.7rem; padding: 5px 12px; border-radius: 20px; margin-bottom: 20px; 
             text-transform: uppercase; font-weight: 700; letter-spacing: 1.5px; 
+            position: relative; z-index: 1;
         }
-        .ad-content h3 { margin-bottom: 12px; font-size: 1.4rem; color: #fff; font-weight: 700; }
-        .ad-content p { font-size: 0.9rem; opacity: 0.75; margin-bottom: 25px; line-height: 1.5; }
+        .ad-content h3 { margin-bottom: 12px; font-size: 1.4rem; color: #fff; font-weight: 700; position: relative; z-index: 1; }
+        .ad-content p { font-size: 0.9rem; opacity: 0.75; margin-bottom: 25px; line-height: 1.5; position: relative; z-index: 1; }
         .ad-btn { 
             background: linear-gradient(135deg, #ff3366, #ff5c8a); color: #fff; padding: 14px 32px; 
             border-radius: 30px; font-weight: bold; text-decoration: none; 
-            box-shadow: 0 6px 20px rgba(255,51,102,0.4); display: inline-block;
+            box-shadow: 0 12px 26px rgba(255,51,102,0.35); display: inline-block; position: relative; z-index: 1;
         }
 
         /* Video Details */
@@ -118,14 +151,16 @@
             position: absolute; bottom: 75px; left: 16px; right: 80px; z-index: 4; pointer-events: none;
         }
         .author { font-weight: 700; font-size: 1rem; margin-bottom: 6px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+        button.author { display: block; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; pointer-events: auto; }
         .caption { font-size: 0.88rem; line-height: 1.35; opacity: 0.9; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+        .report-btn { margin-top: 8px; padding: 4px 0; border: 0; color: rgba(255,255,255,0.8); background: transparent; font-size: 0.72rem; cursor: pointer; pointer-events: auto; }
 
         /* Sidebar Actions */
         .actions-sidebar {
             position: absolute; right: 12px; bottom: 75px; z-index: 4;
             display: flex; flex-direction: column; align-items: center; gap: 18px;
         }
-        .action-icon-btn { background: none; border: none; color: #fff; text-align: center; cursor: pointer; text-shadow: 0 2px 4px rgba(0,0,0,0.6); }
+        .action-icon-btn { background: rgba(17,17,22,0.42); border: 1px solid rgba(255,255,255,0.08); color: #fff; text-align: center; cursor: pointer; text-shadow: 0 2px 4px rgba(0,0,0,0.6); border-radius: 20px; padding: 10px 8px; backdrop-filter: blur(8px); box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
         .action-icon-btn span { font-size: 1.7rem; display: block; margin-bottom: 2px; transition: transform 0.2s; }
         .action-icon-btn:active span { transform: scale(1.3); }
         .action-icon-btn small { font-size: 0.7rem; font-weight: 600; opacity: 0.9; }
@@ -211,37 +246,65 @@
         .wallet-card { background: linear-gradient(135deg, #180c20, #2b1438); border: 1px solid rgba(255, 51, 102, 0.3); border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 22px; }
         .wallet-balance { font-size: 2rem; font-weight: 800; color: #ff3366; margin: 6px 0; }
         .watch-ad-reward-btn { background: #ff3366; color: #fff; border: none; padding: 9px 18px; border-radius: 18px; font-weight: 700; font-size: 0.82rem; cursor: pointer; margin-top: 8px; }
+        .watch-ad-reward-btn:disabled { background: #3a3a42; color: #aaa; cursor: not-allowed; }
+        .adsense-container { margin: 22px 0; padding: 10px; min-height: 110px; background: #121218; border: 1px solid rgba(255,255,255,0.08); text-align: center; }
+        .adsense-label { display: block; margin-bottom: 8px; font-size: 0.68rem; opacity: 0.45; text-transform: uppercase; }
+        .creator-profile { display: flex; align-items: center; gap: 14px; margin: 22px 0; }
+        .creator-avatar { width: 58px; height: 58px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(135deg, #ff3366, #ff5c8a); font-weight: 800; }
+        .creator-follow-btn, .back-link { padding: 10px 14px; border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; background: #202028; color: #fff; font-weight: 700; cursor: pointer; }
+        .creator-follow-btn.following { background: #ff3366; border-color: #ff3366; }
+        .creator-card, .creator-video-item, .policy-section { margin: 12px 0; padding: 16px; background: #121218; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; }
+        .creator-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .creator-card button, .creator-video-item button { padding: 8px 10px; border: 1px solid rgba(255,255,255,0.18); border-radius: 6px; background: #202028; color: #fff; cursor: pointer; }
+        .creator-card button:disabled { opacity: 0.55; cursor: not-allowed; }
+        .report-drawer { position: absolute; bottom: -100%; left: 0; width: 100%; max-height: 75%; overflow: auto; z-index: 45; padding: 20px; background: #16161c; border-radius: 20px 20px 0 0; transition: bottom 0.3s ease; }
+        .report-drawer.open { bottom: 0; }
+        .report-form { display: grid; gap: 12px; }
+        .report-form select, .report-form textarea { width: 100%; padding: 11px; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; background: #202028; color: #fff; }
+        .turnstile-widget { min-height: 65px; }
+        .moderation-item { margin: 12px 0; padding: 16px; background: #121218; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; }
+        .moderation-actions { display: flex; gap: 8px; margin-top: 12px; }
+        .moderation-actions button { padding: 8px 12px; border: 0; border-radius: 6px; color: #fff; background: #287a52; cursor: pointer; }
+        .moderation-actions button.reject { background: #983d4a; }
+        .local-data-note { margin-top: 16px; font-size: 0.78rem; line-height: 1.5; opacity: 0.65; }
+        .settings-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; }
+        .settings-row input { width: 20px; height: 20px; accent-color: #ff3366; flex: 0 0 auto; }
+        .settings-row-copy strong { display: block; font-size: 0.88rem; }
+        .settings-row-copy p { margin-top: 4px; font-size: 0.76rem; line-height: 1.4; opacity: 0.6; }
+        [hidden] { display: none !important; }
 
         /* --- BARRA INFERIOR TIKTOK --- */
         .bottom-nav {
             position: absolute; bottom: 0; left: 0; width: 100%;
-            height: 60px; background: #000; 
+            height: 68px; background: rgba(4,5,8,0.92); 
             display: flex; justify-content: space-around; align-items: center; 
-            border-top: 1px solid rgba(255, 255, 255, 0.1); z-index: 10;
+            border-top: 1px solid rgba(255, 255, 255, 0.09); z-index: 10; backdrop-filter: blur(12px);
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.35);
         }
         .nav-item { 
-            background: none; border: none; color: rgba(255, 255, 255, 0.4); 
+            background: none; border: none; color: rgba(255, 255, 255, 0.45); 
             font-size: 0.65rem; cursor: pointer; display: flex; flex-direction: column; 
-            align-items: center; gap: 2px; transition: color 0.2s; font-weight: 500; 
+            align-items: center; gap: 2px; transition: all 0.2s ease; font-weight: 600; 
+            border-radius: 12px; padding: 6px 8px; min-width: 60px;
         }
-        .nav-item.active { color: #fff; font-weight: 700; }
+        .nav-item.active { color: #fff; font-weight: 700; background: rgba(255,255,255,0.04); }
         .nav-item span { font-size: 1.35rem; }
         
         /* Botão Central de Postagem */
         .upload-center-btn {
-            background: #fff; color: #000; width: 38px; height: 28px; border-radius: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4ff 50%, #f5e8ff 100%); color: #000; width: 42px; height: 30px; border-radius: 10px;
             border: none; font-size: 1.2rem; font-weight: bold; cursor: pointer; 
             display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 0 10px rgba(255,255,255,0.3); position: relative;
+            box-shadow: 0 10px 18px rgba(255,255,255,0.18); position: relative;
             transition: transform 0.1s;
         }
         .upload-center-btn::before {
             content: ''; position: absolute; left: -4px; width: 100%; height: 100%;
-            background: rgba(45, 233, 218, 0.5); border-radius: 8px; z-index: -1;
+            background: rgba(45, 233, 218, 0.5); border-radius: 10px; z-index: -1;
         }
         .upload-center-btn::after {
             content: ''; position: absolute; right: -4px; width: 100%; height: 100%;
-            background: rgba(254, 44, 85, 0.5); border-radius: 8px; z-index: -2;
+            background: rgba(254, 44, 85, 0.5); border-radius: 10px; z-index: -2;
         }
         .upload-center-btn:active { transform: scale(0.92); }
     </style>
@@ -254,68 +317,84 @@
         <div class="modal-overlay" id="modalOverlay" onclick="closeAllModals()"></div>
 
         <!-- MENU LATERAL (DRAWER) -->
-        <div class="side-menu" id="sideMenu">
+        <div class="side-menu" id="sideMenu" role="dialog" aria-label="Menu principal" aria-hidden="true" inert>
             <div class="side-menu-header">
-                <div class="side-menu-profile">
+                <button type="button" class="side-menu-profile side-profile-action" onclick="openMenuView('profile')" aria-label="Abrir perfil local">
                     <div class="side-avatar">CW</div>
                     <div class="side-user-info">
                         <h4>Clube Wins</h4>
-                        <p>@clubewins.oficial</p>
+                        <p>Perfil local</p>
                     </div>
-                </div>
-                <button onclick="toggleSideMenu(false)" style="background:none; border:none; color:#aaa; font-size:1.2rem; cursor:pointer;">✕</button>
+                </button>
+                <button type="button" class="side-menu-close" onclick="toggleSideMenu(false)" aria-label="Fechar menu">✕</button>
             </div>
-            <div class="side-menu-links">
-                <a href="#" class="side-link-item" onclick="toggleSideMenu(false); switchTab('profile', document.querySelector('.bottom-nav .nav-item:last-child')); toggleHeader(false);"><span>💎</span> Meus Diamantes</a>
-                <a href="#" class="side-link-item" onclick="toggleSideMenu(false); switchTab('trending', document.querySelector('.bottom-nav .nav-item:nth-child(2)')); toggleHeader(false);"><span>📊</span> Enquetes Ativas</a>
-                <a href="https://clubewins.com.br" target="_blank" class="side-link-item"><span>🌐</span> Site Oficial Clube Wins</a>
-                <a href="#" class="side-link-item" onclick="toggleSideMenu(false); showToast('Configurações em breve!');"><span>⚙️</span> Configurações</a>
-                <a href="#" class="side-link-item" onclick="toggleSideMenu(false); showToast('Termos e Políticas de Privacidade');"><span>📜</span> Termos de Uso</a>
-            </div>
+            <nav class="side-menu-links" aria-label="Navegação do app">
+                <p class="side-menu-section-label">Feed</p>
+                <button type="button" class="side-link-item" onclick="openMenuView('feed', 'for-you')"><span class="side-icon">🏠</span>Para você</button>
+                <button type="button" class="side-link-item" onclick="openMenuView('feed', 'following')"><span class="side-icon">👥</span>Seguindo</button>
+
+                <p class="side-menu-section-label">Criar e descobrir</p>
+                <button type="button" class="side-link-item" onclick="openMenuView('upload')"><span class="side-icon">➕</span>Publicar vídeo</button>
+                <button type="button" class="side-link-item" onclick="openMenuView('trending')"><span class="side-icon">📊</span>Enquetes</button>
+                <button type="button" class="side-link-item" onclick="openMenuView('creators')"><span class="side-icon">✨</span>Criadores</button>
+                <button type="button" class="side-link-item" onclick="openMenuView('chat')"><span class="side-icon">💬</span>Mural da comunidade</button>
+
+                <p class="side-menu-section-label">Sua conta</p>
+                <button type="button" class="side-link-item" onclick="openMenuView('profile')"><span class="side-icon">👤</span>Perfil e monetização</button>
+                <button type="button" class="side-link-item" onclick="openMenuView('settings')"><span class="side-icon">⚙️</span>Configurações</button>
+
+                <p class="side-menu-section-label">Segurança</p>
+                <button type="button" class="side-link-item" onclick="openMenuView('moderation')"><span class="side-icon">🛡️</span>Moderação</button>
+                <button type="button" class="side-link-item" onclick="openMenuView('trust')"><span class="side-icon">📜</span>Regras e privacidade</button>
+                <button type="button" class="side-link-item" onclick="shareAction('Mais')"><span class="side-icon">↗️</span>Compartilhar Clube Wins</button>
+            </nav>
             <div class="side-menu-footer">
-                TikTok do Amor v1.2 • Clube Wins
+                Clube Wins • v1.2
             </div>
         </div>
 
         <!-- Top Header com Botão de Menu Lateral -->
         <div class="top-header" id="topHeaderBar">
-            <button class="menu-toggle-btn" onclick="toggleSideMenu(true)">☰</button>
+            <button id="mainMenuToggle" class="menu-toggle-btn" type="button" onclick="toggleSideMenu(true)" aria-label="Abrir menu" aria-controls="sideMenu" aria-expanded="false">☰</button>
             <div class="header-tabs">
-                <span onclick="switchTab('feed')" class="active">Pra Você</span>
-                <span onclick="switchTab('feed')">Seguindo</span>
+                <button type="button" class="active" aria-pressed="true" onclick="setFeedMode('for-you', this)">Pra Você</button>
+                <button type="button" aria-pressed="false" onclick="setFeedMode('following', this)">Seguindo</button>
             </div>
             <div class="header-right-placeholder"></div>
         </div>
 
+        <button id="viewMenuToggle" class="menu-toggle-btn view-menu-toggle" type="button" onclick="toggleSideMenu(true)" aria-label="Abrir menu" aria-controls="sideMenu" aria-expanded="false" hidden>☰</button>
+
         <!-- 1. FEED -->
         <div id="view-feed" class="view-section active-view">
             
-            <div class="reel-item" ondblclick="doubleClickLike(event)">
-                <video class="reel-video" loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-romantic-couple-holding-hands-at-sunset-41699-large.mp4"></video>
+            <div class="reel-item" data-post-id="demo-casal" data-creator="casal_wins" ondblclick="doubleClickLike(event)">
+                <video class="reel-video" loop muted playsinline src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
                 <div class="gradient-bottom"></div>
                 <div class="video-info">
-                    <div class="author">@casal_wins</div>
-                    <div class="caption">O amor está no ar! ❤️✨ #TikTokDoAmor</div>
+                    <button class="author" type="button" onclick="openCreator('casal_wins')">@casal_wins</button>
+                    <div class="caption">Que o amor floresça todos os dias! 🌷 #TikTokDoAmor</div>
+                    <button class="report-btn" type="button" onclick="openReport(this)">⚑ Denunciar vídeo</button>
                 </div>
                 <div class="actions-sidebar">
                     <button class="action-icon-btn like-btn" onclick="likeVideo(event)">
                         <span>❤️</span>
-                        <small data-count="14.2">14.2K</small>
+                        <small data-count="14.2" data-unit="K">14.2K</small>
                     </button>
-                    <button class="action-icon-btn" onclick="toggleComments(true)">
+                    <button class="action-icon-btn" onclick="toggleComments(true, this)">
                         <span>💬</span>
                         <small>320</small>
                     </button>
                     <button class="action-icon-btn" onclick="toggleShare(true)">
                         <span>↗️</span>
-                        <small>Share</small>
+                        <small>Compartilhar</small>
                     </button>
                 </div>
             </div>
 
             <!-- AD 1 -->
-            <div class="reel-item ad-card">
-                <div class="ad-badge">Patrocinado</div>
+            <div class="reel-item ad-card house-promotion">
+                <div class="ad-badge">Divulgação própria</div>
                 <div class="ad-content">
                     <h3>Clube Wins - Ofertas Exclusivas</h3>
                     <p>Aproveite as melhores novidades e experiências agora mesmo na plataforma!</p>
@@ -323,26 +402,35 @@
                 </div>
             </div>
 
-            <div class="reel-item" ondblclick="doubleClickLike(event)">
-                <video class="reel-video" loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-burning-sparkler-42995-large.mp4"></video>
+            <div class="reel-item" data-post-id="demo-amor" data-creator="amor_eterno" ondblclick="doubleClickLike(event)">
+                <video class="reel-video" loop muted playsinline src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
                 <div class="gradient-bottom"></div>
                 <div class="video-info">
-                    <div class="author">@amor_eterno</div>
-                    <div class="caption">Curtindo cada segundo! 🔥🚀</div>
+                    <button class="author" type="button" onclick="openCreator('amor_eterno')">@amor_eterno</button>
+                    <div class="caption">Pequenos gestos fazem o amor florescer. 🌸</div>
+                    <button class="report-btn" type="button" onclick="openReport(this)">⚑ Denunciar vídeo</button>
                 </div>
                 <div class="actions-sidebar">
                     <button class="action-icon-btn like-btn" onclick="likeVideo(event)">
                         <span>❤️</span>
-                        <small data-count="9.5">9.5K</small>
+                        <small data-count="9.5" data-unit="K">9.5K</small>
                     </button>
-                    <button class="action-icon-btn" onclick="toggleComments(true)">
+                    <button class="action-icon-btn" onclick="toggleComments(true, this)">
                         <span>💬</span>
                         <small>180</small>
                     </button>
                     <button class="action-icon-btn" onclick="toggleShare(true)">
                         <span>↗️</span>
-                        <small>Share</small>
+                        <small>Compartilhar</small>
                     </button>
+                </div>
+            </div>
+
+            <div id="followingEmpty" class="reel-item ad-card" hidden>
+                <div class="ad-content">
+                    <h3>Seu feed está começando</h3>
+                    <p>Siga criadores para ver os vídeos deles nesta aba.</p>
+                    <button class="creator-follow-btn" type="button" onclick="openCreators()">Encontrar criadores</button>
                 </div>
             </div>
 
@@ -355,32 +443,34 @@
 
             <div class="poll-card" id="poll1">
                 <div class="poll-question">Quem é o mais romântico do relacionamento?</div>
-                <div class="poll-option" onclick="votePoll(this, 'poll1')">Ele <span class="pct">42%</span></div>
-                <div class="poll-option" onclick="votePoll(this, 'poll1')">Ela <span class="pct">58%</span></div>
+                <div class="poll-option" data-option-id="ele" onclick="votePoll(this, 'poll1')">Ele <span class="pct">42%</span></div>
+                <div class="poll-option" data-option-id="ela" onclick="votePoll(this, 'poll1')">Ela <span class="pct">58%</span></div>
             </div>
 
             <div class="poll-card" id="poll2">
                 <div class="poll-question">Qual o melhor programa para o fim de semana?</div>
-                <div class="poll-option" onclick="votePoll(this, 'poll2')">Filme e pipoca em casa <span class="pct">71%</span></div>
-                <div class="poll-option" onclick="votePoll(this, 'poll2')">Sair para jantar / Viajar <span class="pct">29%</span></div>
+                <div class="poll-option" data-option-id="filme" onclick="votePoll(this, 'poll2')">Filme e pipoca em casa <span class="pct">71%</span></div>
+                <div class="poll-option" data-option-id="passeio" onclick="votePoll(this, 'poll2')">Sair para jantar / Viajar <span class="pct">29%</span></div>
             </div>
+            <div id="pollTurnstileWidget" class="turnstile-widget" hidden data-sitekey="__TURNSTILE_SITE_KEY__"></div>
         </div>
 
         <!-- 3. UPLOAD -->
         <div id="view-upload" class="static-view view-section">
             <div class="section-title">➕ Postar seu Vídeo</div>
-            <div class="section-subtitle">Compartilhe momentos especiais com todo mundo</div>
-            <div class="upload-form">
-                <div>
-                    <label>Escolher Vídeo do Celular</label>
-                    <input type="file" class="form-input" accept="video/*">
+            <div class="section-subtitle">Enquanto R2 e Turnstile não estiverem ativos, vídeos ficam somente neste navegador e não entram no feed compartilhado.</div>
+            <form class="upload-form" id="uploadForm" onsubmit="publishVideo(event)">
+                <div class="form-group">
+                    <label for="videoInput">Escolher Vídeo do Celular</label>
+                    <input type="file" class="form-input" id="videoInput" accept="video/*" required>
                 </div>
-                <div>
-                    <label>Legenda</label>
-                    <input type="text" class="form-input" placeholder="Escreva uma legenda romântica...">
+                <div class="form-group">
+                    <label for="captionInput">Legenda</label>
+                    <input type="text" class="form-input" id="captionInput" maxlength="300" placeholder="Escreva uma legenda romântica...">
                 </div>
-                <button class="submit-btn" onclick="showToast('Vídeo enviado com sucesso!'); switchTab('feed', document.querySelector('.bottom-nav .nav-item')); toggleHeader(true);">Publicar</button>
-            </div>
+                <div id="uploadTurnstileWidget" class="turnstile-widget" hidden data-sitekey="__TURNSTILE_SITE_KEY__"></div>
+                <button class="submit-btn" type="submit">Adicionar ao Feed</button>
+            </form>
         </div>
 
         <!-- 4. MURAL -->
@@ -399,14 +489,102 @@
             <div class="section-subtitle">Gerencie sua conta e ganhos</div>
 
             <div class="wallet-card">
-                <div style="font-size: 0.82rem; opacity: 0.8;">Seus Diamantes do Amor</div>
-                <div class="wallet-balance" id="diamondBalance">150 💎</div>
-                <div style="font-size: 0.72rem; opacity: 0.6; margin-bottom: 6px;">Assista a um anúncio rápido e ganhe +50 diamantes:</div>
-                <button class="watch-ad-reward-btn" onclick="watchAdForDiamonds()">▶️ Ver Anúncio</button>
+                <div style="font-size: 0.82rem; opacity: 0.8;">Saldo demonstrativo</div>
+                <div class="wallet-balance" id="diamondBalance">0 💎</div>
+                <div style="font-size: 0.72rem; opacity: 0.6; margin-bottom: 6px;">Recompensas por anúncios ainda não estão disponíveis.</div>
+                <button class="watch-ad-reward-btn" type="button" disabled>Indisponível</button>
             </div>
 
-            <div style="font-weight: 700; margin-bottom: 10px; font-size: 0.9rem;">Seus Vídeos Publicados</div>
-            <div style="opacity: 0.5; font-size: 0.82rem; text-align: center; padding: 20px; background: #121218; border-radius: 10px; border: 1px dashed rgba(255,255,255,0.1);">Nenhum vídeo postado ainda.</div>
+            <div style="margin: 18px 0 14px; font-weight: 800; font-size: 0.92rem;">💸 Ideias de monetização com vídeos</div>
+            <div class="creator-card" style="margin-bottom:10px;">
+                <div>
+                    <strong>Vídeos patrocinados</strong>
+                    <p class="section-subtitle" style="margin:4px 0 0;">Receita por marca, parceria e conteúdo comercial.</p>
+                </div>
+                <button type="button" disabled>Em planejamento</button>
+            </div>
+            <div class="creator-card" style="margin-bottom:10px;">
+                <div>
+                    <strong>Links de afiliados</strong>
+                    <p class="section-subtitle" style="margin:4px 0 0;">Produto, loja, convite e comissão por clique.</p>
+                </div>
+                <button type="button" disabled>Em planejamento</button>
+            </div>
+            <div class="creator-card" style="margin-bottom:10px;">
+                <div>
+                    <strong>Assinatura VIP</strong>
+                    <p class="section-subtitle" style="margin:4px 0 0;">Conteúdos exclusivos, bastidores e lives pagas.</p>
+                </div>
+                <button type="button" disabled>Em planejamento</button>
+            </div>
+
+            <div style="font-weight: 700; margin: 22px 0 10px; font-size: 0.9rem;">Seus Vídeos Publicados</div>
+            <div id="publishedVideoStatus" style="opacity: 0.5; font-size: 0.82rem; text-align: center; padding: 20px; background: #121218; border-radius: 10px; border: 1px dashed rgba(255,255,255,0.1);">Carregando seus vídeos...</div>
+            <p id="adsenseSetupNote" class="local-data-note">AdSense ainda não configurado: preencha o ID do publisher e o ID do bloco no espaço de anúncios para ativar a veiculação.</p>
+            <div id="adsenseContainer" class="adsense-container" data-publisher-id="__ADSENSE_PUBLISHER_ID__" data-ad-slot="__ADSENSE_AD_SLOT__">
+                <span class="adsense-label">Publicidade</span>
+                <div style="display:flex;align-items:center;justify-content:center;min-height:72px;background:linear-gradient(135deg,#1b1223,#290f2b);border:1px solid rgba(255,255,255,0.08);border-radius:12px;color:#fff;padding:18px;font-weight:700;text-align:center;">
+                    Clube Wins • Anúncio local em destaque
+                </div>
+                <ins class="adsbygoogle" style="display:block" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            </div>
+        </div>
+
+        <div id="view-creators" class="static-view view-section">
+            <div class="section-title">✨ Criadores</div>
+            <div class="section-subtitle">Encontre perfis e escolha quem quer acompanhar.</div>
+            <div id="creatorDirectory"></div>
+        </div>
+
+        <div id="view-creator" class="static-view view-section">
+            <button class="back-link" type="button" onclick="returnToFeed()">← Voltar ao feed</button>
+            <div class="creator-profile">
+                <div id="creatorAvatar" class="creator-avatar">CW</div>
+                <div><h2 id="creatorName" style="font-size:1.15rem"></h2><p id="creatorBio" class="section-subtitle" style="margin:4px 0 0"></p></div>
+            </div>
+            <button id="creatorFollowButton" class="creator-follow-btn" type="button"></button>
+            <p id="creatorVideoCount" class="section-subtitle" style="margin-top:18px"></p>
+            <div id="creatorVideoList"></div>
+        </div>
+
+        <div id="view-settings" class="static-view view-section">
+            <div class="section-title">⚙️ Configurações</div>
+            <div class="section-subtitle">Preferências e dados deste dispositivo.</div>
+            <section class="policy-section">
+                <h3>Reprodução</h3>
+                <label class="settings-row" for="videoAutoplayToggle">
+                    <span class="settings-row-copy">
+                        <strong>Reprodução automática</strong>
+                        <p>Reproduzir vídeos quando aparecem no feed. O som permanece desligado.</p>
+                    </span>
+                    <input id="videoAutoplayToggle" type="checkbox" checked onchange="setVideoAutoplay(this.checked)">
+                </label>
+            </section>
+            <section class="policy-section">
+                <h3>Privacidade neste dispositivo</h3>
+                <p>Não há contas cadastradas. Seguimentos, vídeos enviados sem R2 e denúncias locais permanecem neste navegador.</p>
+                <button class="submit-btn" type="button" style="margin-top:14px" onclick="clearLocalData()">Limpar dados deste dispositivo</button>
+            </section>
+        </div>
+
+        <div id="view-trust" class="static-view view-section">
+            <div class="section-title">Regras e Privacidade</div>
+            <div class="section-subtitle">Informações importantes para quem publica ou assiste.</div>
+            <section class="policy-section"><h3>Regras da comunidade</h3><p>Publique apenas vídeos que você criou ou tem autorização para compartilhar. Não publique conteúdo ilegal, ameaçador, íntimo sem consentimento, discriminatório ou que exponha dados pessoais. Com o backend ativo, vídeos aguardam revisão e denúncias são enviadas à fila de moderação; sem ele, ficam apenas neste navegador.</p></section>
+            <section class="policy-section"><h3>Privacidade</h3><p>O identificador anônimo do navegador associa seguimentos e votos. Com backend e Turnstile ativos, vídeos pendentes ficam no R2; metadados, seguimentos, comentários, votos e denúncias ficam no D1. Sem esses serviços, os dados disponíveis ficam no armazenamento local. O Worker registra URL e horário dos acessos na fila. Não há cadastro de contas nem pagamentos implementados.</p></section>
+            <section class="policy-section"><h3>Publicidade</h3><p>O bloco do AdSense só será carregado quando os IDs válidos da sua conta forem configurados. Nunca clique nos próprios anúncios nem peça que outras pessoas cliquem.</p></section>
+        </div>
+
+        <div id="view-moderation" class="static-view view-section">
+            <div class="section-title">🛡️ Moderação</div>
+            <div class="section-subtitle">Use a chave configurada como segredo no Cloudflare. Ela fica apenas na memória desta página.</div>
+            <div class="form-group">
+                <label for="moderationKey">Chave de moderação</label>
+                <input id="moderationKey" class="form-input" type="password" autocomplete="off">
+            </div>
+            <button class="submit-btn" type="button" style="margin-top:12px" onclick="loadModerationQueue()">Carregar fila</button>
+            <p id="moderationStatus" class="local-data-note" aria-live="polite"></p>
+            <div id="moderationQueue"></div>
         </div>
 
         <!-- COMENTÁRIOS DRAWER -->
@@ -418,6 +596,7 @@
             <div class="comments-list" id="commentsList">
                 <div class="comment-item"><span class="comment-user">@mariana:</span> Muito lindo o vídeo! 💕</div>
             </div>
+            <div id="commentTurnstileWidget" class="turnstile-widget" hidden data-sitekey="__TURNSTILE_SITE_KEY__"></div>
             <div class="comment-input-area">
                 <input type="text" class="comment-input" id="commentInput" placeholder="Adicione um comentário...">
                 <button class="send-comment-btn" onclick="addComment()">Publicar</button>
@@ -433,6 +612,25 @@
                 <button class="share-option" onclick="shareAction('Mais')"><span>📲</span> Outros</button>
             </div>
             <button class="submit-btn" style="margin-top: 18px; padding: 11px;" onclick="closeAllModals()">Cancelar</button>
+        </div>
+
+        <div class="report-drawer" id="reportDrawer">
+            <div class="drawer-header">Denunciar vídeo<button class="close-drawer" type="button" onclick="closeAllModals()">✕</button></div>
+            <form class="report-form" onsubmit="submitReport(event)">
+                <label for="reportReason">Motivo</label>
+                <select id="reportReason" required>
+                    <option value="">Selecione um motivo</option>
+                    <option value="rights">Violação de direitos autorais</option>
+                    <option value="privacy">Privacidade ou exposição</option>
+                    <option value="harmful">Conteúdo abusivo ou perigoso</option>
+                    <option value="spam">Spam ou golpe</option>
+                    <option value="other">Outro</option>
+                </select>
+                <label for="reportDetails">Detalhes (opcional)</label>
+                <textarea id="reportDetails" rows="3" maxlength="500"></textarea>
+                <div id="reportTurnstileWidget" class="turnstile-widget" hidden data-sitekey="__TURNSTILE_SITE_KEY__"></div>
+                <button class="submit-btn" type="submit">Registrar denúncia neste dispositivo</button>
+            </form>
         </div>
 
         <!-- Barra Inferior -->
@@ -454,37 +652,634 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const savedDiamonds = localStorage.getItem("clubewins_diamonds");
-            if(savedDiamonds) {
-                document.getElementById('diamondBalance').innerText = savedDiamonds + ' 💎';
+        const pollOptions = {
+            poll1: ['ele', 'ela'],
+            poll2: ['filme', 'passeio']
+        };
+        const creatorProfiles = {
+            casal_wins: { name: 'Casal Wins', initials: 'CW', bio: 'Momentos e histórias de casal.' },
+            amor_eterno: { name: 'Amor Eterno', initials: 'AE', bio: 'Celebrando os pequenos momentos.' },
+            voce: { name: 'Você', initials: 'VO', bio: 'Seus vídeos neste navegador.' }
+        };
+        let appDatabasePromise;
+        let followedCreators = new Set();
+        let feedMode = 'for-you';
+        let activeCreator = '';
+        let activeReport = null;
+        let activeCommentVideo = 'demo-casal';
+        let adsenseInitialized = false;
+        let sharedBackendAvailable = false;
+        let videoAutoplayEnabled = true;
+        let menuOpener = null;
+        let uploadTurnstileToken = '';
+        let commentTurnstileToken = '';
+        let pollTurnstileToken = '';
+        let reportTurnstileToken = '';
+        const turnstileWidgets = new Map();
+        try {
+            videoAutoplayEnabled = localStorage.getItem('clubewins_video_autoplay') !== 'false';
+        } catch (error) {}
+        const viewerId = getViewerId();
+
+        function getViewerId() {
+            try {
+                let id = localStorage.getItem('clubewins_viewer_id');
+                if (!id) {
+                    id = crypto.randomUUID();
+                    localStorage.setItem('clubewins_viewer_id', id);
+                }
+                return id;
+            } catch (error) {
+                return crypto.randomUUID();
             }
+        }
+
+        function turnstileSiteKey() {
+            return document.getElementById('uploadTurnstileWidget').dataset.sitekey || '';
+        }
+
+        function initializeTurnstile() {
+            if (!/^[a-zA-Z0-9_-]{10,100}$/.test(turnstileSiteKey())) return;
+            if (window.turnstile || window.turnstileScriptLoading) return;
+
+            window.turnstileScriptLoading = true;
+            window.onTurnstileLoaded = () => {
+                window.turnstileScriptLoading = false;
+                if (document.getElementById('view-upload').classList.contains('active-view')) {
+                    ensureTurnstileWidget('uploadTurnstileWidget');
+                }
+                if (document.getElementById('reportDrawer').classList.contains('open')) {
+                    ensureTurnstileWidget('reportTurnstileWidget');
+                }
+                if (document.getElementById('commentsDrawer').classList.contains('open')) {
+                    ensureTurnstileWidget('commentTurnstileWidget');
+                }
+                if (document.getElementById('view-trending').classList.contains('active-view')) {
+                    ensureTurnstileWidget('pollTurnstileWidget');
+                }
+            };
+            const script = document.createElement('script');
+            script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoaded&render=explicit';
+            script.async = true;
+            script.defer = true;
+            script.onerror = () => { window.turnstileScriptLoading = false; };
+            document.head.append(script);
+        }
+
+        function ensureTurnstileWidget(containerId) {
+            const container = document.getElementById(containerId);
+            if (!/^[a-zA-Z0-9_-]{10,100}$/.test(container.dataset.sitekey || '')) return;
+            container.hidden = false;
+            initializeTurnstile();
+            if (!window.turnstile || turnstileWidgets.has(containerId)) return;
+            const widget = window.turnstile.render(container, {
+                sitekey: container.dataset.sitekey,
+                callback: token => {
+                    if (containerId === 'uploadTurnstileWidget') uploadTurnstileToken = token;
+                    else if (containerId === 'commentTurnstileWidget') commentTurnstileToken = token;
+                    else if (containerId === 'pollTurnstileWidget') pollTurnstileToken = token;
+                    else reportTurnstileToken = token;
+                },
+                'expired-callback': () => {
+                    if (containerId === 'uploadTurnstileWidget') uploadTurnstileToken = '';
+                    else if (containerId === 'commentTurnstileWidget') commentTurnstileToken = '';
+                    else if (containerId === 'pollTurnstileWidget') pollTurnstileToken = '';
+                    else reportTurnstileToken = '';
+                }
+            });
+            turnstileWidgets.set(containerId, widget);
+        }
+
+        function resetTurnstileWidget(containerId) {
+            const widget = turnstileWidgets.get(containerId);
+            if (widget !== undefined && window.turnstile) window.turnstile.reset(widget);
+            if (containerId === 'uploadTurnstileWidget') uploadTurnstileToken = '';
+            else if (containerId === 'commentTurnstileWidget') commentTurnstileToken = '';
+            else if (containerId === 'pollTurnstileWidget') pollTurnstileToken = '';
+            else reportTurnstileToken = '';
+        }
+
+        function openAppDatabase() {
+            if (appDatabasePromise) return appDatabasePromise;
+            appDatabasePromise = new Promise((resolve, reject) => {
+                const request = indexedDB.open('clubewins-site', 1);
+                request.onupgradeneeded = () => {
+                    const database = request.result;
+                    if (!database.objectStoreNames.contains('videos')) database.createObjectStore('videos', { keyPath: 'id' });
+                    if (!database.objectStoreNames.contains('follows')) database.createObjectStore('follows', { keyPath: 'handle' });
+                    if (!database.objectStoreNames.contains('reports')) database.createObjectStore('reports', { keyPath: 'id' });
+                };
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+            return appDatabasePromise;
+        }
+
+        function databaseRequest(storeName, mode, method, value) {
+            return openAppDatabase().then(database => new Promise((resolve, reject) => {
+                const transaction = database.transaction(storeName, mode);
+                const request = transaction.objectStore(storeName)[method](value);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+                transaction.onabort = () => reject(transaction.error);
+            }));
+        }
+
+        function setVideoAutoplay(enabled) {
+            videoAutoplayEnabled = enabled;
+            try {
+                localStorage.setItem('clubewins_video_autoplay', String(enabled));
+            } catch (error) {}
+            document.querySelectorAll('#view-feed .reel-item').forEach(item => {
+                observer.unobserve(item);
+                observer.observe(item);
+            });
+            showToast(enabled ? 'Reprodução automática ativada.' : 'Reprodução automática pausada.');
+        }
+
+        async function clearLocalData() {
+            if (!window.confirm('Apagar vídeos, seguimentos, denúncias e identificador salvos somente neste dispositivo?')) return;
+            try {
+                const database = await openAppDatabase();
+                await new Promise((resolve, reject) => {
+                    const transaction = database.transaction(['videos', 'follows', 'reports'], 'readwrite');
+                    ['videos', 'follows', 'reports'].forEach(storeName => transaction.objectStore(storeName).clear());
+                    transaction.oncomplete = resolve;
+                    transaction.onerror = () => reject(transaction.error);
+                    transaction.onabort = () => reject(transaction.error);
+                });
+                try {
+                    localStorage.removeItem('clubewins_viewer_id');
+                    localStorage.removeItem('clubewins_video_autoplay');
+                } catch (error) {}
+                window.location.reload();
+            } catch (error) {
+                showToast('Não foi possível limpar os dados deste dispositivo.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            document.getElementById('videoAutoplayToggle').checked = videoAutoplayEnabled;
+            try {
+                const [videos, follows] = await Promise.all([
+                    databaseRequest('videos', 'readonly', 'getAll'),
+                    databaseRequest('follows', 'readonly', 'getAll')
+                ]);
+                followedCreators = new Set(follows.map(record => record.handle));
+                videos.sort((first, second) => first.createdAt.localeCompare(second.createdAt));
+                videos.forEach(renderUploadedVideo);
+                updatePublishedVideoStatus(videos.length);
+                applyFeedMode();
+                renderCreatorDirectory();
+            } catch (error) {
+                document.getElementById('publishedVideoStatus').textContent = 'O armazenamento local não está disponível neste navegador.';
+            }
+            await loadSharedData();
+            initializeTurnstile();
+            applyFeedMode();
+            renderCreatorDirectory();
         });
 
         function toggleSideMenu(open) {
             const menu = document.getElementById('sideMenu');
             const overlay = document.getElementById('modalOverlay');
             if (open) {
+                menuOpener = document.activeElement;
+                menu.inert = false;
+                menu.setAttribute('aria-hidden', 'false');
                 menu.classList.add('open');
                 overlay.classList.add('active');
+                document.querySelectorAll('.menu-toggle-btn').forEach(button => button.setAttribute('aria-expanded', 'true'));
+                menu.querySelector('.side-menu-close').focus();
             } else {
+                if (menuOpener?.isConnected) menuOpener.focus();
                 menu.classList.remove('open');
                 overlay.classList.remove('active');
+                menu.setAttribute('aria-hidden', 'true');
+                menu.inert = true;
+                document.querySelectorAll('.menu-toggle-btn').forEach(button => button.setAttribute('aria-expanded', 'false'));
+                menuOpener = null;
             }
         }
 
         function switchTab(viewName, buttonElement) {
+            const view = document.getElementById('view-' + viewName);
+            if (!view) return;
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-view'));
-            document.getElementById('view-' + viewName).classList.add('active-view');
+            view.classList.add('active-view');
 
+            document.querySelectorAll('.bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
             if (buttonElement && buttonElement.classList.contains('nav-item')) {
-                document.querySelectorAll('.bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
                 buttonElement.classList.add('active');
             }
+            if (viewName === 'feed') applyFeedMode();
+            if (viewName === 'profile') initializeAdSense();
+            if (viewName === 'upload') ensureTurnstileWidget('uploadTurnstileWidget');
+            if (viewName === 'trending') ensureTurnstileWidget('pollTurnstileWidget');
+        }
+
+        function openMenuView(viewName, feedMode = 'for-you') {
+            toggleSideMenu(false);
+            if (viewName === 'creators') {
+                openCreators();
+                document.getElementById('viewMenuToggle').focus();
+                return;
+            }
+            if (viewName === 'moderation') {
+                openModeration();
+                document.getElementById('viewMenuToggle').focus();
+                return;
+            }
+            const navSelectors = {
+                feed: '.bottom-nav .nav-item:nth-child(1)',
+                trending: '.bottom-nav .nav-item:nth-child(2)',
+                chat: '.bottom-nav .nav-item:nth-child(4)',
+                profile: '.bottom-nav .nav-item:nth-child(5)'
+            };
+            switchTab(viewName, navSelectors[viewName] ? document.querySelector(navSelectors[viewName]) : null);
+            toggleHeader(viewName === 'feed');
+            if (viewName === 'feed') {
+                const tabIndex = feedMode === 'following' ? 1 : 0;
+                setFeedMode(feedMode, document.querySelectorAll('.header-tabs button')[tabIndex]);
+            }
+            document.getElementById(viewName === 'feed' ? 'mainMenuToggle' : 'viewMenuToggle').focus();
+        }
+
+        async function loadSharedData() {
+            try {
+                const [videosResponse, followsResponse] = await Promise.all([
+                    fetch('/api/videos'),
+                    fetch(`/api/follows?viewerId=${encodeURIComponent(viewerId)}`)
+                ]);
+                if (!videosResponse.ok || !followsResponse.ok) return;
+                const [videos, serverFollows] = await Promise.all([videosResponse.json(), followsResponse.json()]);
+                sharedBackendAvailable = true;
+                followedCreators = new Set([...followedCreators, ...serverFollows]);
+                videos.sort((first, second) => first.created_at.localeCompare(second.created_at));
+                videos.forEach(video => renderUploadedVideo({
+                    id: video.id,
+                    creator: video.creator,
+                    caption: video.caption,
+                    mediaUrl: video.mediaUrl,
+                    createdAt: video.created_at,
+                    remote: true
+                }));
+                await loadPollResults();
+            } catch (error) {
+                sharedBackendAvailable = false;
+            }
+        }
+
+        async function loadPollResults() {
+            const response = await fetch(`/api/polls?viewerId=${encodeURIComponent(viewerId)}`);
+            if (!response.ok) return;
+            const data = await response.json();
+            const counts = new Map(data.counts.map(result => [`${result.poll_id}:${result.option_id}`, Number(result.count)]));
+            const votes = new Map(data.votes.map(vote => [vote.poll_id, vote.option_id]));
+
+            Object.keys(pollOptions).forEach(pollId => {
+                const card = document.getElementById(pollId);
+                const total = pollOptions[pollId].reduce((sum, optionId) => sum + (counts.get(`${pollId}:${optionId}`) || 0), 0);
+                card.querySelectorAll('.poll-option').forEach(option => {
+                    const count = counts.get(`${pollId}:${option.dataset.optionId}`) || 0;
+                    if (total > 0) option.querySelector('.pct').textContent = `${Math.round(count / total * 100)}%`;
+                    if (votes.has(pollId)) {
+                        option.classList.add('voted');
+                        option.style.borderColor = option.dataset.optionId === votes.get(pollId) ? '#ff3366' : '';
+                    }
+                });
+            });
         }
 
         function toggleHeader(show) {
             document.getElementById('topHeaderBar').style.display = show ? 'flex' : 'none';
+            document.getElementById('viewMenuToggle').hidden = show;
+        }
+
+        function setFeedMode(mode, button) {
+            feedMode = mode;
+            document.querySelectorAll('.header-tabs button').forEach(tab => {
+                const selected = tab === button;
+                tab.classList.toggle('active', selected);
+                tab.setAttribute('aria-pressed', String(selected));
+            });
+            applyFeedMode();
+        }
+
+        function applyFeedMode() {
+            const emptyState = document.getElementById('followingEmpty');
+            let matchingPosts = 0;
+            document.querySelectorAll('#view-feed .reel-item[data-creator]').forEach(reel => {
+                const visible = feedMode === 'for-you' || followedCreators.has(reel.dataset.creator);
+                reel.hidden = !visible;
+                if (visible) matchingPosts += 1;
+            });
+            document.querySelectorAll('#view-feed .house-promotion').forEach(reel => {
+                reel.hidden = feedMode !== 'for-you';
+            });
+            emptyState.hidden = feedMode !== 'following' || matchingPosts > 0;
+            document.getElementById('view-feed').scrollTop = 0;
+        }
+
+        function openCreators() {
+            renderCreatorDirectory();
+            switchTab('creators');
+            toggleHeader(false);
+        }
+
+        function openCreator(handle) {
+            activeCreator = handle;
+            const profile = creatorProfiles[handle] || { name: `@${handle}`, initials: handle.slice(0, 2).toUpperCase(), bio: 'Criador da comunidade.' };
+            document.getElementById('creatorAvatar').textContent = profile.initials;
+            document.getElementById('creatorName').textContent = profile.name;
+            document.getElementById('creatorBio').textContent = profile.bio;
+            renderCreatorProfileVideos(handle);
+            updateCreatorFollowButton();
+            switchTab('creator');
+            toggleHeader(false);
+        }
+
+        function renderCreatorDirectory() {
+            const directory = document.getElementById('creatorDirectory');
+            const handles = new Set(Object.keys(creatorProfiles));
+            document.querySelectorAll('#view-feed .reel-item[data-creator]').forEach(reel => handles.add(reel.dataset.creator));
+            directory.replaceChildren();
+
+            handles.forEach(handle => {
+                const profile = creatorProfiles[handle] || { name: `@${handle}`, initials: handle.slice(0, 2).toUpperCase(), bio: 'Criador da comunidade.' };
+                const card = document.createElement('div');
+                card.className = 'creator-card';
+                const details = document.createElement('div');
+                const name = document.createElement('strong');
+                name.textContent = profile.name;
+                const bio = document.createElement('p');
+                bio.className = 'section-subtitle';
+                bio.style.margin = '4px 0 0';
+                bio.textContent = profile.bio;
+                details.append(name, bio);
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = 'Ver perfil';
+                button.addEventListener('click', () => openCreator(handle));
+                card.append(details, button);
+                directory.append(card);
+            });
+        }
+
+        function renderCreatorProfileVideos(handle) {
+            const posts = [...document.querySelectorAll('#view-feed .reel-item[data-creator]')]
+                .filter(reel => reel.dataset.creator === handle);
+            const list = document.getElementById('creatorVideoList');
+            list.replaceChildren();
+            document.getElementById('creatorVideoCount').textContent = `${posts.length} vídeo(s) no feed deste navegador.`;
+
+            posts.forEach(reel => {
+                const row = document.createElement('div');
+                row.className = 'creator-video-item';
+                const caption = document.createElement('p');
+                caption.textContent = reel.querySelector('.caption')?.textContent || 'Vídeo sem legenda';
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = 'Assistir no feed';
+                button.addEventListener('click', () => {
+                    setFeedMode('for-you', document.querySelector('.header-tabs button'));
+                    returnToFeed();
+                    requestAnimationFrame(() => reel.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+                });
+                row.append(caption, button);
+                list.append(row);
+            });
+        }
+
+        function updateCreatorFollowButton() {
+            const button = document.getElementById('creatorFollowButton');
+            const isOwnProfile = activeCreator === 'voce';
+            const isFollowing = followedCreators.has(activeCreator);
+            button.onclick = () => toggleFollow(activeCreator);
+            button.disabled = isOwnProfile;
+            button.classList.toggle('following', isFollowing);
+            button.textContent = isOwnProfile ? 'Seu perfil neste navegador' : isFollowing ? 'Seguindo' : 'Seguir';
+        }
+
+        async function toggleFollow(handle) {
+            if (handle === 'voce') return;
+            try {
+                const following = !followedCreators.has(handle);
+                if (sharedBackendAvailable) {
+                    const response = await fetch('/api/follows', {
+                        method: 'POST',
+                        headers: { 'content-type': 'application/json' },
+                        body: JSON.stringify({ viewerId, creator: handle, following })
+                    });
+                    if (!response.ok) throw new Error('Falha ao sincronizar seguimento.');
+                }
+                if (followedCreators.has(handle)) {
+                    await databaseRequest('follows', 'readwrite', 'delete', handle);
+                    followedCreators.delete(handle);
+                } else {
+                    await databaseRequest('follows', 'readwrite', 'put', { handle, followedAt: new Date().toISOString() });
+                    followedCreators.add(handle);
+                }
+                updateCreatorFollowButton();
+                renderCreatorDirectory();
+                applyFeedMode();
+                showToast(followedCreators.has(handle) ? 'Você está seguindo este criador.' : 'Criador removido dos seguidos.');
+            } catch (error) {
+                showToast('Não foi possível salvar esta alteração neste navegador.');
+            }
+        }
+
+        function returnToFeed() {
+            switchTab('feed', document.querySelector('.bottom-nav .nav-item'));
+            toggleHeader(true);
+        }
+
+        function initializeAdSense() {
+            if (adsenseInitialized) return;
+            const container = document.getElementById('adsenseContainer');
+            const setupNote = document.getElementById('adsenseSetupNote');
+            const publisherId = (container.dataset.publisherId || '').trim();
+            const slotId = (container.dataset.adSlot || '').trim();
+
+            if (!/^ca-pub-\d+$/.test(publisherId) || !/^\d+$/.test(slotId)) {
+                setupNote.hidden = false;
+                container.hidden = false;
+                container.querySelector('div').style.display = 'flex';
+                return;
+            }
+
+            setupNote.hidden = true;
+            adsenseInitialized = true;
+            const ad = container.querySelector('.adsbygoogle');
+            ad.dataset.adClient = publisherId;
+            ad.dataset.adSlot = slotId;
+            container.hidden = false;
+            const script = document.createElement('script');
+            script.async = true;
+            script.crossOrigin = 'anonymous';
+            script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${publisherId}`;
+            script.onload = () => {
+                try {
+                    (window.adsbygoogle = window.adsbygoogle || []).push({});
+                } catch (error) {
+                    container.hidden = true;
+                }
+            };
+            script.onerror = () => { container.hidden = true; };
+            document.head.append(script);
+        }
+
+        function openReport(button) {
+            const reel = button.closest('.reel-item');
+            activeReport = reel ? { postId: reel.dataset.postId || '', creator: reel.dataset.creator || '' } : null;
+            if (!activeReport) return;
+            document.getElementById('reportDrawer').classList.add('open');
+            document.getElementById('modalOverlay').classList.add('active');
+            ensureTurnstileWidget('reportTurnstileWidget');
+        }
+
+        function openModeration() {
+            switchTab('moderation');
+            toggleHeader(false);
+        }
+
+        async function loadModerationQueue() {
+            const status = document.getElementById('moderationStatus');
+            const list = document.getElementById('moderationQueue');
+            const key = document.getElementById('moderationKey').value.trim();
+            if (!key) {
+                status.textContent = 'Informe a chave configurada no Cloudflare.';
+                return;
+            }
+            status.textContent = 'Carregando fila...';
+            list.replaceChildren();
+            try {
+                const headers = { Authorization: `Bearer ${key}` };
+                const [videosResponse, reportsResponse] = await Promise.all([
+                    fetch('/api/admin/videos', { headers }),
+                    fetch('/api/admin/reports', { headers })
+                ]);
+                if (!videosResponse.ok || !reportsResponse.ok) throw new Error('A chave foi recusada ou o backend não está configurado.');
+                const [videos, reports] = await Promise.all([videosResponse.json(), reportsResponse.json()]);
+                status.textContent = `${videos.length} vídeo(s) pendente(s), ${reports.length} denúncia(s) aberta(s).`;
+
+                videos.forEach(video => {
+                    const card = document.createElement('div');
+                    card.className = 'moderation-item';
+                    const description = document.createElement('p');
+                    description.textContent = `@${video.creator}: ${video.caption || 'Vídeo sem legenda'}`;
+                    const preview = document.createElement('button');
+                    preview.type = 'button';
+                    preview.textContent = 'Carregar prévia';
+                    preview.addEventListener('click', async () => {
+                        preview.disabled = true;
+                        try {
+                            const response = await fetch(`/api/admin/videos/${encodeURIComponent(video.id)}/media`, { headers });
+                            if (!response.ok) throw new Error('Não foi possível carregar a prévia.');
+                            const player = document.createElement('video');
+                            player.controls = true;
+                            player.playsInline = true;
+                            player.style.cssText = 'display:block;width:100%;max-height:320px;margin-top:12px;background:#000';
+                            player.src = URL.createObjectURL(await response.blob());
+                            card.insertBefore(player, actions);
+                            preview.remove();
+                        } catch (error) {
+                            preview.disabled = false;
+                            status.textContent = error instanceof Error ? error.message : 'Falha ao carregar a prévia.';
+                        }
+                    });
+                    const actions = document.createElement('div');
+                    actions.className = 'moderation-actions';
+                    actions.append(
+                        moderationAction('Aprovar', () => moderateVideo(video.id, 'approved', key), false),
+                        moderationAction('Rejeitar', () => moderateVideo(video.id, 'rejected', key), true)
+                    );
+                    card.append(description, preview, actions);
+                    list.append(card);
+                });
+
+                reports.forEach(report => {
+                    const card = document.createElement('div');
+                    card.className = 'moderation-item';
+                    const description = document.createElement('p');
+                    description.textContent = `Vídeo ${report.video_id}: ${report.reason}. ${report.details}`;
+                    const actions = document.createElement('div');
+                    actions.className = 'moderation-actions';
+                    actions.append(moderationAction('Marcar revisada', () => moderateReport(report.id, 'reviewed', key), false));
+                    card.append(description, actions);
+                    list.append(card);
+                });
+            } catch (error) {
+                status.textContent = error instanceof Error ? error.message : 'Não foi possível carregar a moderação.';
+            }
+        }
+
+        function moderationAction(label, action, isReject) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.textContent = label;
+            if (isReject) button.classList.add('reject');
+            button.addEventListener('click', action);
+            return button;
+        }
+
+        async function moderateVideo(id, status, key) {
+            await fetch(`/api/admin/videos/${encodeURIComponent(id)}`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${key}`, 'content-type': 'application/json' },
+                body: JSON.stringify({ status })
+            });
+            await loadModerationQueue();
+        }
+
+        async function moderateReport(id, status, key) {
+            await fetch(`/api/admin/reports/${encodeURIComponent(id)}`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${key}`, 'content-type': 'application/json' },
+                body: JSON.stringify({ status })
+            });
+            await loadModerationQueue();
+        }
+
+        async function submitReport(event) {
+            event.preventDefault();
+            if (!activeReport) return;
+            const report = {
+                id: `report-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+                ...activeReport,
+                reason: document.getElementById('reportReason').value,
+                details: document.getElementById('reportDetails').value.trim(),
+                createdAt: new Date().toISOString()
+            };
+            try {
+                if (sharedBackendAvailable && reportTurnstileToken) {
+                    const response = await fetch('/api/reports', {
+                        method: 'POST',
+                        headers: { 'content-type': 'application/json' },
+                        body: JSON.stringify({
+                            videoId: report.postId,
+                            reporterId: viewerId,
+                            reason: report.reason,
+                            details: report.details,
+                            token: reportTurnstileToken
+                        })
+                    });
+                    if (response.ok) {
+                        document.querySelector('.report-form').reset();
+                        closeAllModals();
+                        resetTurnstileWidget('reportTurnstileWidget');
+                        showToast('Denúncia enviada para a moderação.');
+                        return;
+                    }
+                }
+                await databaseRequest('reports', 'readwrite', 'put', report);
+                document.querySelector('.report-form').reset();
+                closeAllModals();
+                resetTurnstileWidget('reportTurnstileWidget');
+                showToast('Denúncia salva neste navegador; o servidor não a recebeu.');
+            } catch (error) {
+                showToast('Não foi possível salvar a denúncia neste navegador.');
+            }
         }
 
         function showToast(message) {
@@ -499,7 +1294,7 @@
             entries.forEach(entry => {
                 const video = entry.target.querySelector('video');
                 if (video) {
-                    if (entry.isIntersecting) {
+                    if (entry.isIntersecting && videoAutoplayEnabled) {
                         video.play().catch(() => {});
                     } else {
                         video.pause();
@@ -510,24 +1305,38 @@
         }, observerOptions);
 
         document.querySelectorAll('.reel-item').forEach(item => {
-            if(item.querySelector('video')) observer.observe(item);
+            const video = item.querySelector('video');
+            if(video) {
+                video.addEventListener('error', () => showVideoFallback(video));
+                observer.observe(item);
+            }
         });
+
+        function showVideoFallback(video) {
+            if (video.nextElementSibling?.classList.contains('video-fallback')) return;
+            const fallback = document.createElement('div');
+            fallback.className = 'video-fallback';
+            fallback.textContent = 'Este vídeo está indisponível no momento.';
+            video.after(fallback);
+        }
 
         function likeVideo(e) {
             const btn = e.currentTarget;
             const countElem = btn.querySelector('small');
             let baseCount = parseFloat(countElem.getAttribute('data-count'));
             const spanIcon = btn.querySelector('span');
+            const unit = countElem.dataset.unit;
+            const increment = unit === 'K' ? 0.1 : 1;
 
             if (spanIcon.style.color === 'rgb(255, 51, 102)') {
                 spanIcon.style.color = '#fff';
-                baseCount -= 0.1;
+                baseCount -= increment;
             } else {
                 spanIcon.style.color = '#ff3366';
-                baseCount += 0.1;
+                baseCount += increment;
             }
             countElem.setAttribute('data-count', baseCount.toFixed(1));
-            countElem.innerText = baseCount.toFixed(1) + 'K';
+            countElem.innerText = unit === 'K' ? baseCount.toFixed(1) + 'K' : String(Math.round(baseCount));
         }
 
         function doubleClickLike(e) {
@@ -553,15 +1362,45 @@
             }
         }
 
-        function toggleComments(open) {
+        function toggleComments(open, source) {
             const drawer = document.getElementById('commentsDrawer');
             const overlay = document.getElementById('modalOverlay');
             if (open) {
+                const reel = source instanceof Element ? source.closest('.reel-item') || source : null;
+                if (reel?.dataset.postId) activeCommentVideo = reel.dataset.postId;
                 drawer.classList.add('open');
                 overlay.classList.add('active');
+                ensureTurnstileWidget('commentTurnstileWidget');
+                loadSharedComments();
             } else {
                 closeAllModals();
             }
+        }
+
+        async function loadSharedComments() {
+            if (!sharedBackendAvailable || !activeCommentVideo) return;
+            try {
+                const response = await fetch(`/api/videos/${encodeURIComponent(activeCommentVideo)}/comments`);
+                if (!response.ok) return;
+                const comments = await response.json();
+                const list = document.getElementById('commentsList');
+                list.replaceChildren();
+                comments.forEach(comment => appendComment(`@${comment.author_id}:`, comment.body));
+            } catch (error) {
+                showToast('Não foi possível carregar os comentários compartilhados.');
+            }
+        }
+
+        function appendComment(author, body) {
+            const list = document.getElementById('commentsList');
+            const item = document.createElement('div');
+            item.className = 'comment-item';
+            const name = document.createElement('span');
+            name.className = 'comment-user';
+            name.textContent = author;
+            item.append(name, document.createTextNode(` ${body}`));
+            list.append(item);
+            list.scrollTop = list.scrollHeight;
         }
 
         function toggleShare(open) {
@@ -576,54 +1415,242 @@
         }
 
         function closeAllModals() {
-            document.getElementById('sideMenu').classList.remove('open');
+            const sideMenu = document.getElementById('sideMenu');
+            if (sideMenu.contains(document.activeElement) && menuOpener?.isConnected) menuOpener.focus();
+            sideMenu.classList.remove('open');
+            sideMenu.setAttribute('aria-hidden', 'true');
+            sideMenu.inert = true;
+            menuOpener = null;
+            document.querySelectorAll('.menu-toggle-btn').forEach(button => button.setAttribute('aria-expanded', 'false'));
             document.getElementById('commentsDrawer').classList.remove('open');
             document.getElementById('shareModal').classList.remove('open');
+            document.getElementById('reportDrawer').classList.remove('open');
             document.getElementById('modalOverlay').classList.remove('active');
+            activeReport = null;
         }
 
-        function shareAction(type) {
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') closeAllModals();
+        });
+
+        async function shareAction(type) {
             closeAllModals();
-            if(type === 'Copiar') {
+            const shareUrl = window.location.href;
+
+            try {
+                if (type === 'Copiar') {
+                    await navigator.clipboard.writeText(shareUrl);
+                    showToast('Link copiado para a área de transferência!');
+                    return;
+                }
+
+                if (type === 'WhatsApp') {
+                    window.open(`https://wa.me/?text=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer');
+                    return;
+                }
+
+                if (navigator.share) {
+                    await navigator.share({ title: document.title, url: shareUrl });
+                    return;
+                }
+
+                await navigator.clipboard.writeText(shareUrl);
                 showToast('Link copiado para a área de transferência!');
-            } else {
-                showToast('Link compartilhado com sucesso!');
+            } catch (error) {
+                if (error instanceof Error && error.name === 'AbortError') return;
+                showToast('Não foi possível compartilhar o link.');
             }
         }
 
-        function addComment() {
+        async function addComment() {
             const input = document.getElementById('commentInput');
-            if (input.value.trim() === '') return;
+            const body = input.value.trim();
+            if (body === '') return;
+            if (sharedBackendAvailable && commentTurnstileToken && activeCommentVideo) {
+                try {
+                    const response = await fetch(`/api/videos/${encodeURIComponent(activeCommentVideo)}/comments`, {
+                        method: 'POST',
+                        headers: { 'content-type': 'application/json' },
+                        body: JSON.stringify({ viewerId, body, token: commentTurnstileToken })
+                    });
+                    if (response.ok) {
+                        const comment = await response.json();
+                        appendComment(`@${comment.authorId}:`, comment.body);
+                        input.value = '';
+                        resetTurnstileWidget('commentTurnstileWidget');
+                        showToast('Comentário enviado.');
+                        return;
+                    }
+                } catch (error) {
+                    showToast('Servidor indisponível; comentário ficará só nesta sessão.');
+                }
+            }
 
-            const list = document.getElementById('commentsList');
-            const newComment = document.createElement('div');
-            newComment.classList.add('comment-item');
-            newComment.innerHTML = `<span class="comment-user">@voce:</span>${input.value}`;
-            list.appendChild(newComment);
-            
+            appendComment('@voce:', body);
             input.value = '';
-            list.scrollTop = list.scrollHeight;
-            showToast('Comentário enviado!');
+            showToast('Comentário adicionado somente nesta sessão.');
         }
 
-        function watchAdForDiamonds() {
-            showToast('🎥 Carregando anúncio patrocinado...');
-            setTimeout(() => {
-                const balanceElem = document.getElementById('diamondBalance');
-                let current = parseInt(balanceElem.innerText);
-                current += 50;
-                balanceElem.innerText = current + ' 💎';
-                localStorage.setItem("clubewins_diamonds", current);
-                showToast('🎉 +50 Diamantes adicionados à sua carteira!');
-            }, 1500);
+        function updatePublishedVideoStatus(count) {
+            const status = document.getElementById('publishedVideoStatus');
+            status.textContent = count ? `${count} vídeo(s) salvo(s) neste navegador.` : 'Nenhum vídeo salvo neste navegador.';
         }
 
-        function votePoll(element, pollId) {
-            showToast('✨ Voto computado com sucesso!');
+        function renderUploadedVideo(post) {
+            if ([...document.querySelectorAll('#view-feed .reel-item[data-post-id]')].some(reel => reel.dataset.postId === post.id)) return;
+            const reel = document.createElement('div');
+            reel.className = 'reel-item';
+            reel.dataset.postId = post.id;
+            reel.dataset.creator = post.creator;
+            reel.addEventListener('dblclick', doubleClickLike);
+
+            const video = document.createElement('video');
+            video.className = 'reel-video';
+            video.src = post.mediaUrl || URL.createObjectURL(post.file);
+            video.loop = true;
+            video.muted = true;
+            video.playsInline = true;
+            video.addEventListener('error', () => showVideoFallback(video));
+            reel.append(video);
+
+            const gradient = document.createElement('div');
+            gradient.className = 'gradient-bottom';
+            reel.append(gradient);
+
+            const videoInfo = document.createElement('div');
+            videoInfo.className = 'video-info';
+            const author = document.createElement('button');
+            author.className = 'author';
+            author.type = 'button';
+            author.textContent = `@${post.creator || 'voce'}`;
+            author.addEventListener('click', () => openCreator(post.creator));
+            const caption = document.createElement('div');
+            caption.className = 'caption';
+            caption.textContent = post.caption || 'Compartilhando um momento especial.';
+            if (post.remoteStatus === 'pending') {
+                const pending = document.createElement('div');
+                pending.className = 'local-data-note';
+                pending.textContent = 'Aguardando revisão antes de aparecer para outras pessoas.';
+                videoInfo.append(pending);
+            }
+            const reportButton = document.createElement('button');
+            reportButton.className = 'report-btn';
+            reportButton.type = 'button';
+            reportButton.textContent = '⚑ Denunciar vídeo';
+            reportButton.addEventListener('click', () => openReport(reportButton));
+            videoInfo.append(author, caption, reportButton);
+            reel.append(videoInfo);
+
+            const actions = document.createElement('div');
+            actions.className = 'actions-sidebar';
+            const likeButton = document.createElement('button');
+            likeButton.className = 'action-icon-btn like-btn';
+            likeButton.setAttribute('aria-label', 'Curtir vídeo');
+            likeButton.innerHTML = '<span>❤️</span><small data-count="0">0</small>';
+            likeButton.addEventListener('click', likeVideo);
+
+            const commentsButton = document.createElement('button');
+            commentsButton.className = 'action-icon-btn';
+            commentsButton.setAttribute('aria-label', 'Abrir comentários');
+            commentsButton.innerHTML = '<span>💬</span><small>Comentar</small>';
+            commentsButton.addEventListener('click', () => toggleComments(true, reel));
+
+            const shareButton = document.createElement('button');
+            shareButton.className = 'action-icon-btn';
+            shareButton.setAttribute('aria-label', 'Compartilhar vídeo');
+            shareButton.innerHTML = '<span>↗️</span><small>Compartilhar</small>';
+            shareButton.addEventListener('click', () => toggleShare(true));
+            actions.append(likeButton, commentsButton, shareButton);
+            reel.append(actions);
+
+            const feed = document.getElementById('view-feed');
+            const promotion = feed.querySelector('.house-promotion');
+            feed.insertBefore(reel, promotion || document.getElementById('followingEmpty'));
+            observer.observe(reel);
+        }
+
+        async function publishVideo(event) {
+            event.preventDefault();
+            const videoInput = document.getElementById('videoInput');
+            const file = videoInput.files[0];
+            if (!file || !file.type.startsWith('video/')) {
+                showToast('Escolha um arquivo de vídeo válido.');
+                return;
+            }
+
+            const post = {
+                id: `video-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+                creator: 'voce',
+                caption: document.getElementById('captionInput').value.trim(),
+                file,
+                createdAt: new Date().toISOString()
+            };
+            const submitButton = document.querySelector('#uploadForm button[type="submit"]');
+            submitButton.disabled = true;
+            try {
+                let remotePost = null;
+                if (sharedBackendAvailable && uploadTurnstileToken) {
+                    const form = new FormData();
+                    form.append('video', file);
+                    form.append('caption', post.caption);
+                    form.append('viewerId', viewerId);
+                    form.append('cf-turnstile-response', uploadTurnstileToken);
+                    const response = await fetch('/api/videos', { method: 'POST', body: form });
+                    if (response.ok) remotePost = await response.json();
+                }
+                if (remotePost) {
+                    post.remoteId = remotePost.id;
+                    post.remoteStatus = remotePost.status;
+                    post.creator = `u_${viewerId.slice(0, 12)}`;
+                }
+                await databaseRequest('videos', 'readwrite', 'put', post);
+                renderUploadedVideo(post);
+                const count = await databaseRequest('videos', 'readonly', 'count');
+                updatePublishedVideoStatus(count);
+                renderCreatorDirectory();
+                document.getElementById('uploadForm').reset();
+                resetTurnstileWidget('uploadTurnstileWidget');
+                switchTab('feed', document.querySelector('.bottom-nav .nav-item'));
+                toggleHeader(true);
+                setFeedMode('for-you', document.querySelector('.header-tabs button'));
+                showToast(remotePost ? 'Vídeo enviado e aguardando moderação.' : 'Vídeo salvo somente neste navegador.');
+            } catch (error) {
+                showToast('Não foi possível salvar. Verifique o espaço disponível neste navegador.');
+            } finally {
+                submitButton.disabled = false;
+            }
+        }
+
+        async function votePoll(element, pollId) {
             const card = document.getElementById(pollId);
+            const optionId = element.dataset.optionId;
+            if (!optionId) return;
+            if (sharedBackendAvailable && pollTurnstileToken) {
+                try {
+                    const response = await fetch(`/api/polls/${pollId}/votes`, {
+                        method: 'POST',
+                        headers: { 'content-type': 'application/json' },
+                        body: JSON.stringify({ viewerId, optionId, token: pollTurnstileToken })
+                    });
+                    if (response.status === 409) {
+                        showToast('Você já votou nesta enquete neste navegador.');
+                        return;
+                    }
+                    if (response.ok) {
+                        resetTurnstileWidget('pollTurnstileWidget');
+                        await loadPollResults();
+                        showToast('Voto registrado.');
+                        return;
+                    }
+                } catch (error) {
+                    showToast('Servidor indisponível; voto ficará só nesta sessão.');
+                }
+            }
+
             const options = card.querySelectorAll('.poll-option');
             options.forEach(opt => opt.classList.add('voted'));
             element.style.borderColor = '#ff3366';
+            showToast('Voto registrado somente nesta sessão.');
         }
     </script>
 </body>

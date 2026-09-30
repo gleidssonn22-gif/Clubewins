@@ -1,0 +1,52 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "clubewins-worker",
+	"main": "src/index.ts",
+	"base_dir": ".",
+	"compatibility_date": "2025-02-04",
+	"workers_dev": false,
+	"routes": [
+		"https://clubewins.com.br/*",
+		"https://www.clubewins.com.br/*"
+	],
+	"rules": [
+		{
+			"type": "Text",
+			"globs": [
+				"**/*.html"
+			],
+			"fallthrough": false
+		}
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "clubewins-data",
+			"database_id": "739c5dfd-2d04-4089-a89a-b61018aa799b",
+			"migrations_dir": "migrations"
+		}
+	],
+	"vars": {
+		"ADSENSE_PUBLISHER_ID": "",
+		"ADSENSE_AD_SLOT": "",
+		"TURNSTILE_SITE_KEY": ""
+	},
+	"observability": {
+		"enabled": true
+	},
+	"queues": {
+		"producers": [
+			{
+				"binding": "MY_QUEUE",
+				"queue": "clubewins"
+			}
+		],
+		"consumers": [
+			{
+				"queue": "clubewins",
+				"max_batch_size": 10,
+				"dead_letter_queue": "my-queue-dlq"
+			}
+		]
+	}
+}
