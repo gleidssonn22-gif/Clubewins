@@ -5,33 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clube Wins - Inovação, Jogos e Conteúdo</title>
     <meta name="description" content="Bem-vindo ao Clube Wins. Explore conteúdos exclusivos, divirta-se com nossos minigames e fique por dentro das novidades.">
-    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Open Graph / Redes Sociais -->
+    <meta property="og:title" content="Clube Wins - Inovação, Jogos e Conteúdo">
+    <meta property="og:description" content="Seu portal interativo de conteúdos, jogos e entretenimento.">
+    <meta property="og:type" content="website">
+    
+    <!-- Script crítico para evitar o "flash" branco no carregamento do tema escuro -->
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+        }
+    </script>
+
     <style>
         :root {
-            --bg-color: #f4f4f9;
-            --text-color: #333333;
+            --bg-color: #f1f5f9;
+            --text-color: #0f172a;
             --card-bg: #ffffff;
-            --primary-color: #0066ff;
-            --primary-hover: #0052cc;
-            --border-color: #dddddd;
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --border-color: #cbd5e1;
+            --shadow-color: rgba(15, 23, 42, 0.05);
+            --accent-glow: rgba(37, 99, 235, 0.2);
         }
 
         [data-theme="dark"] {
-            --bg-color: #121216;
-            --text-color: #e0e0e0;
-            --card-bg: #1e1e24;
+            --bg-color: #090d16;
+            --text-color: #f8fafc;
+            --card-bg: #131b2e;
             --primary-color: #3b82f6;
             --primary-hover: #2563eb;
-            --border-color: #2d2d38;
+            --border-color: #1e293b;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --accent-glow: rgba(59, 130, 246, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 0;
             transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
@@ -41,13 +64,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px var(--shadow-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
         }
 
         .logo {
             font-size: 1.5rem;
-            font-weight: bold;
+            font-weight: 800;
             color: var(--primary-color);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .nav-buttons {
@@ -59,63 +90,174 @@
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
+            padding: 9px 18px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            transition: background-color 0.2s;
+            font-size: 0.9rem;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
         }
 
         button:hover {
             background-color: var(--primary-hover);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        button:active {
+            transform: scale(0.96);
         }
 
         main {
             max-width: 900px;
+            width: 100%;
             margin: 2rem auto;
             padding: 0 1rem;
+            flex: 1;
         }
 
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 2rem;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 10px 25px -5px var(--shadow-color);
             text-align: center;
+            transition: transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card h1 {
+            font-size: 2.1rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card p {
+            color: var(--text-color);
+            opacity: 0.85;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        /* Grade de Novidades */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .news-item {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 1.2rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+        }
+
+        .news-item:hover {
+            border-color: var(--primary-color);
+        }
+
+        .news-item span {
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Links Sociais Rápidos */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .social-btn:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
         }
 
         /* Espaço reservado para o AdSense */
         .adsense-box {
             background: var(--card-bg);
             border: 2px dashed var(--border-color);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 20px;
             margin: 20px 0;
             text-align: center;
-            color: #888;
-            font-size: 0.9rem;
+            color: #64748b;
+            font-size: 0.85rem;
         }
 
         /* Minigame de cliques */
         .game-container {
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         #score {
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 2.8rem;
+            font-weight: 800;
             color: var(--primary-color);
+            display: block;
+            margin: 5px 0 15px 0;
+            transition: transform 0.1s ease;
+        }
+
+        .pulse {
+            transform: scale(1.15);
+        }
+
+        #gameBtn {
+            font-size: 1.05rem;
+            padding: 14px 28px;
+        }
+
+        #timer {
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--primary-color);
+            min-height: 28px;
         }
 
         footer {
             text-align: center;
-            padding: 1.5rem;
+            padding: 2rem;
             border-top: 1px solid var(--border-color);
-            margin-top: 3rem;
+            margin-top: auto;
             font-size: 0.9rem;
-            color: #888;
+            color: #64748b;
+            background-color: var(--card-bg);
         }
     </style>
 </head>
@@ -124,38 +266,55 @@
     <header>
         <div class="logo">Clube Wins 🚀</div>
         <div class="nav-buttons">
-            <button id="themeToggle" onclick="toggleTheme()">🌓 Tema</button>
-            <button onclick="surpresa()">✨ Surpresa</button>
+            <button id="themeToggle" onclick="toggleTheme()" aria-label="Alternar Tema">🌓 Tema</button>
+            <button onclick="surpresa()" aria-label="Surpresa">✨ Surpresa</button>
         </div>
     </header>
 
     <main>
         <!-- Bloco de Anúncio Superior (AdSense) -->
-        <div class="adsense-box">
+        <div class="adsense-box" aria-label="Área de Anúncios">
             <span>[Espaço reservado para Anúncio do Google AdSense - Topo]</span>
-            <!-- Cole o código do AdSense aqui futuramente -->
         </div>
 
         <section class="card">
             <h1>Bem-vindo ao Novo Clube Wins</h1>
-            <p>Seu portal interativo de conteúdos, jogos e entretenimento. Navegue, interaja e divirta-se!</p>
+            <p>Seu portal interativo de conteúdos, jogos e entretenimento. Navegue, interaja e divirta-se com nossas ferramentas exclusivas!</p>
+            
+            <div class="news-grid">
+                <div class="news-item">
+                    <span>Novidade</span>
+                    <strong>🎮 Novos Minigames</strong>
+                    <p style="margin-top:6px; font-size:0.85rem; opacity:0.8;">Desafios rápidos atualizados para você testar suas habilidades e bater recordes.</p>
+                </div>
+                <div class="news-item">
+                    <span>Exclusivo</span>
+                    <strong>💡 Conteúdo & Dicas</strong>
+                    <p style="margin-top:6px; font-size:0.85rem; opacity:0.8;">Artigos e novidades sobre tecnologia, jogos e inovação digital.</p>
+                </div>
+            </div>
+
+            <!-- Redes Sociais / Atalhos -->
+            <div class="social-links">
+                <a href="https://github.com" target="_blank" class="social-btn">📂 GitHub</a>
+                <a href="#" onclick="copiarLink(); return false;" class="social-btn">🔗 Copiar Link do Site</a>
+            </div>
         </section>
 
-        <!-- Minigame Integrado para Viralizar / Reter Usuários -->
+        <!-- Minigame Integrado com High Score e CPS -->
         <section class="card">
             <h2>🕹️ Desafio do Clique Rápido</h2>
             <p>Quantas vezes você consegue clicar no botão abaixo em 10 segundos?</p>
             <div class="game-container">
-                <p>Pontuação: <span id="score">0</span></p>
-                <button id="gameBtn" onclick="incrementScore()">Clique Aqui!</button>
-                <p id="timer" style="margin-top: 10px; font-weight: bold;"></p>
+                <span id="score">0</span>
+                <button id="gameBtn" onclick="incrementScore()">Clique Aqui para Iniciar!</button>
+                <div id="timer">Carregando recorde...</div>
             </div>
         </section>
 
         <!-- Bloco de Anúncio Inferior (AdSense) -->
-        <div class="adsense-box">
+        <div class="adsense-box" aria-label="Área de Anúncios">
             <span>[Espaço reservado para Anúncio do Google AdSense - Rodapé]</span>
-            <!-- Cole o código do AdSense aqui futuramente -->
         </div>
     </main>
 
@@ -167,8 +326,7 @@
         // Função de Modo Escuro / Claro
         function toggleTheme() {
             const html = document.documentElement;
-            const currentTheme = html.getAttribute("data-theme");
-            if (currentTheme === "dark") {
+            if (html.getAttribute("data-theme") === "dark") {
                 html.removeAttribute("data-theme");
                 localStorage.setItem("theme", "light");
             } else {
@@ -177,12 +335,7 @@
             }
         }
 
-        // Carregar preferência salva do usuário
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.setAttribute("data-theme", "dark");
-        }
-
-        // Botão Surpresa (Ideia 5)
+        // Botão Surpresa
         function surpresa() {
             const mensagens = [
                 "🎉 Parabéns! Você encontrou o easter egg secreto do Clube Wins!",
@@ -193,7 +346,27 @@
             alert(randomMsg);
         }
 
-        // Lógica do Minigame
+        // Copiar Link do Site
+        function copiarLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert("✨ Link copiado com sucesso! Compartilhe com seus amigos.");
+            }).catch(err => {
+                console.error("Erro ao copiar link: ", err);
+            });
+        }
+
+        // Exibir recorde ao carregar a página
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedHighScore = localStorage.getItem("highScore") || 0;
+            const timerDisplay = document.getElementById("timer");
+            if (savedHighScore > 0) {
+                timerDisplay.textContent = `Seu recorde atual: ${savedHighScore} cliques`;
+            } else {
+                timerDisplay.textContent = `Nenhum recorde registrado ainda. Tente a sorte!`;
+            }
+        });
+
+        // Lógica do Minigame com Recorde e Animação
         let score = 0;
         let gameActive = false;
         let timeLeft = 10;
@@ -205,12 +378,13 @@
             const btn = document.getElementById("gameBtn");
 
             if (!gameActive) {
-                // Iniciar o jogo no primeiro clique
+                // Iniciar o jogo
                 gameActive = true;
                 score = 0;
                 timeLeft = 10;
                 scoreDisplay.textContent = score;
                 btn.textContent = "Clique o mais rápido que puder!";
+                timerDisplay.textContent = `Tempo restante: ${timeLeft}s`;
 
                 timerInterval = setInterval(() => {
                     timeLeft--;
@@ -220,8 +394,18 @@
                         clearInterval(timerInterval);
                         gameActive = false;
                         btn.textContent = "Jogar de Novo";
-                        alert(`Fim de jogo! Sua pontuação final foi: ${score} cliques.`);
-                        timerDisplay.textContent = "";
+
+                        let cps = (score / 10).toFixed(1);
+
+                        // Verificar e salvar recorde
+                        let highScore = parseInt(localStorage.getItem("highScore")) || 0;
+                        if (score > highScore) {
+                            highScore = score;
+                            localStorage.setItem("highScore", highScore);
+                            timerDisplay.textContent = `Novo Recorde! 🎉 ${score} cliques (${cps} cliques/s)!`;
+                        } else {
+                            timerDisplay.textContent = `Fim de jogo! Fez ${score} cliques (${cps} c/s). (Recorde: ${highScore})`;
+                        }
                     }
                 }, 1000);
             }
@@ -229,6 +413,12 @@
             if (gameActive) {
                 score++;
                 scoreDisplay.textContent = score;
+
+                // Animação de pulso no placar
+                scoreDisplay.classList.add("pulse");
+                setTimeout(() => {
+                    scoreDisplay.classList.remove("pulse");
+                }, 100);
             }
         }
     </script>
