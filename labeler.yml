@@ -1,0 +1,25 @@
+# Adiciona a label "bug" se houver alterações em arquivos de script ou estilos
+"bug":
+  - changed-files:
+      - any-glob: 
+          - "**/*.js"
+          - "**/*.css"
+
+# Adiciona a label "documentação" se você alterar arquivos Markdown
+"documentação":
+  - changed-files:
+      - any-glob: "**/*.md"
+
+# Adiciona a label "dependências" se houver alterações no gerenciador de pacotes
+"dependências":
+  - changed-files:
+      - any-glob: "package.json"
+
+# Adiciona a label "configuração" se alterar arquivos do GitHub Actions ou configurações globais
+"configuração":
+  - changed-files:
+      - any-glob: 
+          - ".github/**"
+          - "*.json"
+          - "*.yml"
+          - "*.yaml"
