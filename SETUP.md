@@ -4,6 +4,7 @@ O Worker `clubewins-worker` está publicado para `clubewins.com.br` e `www.clube
 
 ## Estado atual
 
+- Curtidas dos vídeos e seus totais são compartilhados no D1 por identificador anônimo do navegador. Não há cadastro de contas nem recuperação de senha.
 - Sem R2, vídeos adicionados ficam somente no armazenamento local do navegador e não são compartilhados. As rotas de upload e mídia do Worker respondem `503` enquanto não houver bucket.
 - Sem as chaves do Turnstile, comentários, votos e denúncias compartilhados ficam desativados; a interface informa quando a ação é apenas local.
 - O AdSense ainda não está configurado. A tela de perfil mostra um espaço local de publicidade, sem carregar anúncios reais. `/ads.txt` responde `503` até existir um publisher ID válido.
@@ -42,4 +43,4 @@ Faça deploy e confirme `https://clubewins.com.br/ads.txt` e a veiculação no p
 
 ## Dados e privacidade
 
-O backend usa um identificador anônimo do navegador; não há cadastro de contas. D1 armazena interações compartilhadas que passaram pelas validações. Enquanto R2 estiver desativado, os arquivos de vídeo enviados pelo formulário ficam no navegador do próprio usuário. Revise retenção de dados, termos e políticas de privacidade antes de ativar uploads públicos.
+O backend usa um identificador anônimo do navegador; não há cadastro de contas. D1 armazena curtidas, seguimentos e interações compartilhadas que passaram pelas validações. O perfil permite remover os vídeos, seguimentos e denúncias locais deste aparelho; essa ação não exclui registros já enviados ao servidor. Enquanto R2 estiver desativado, os arquivos de vídeo enviados pelo formulário ficam no navegador do próprio usuário. Revise retenção de dados, termos e políticas de privacidade antes de ativar uploads públicos.
